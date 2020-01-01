@@ -96,8 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotRate:
   - 60
-  gunFireLength:
-  - 4
+  gunFireLength: 04000000
   gunFireDelay:
   - 0.1
   intake:
@@ -113,6 +112,7 @@ MonoBehaviour:
   fakeBullet: {fileID: 0}
   offset: {x: 11, y: -1.5}
   reload: {fileID: 0}
+  animate: 0
 --- !u!82 &7654377711251711750
 AudioSource:
   m_ObjectHideFlags: 0

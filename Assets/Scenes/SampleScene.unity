@@ -693,21 +693,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2214775823538991510, guid: 8b733eb6b12ef51478892ed41645ed04,
-        type: 3}
-      propertyPath: magazine
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2214775823538991510, guid: 8b733eb6b12ef51478892ed41645ed04,
-        type: 3}
-      propertyPath: reloadTime
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2214775823538991510, guid: 8b733eb6b12ef51478892ed41645ed04,
-        type: 3}
-      propertyPath: shotRate.Array.data[0]
-      value: 2500
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b733eb6b12ef51478892ed41645ed04, type: 3}
 --- !u!4 &849549643 stripped
@@ -1308,10 +1293,10 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 1
+  m_DrawMode: 2
   m_Size: {x: 370, y: 40}
   m_AdaptiveModeThreshold: 0.641
-  m_SpriteTileMode: 0
+  m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
@@ -1323,7 +1308,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740306982}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.7, y: -0.22, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 213347506}

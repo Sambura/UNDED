@@ -25,7 +25,8 @@ public class Player : MonoBehaviour
 	private bool idle;
 	private int direction;
 	private float hp;
-	private SpriteRenderer[] bullets;
+	private bool tp;
+	private float tpTime;
 
 	void Start()
 	{
@@ -45,18 +46,7 @@ public class Player : MonoBehaviour
 
 	public void InitBullets()
 	{
-		if (bullets != null)
-		{
-			for (int i = 0; i < bullets.Length; i++)
-				Destroy(bullets[i]);
-		}
-		bullets = new SpriteRenderer[(int)weapon.magazine];
-		float xS = -(int)weapon.magazine * 3 / 2f;
-		for (int i = 0; i < (int)weapon.magazine; i++)
-		{
-			bullets[i] = Instantiate(weapon.fakeBullet, transform).GetComponent<SpriteRenderer>();
-			bullets[i].transform.localPosition = new Vector3(xS + 3 * i, -16);
-		}
+		weapon.InitBullets();
 	}
 
 	public void GetHit(float damage, float x)
@@ -98,11 +88,25 @@ public class Player : MonoBehaviour
 		if (IsDead) return;
 		hp += regeneration / 60 * Time.deltaTime;
 		UpdateHealth();
-		for (int i = 0; i < bullets.Length; i++)
-		{
-			bullets[i].color = new Color(1, 1, 1, (int)weapon.bullets > i ? 1 : 0.4f);
-		}
 		int delta = 0;
+		if (tp)
+		{
+			if (Time.time - tpTime >= 0.42f)
+			{
+				tp = false;
+				weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+				animator.Play("Idle");
+				float d = direction * movementSpeed;
+				if (Mathf.Abs(transform.position.x + d) >= 175)
+				{
+					d = Mathf.Sign(transform.position.x) * 175 - transform.position.x;
+				}
+				var t = new Vector3(d, 0);
+				transform.Translate(t);
+				mainCamera.transform.Translate(t);
+			} else
+			return;
+		}
 		if (!weapon.IsShooting)
 		{
 			if (Input.GetKey(KeyCode.D))
@@ -140,22 +144,24 @@ public class Player : MonoBehaviour
 				idle = true;
 				if (Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Return))
 				{
-					if (weapon.CanFire) {
-						weapon.PerformShot(0);
-					}
-				} else if (Input.GetKey(KeyCode.Quote) || Input.GetKey(KeyCode.N))
+					weapon.PerformShot(0);
+				}
+				else if (Input.GetKey(KeyCode.Quote) || Input.GetKey(KeyCode.N))
 				{
-					if (weapon.CanFire)
-					{
-						weapon.PerformShot(1);
-					}
+					weapon.PerformShot(1);
 				}
 			}
 			///
-			if ((Input.GetKey(KeyCode.R) && weapon.bullets < weapon.magazine && !weapon.IsReloading && !weapon.IsShooting && !weapon.partialReload) 
-				|| weapon.CanReload)
+			if ((Input.GetKey(KeyCode.R) && !weapon.partialReload) || weapon.CanReload)
 			{
 				weapon.PerformReload();
+			}
+			if (!weapon.IsShooting && Input.GetKey(KeyCode.Space))
+			{
+				animator.Play("TP");
+				tp = true;
+				tpTime = Time.time;
+				weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
 			}
 		}
 	}
