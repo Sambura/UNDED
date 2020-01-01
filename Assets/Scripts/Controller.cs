@@ -56,7 +56,7 @@ public class Controller : MonoBehaviour
 		}
 		if (kills % 250 == 0)
 		{
-			player.regeneration *= 1.15f;
+			player.regeneration *= 1.25f;
 			Debug.Log($"Congrats! Your regeneration now = {player.regeneration}");
 		}
 		if (kills % 500 == 0)
@@ -78,6 +78,7 @@ public class Controller : MonoBehaviour
 			if (Camera.main.orthographicSize < 100)
 			{
 				Camera.main.orthographicSize += 5;
+				player.InitBullets();
 				Debug.Log("Congrats! You've increased your filed of view!");
 			}
 		}

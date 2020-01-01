@@ -98,9 +98,7 @@ MonoBehaviour:
   shotRate:
   - 350
   - 200
-  gunFireLength:
-  - 1
-  - 1
+  gunFireLength: 0100000001000000
   gunFireDelay:
   - 0
   - 0
@@ -117,7 +115,7 @@ MonoBehaviour:
   reloadTime: 0.3
   partialReload: 1
   partialLoad: 1
-  fakeBullet: {fileID: 8038733273026564906, guid: b1ef84d7ac6076b4fb02e2fc535fa035,
+  fakeBullet: {fileID: 8361485583358853751, guid: 8b23f7d23e5f2034da57f129b0b4703d,
     type: 3}
   offset: {x: 4, y: -2}
   reload: {fileID: 8300000, guid: 6e8e37ba40704114fb4a29262f5226d0, type: 3}
