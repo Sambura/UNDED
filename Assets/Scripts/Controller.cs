@@ -54,10 +54,20 @@ public class Controller : MonoBehaviour
 			player.healthPoints *= 1.1f;
 			Debug.Log($"Congrats! Your maxHealth now = {player.healthPoints}");
 		}
+		if (kills % 125 == 0)
+		{
+			player.grenadeRate += 1;
+			Debug.Log($"Congrats! You now can throw {player.grenadeRate} grenades per minute!");
+		}
 		if (kills % 250 == 0)
 		{
 			player.regeneration *= 1.25f;
 			Debug.Log($"Congrats! Your regeneration now = {player.regeneration}");
+		}
+		if (kills % 375 == 0)
+		{
+			player.tpRate *= 1.1f;
+			Debug.Log($"Congrats! You now can teleport {player.tpRate} times a minute!");
 		}
 		if (kills % 500 == 0)
 		{

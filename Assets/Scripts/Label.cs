@@ -21,7 +21,7 @@ public class Label : MonoBehaviour
 		{
 			text.color = new Color(1, 1, 1, a);
 			transform.Translate(translate);
-			yield return new WaitForSeconds(0.02f);
+			yield return new WaitForSeconds(0.01f);
 		}
 		Destroy(gameObject);
 	}

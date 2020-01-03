@@ -25,6 +25,7 @@ public class Weapon : MonoBehaviour
 	public bool IsReloading { get; private set; }
 	public bool IsWaiting { get; private set; }
 	public float load { get; private set; }
+	public float bulletsY { get; private set; }
 
 	private AudioSource audioSource;
 	private SpriteRenderer spriteRenderer;
@@ -88,6 +89,7 @@ public class Weapon : MonoBehaviour
 			sY -= 4;
 			left -= now;
 		}
+		bulletsY = sY;
 		UpdateBullets();
 	}
 

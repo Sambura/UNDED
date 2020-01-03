@@ -62,9 +62,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Blast.cs" />
     <Compile Include="Assets\Scripts\Bullet.cs" />
+    <Compile Include="Assets\Scripts\CameraHandle.cs" />
     <Compile Include="Assets\Scripts\Controller.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Grenade.cs" />
     <Compile Include="Assets\Scripts\Label.cs" />
     <Compile Include="Assets\Scripts\ParticleSystemDestroyer.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
