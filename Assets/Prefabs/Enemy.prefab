@@ -95,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.5}
@@ -157,6 +157,9 @@ MonoBehaviour:
   dmgSystem: {fileID: 7763362860647767537, guid: 57df31e9db5b76f4facfef791d23f372,
     type: 3}
   weapon: {fileID: 4616251514549965415}
+  dodgeRate: 20
+  dodgeSpeed: 120
+  dodgeTime: 0.4
 --- !u!95 &6125294497506703119
 Animator:
   serializedVersion: 3

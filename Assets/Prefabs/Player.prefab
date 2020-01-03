@@ -165,10 +165,10 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3866094309991103345}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.5, y: -2}
@@ -221,6 +221,8 @@ MonoBehaviour:
   healthPoints: 100
   deathFX: {fileID: 8393316039139536883, guid: 97f9f33cc79ee174e94d38e965640d29, type: 3}
   regeneration: 100
+  grenade: {fileID: 0}
+  grenadeRate: 0
 --- !u!95 &3866094309991103355
 Animator:
   serializedVersion: 3

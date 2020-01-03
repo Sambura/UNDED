@@ -95,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -3, y: -1}
@@ -148,7 +148,6 @@ MonoBehaviour:
   healthPoints: 100
   deltaY: 8
   shotRate: 300
-  attackLength: 1
   attackDelay: 0
   damage: 1.5
   attackDistance: 20
@@ -157,8 +156,10 @@ MonoBehaviour:
   label: {fileID: 5217042072511729114, guid: c18c1cc542181f54c804cba8b82b285c, type: 3}
   dmgSystem: {fileID: 6199028226064837274, guid: ef400222032846b4a9fd517e06b84fdc,
     type: 3}
-  bullet: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
+  weapon: {fileID: 0}
+  dodgeRate: 0
+  dodgeSpeed: 0
+  dodgeTime: 0
 --- !u!95 &2490287006935249373
 Animator:
   serializedVersion: 3

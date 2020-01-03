@@ -321,6 +321,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5083099318526692471, guid: 70ee4d32c18afe54d80bbbfbe8af93f2,
+        type: 3}
+      propertyPath: reloadTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5083099318526692471, guid: 70ee4d32c18afe54d80bbbfbe8af93f2,
+        type: 3}
+      propertyPath: magazine
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 70ee4d32c18afe54d80bbbfbe8af93f2, type: 3}
 --- !u!1 &213347505
@@ -520,6 +530,7 @@ MonoBehaviour:
   - {fileID: 7020377696812033229, guid: 0b469e6f614d21142967a441a19259c8, type: 3}
   - {fileID: 2047008831404615656, guid: 893c74fd45f498d4bbaf008a83afa8e2, type: 3}
   - {fileID: 8274000691661349217, guid: 783e79a1748bcd84791fe230da56c4e3, type: 3}
+  - {fileID: 7645632048655553709, guid: 20d9d5eacdee05c47a2baa9a9b18e325, type: 3}
   spawnX: 190
   spawnY: -20
   spawnReductor: 0.005
@@ -549,6 +560,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -564,6 +576,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d838cd73c1da5a849949942bc7e15b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -692,6 +716,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2214775823538991510, guid: 8b733eb6b12ef51478892ed41645ed04,
+        type: 3}
+      propertyPath: magazine
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2214775823538991510, guid: 8b733eb6b12ef51478892ed41645ed04,
+        type: 3}
+      propertyPath: shotRate.Array.data[1]
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2214775823538991510, guid: 8b733eb6b12ef51478892ed41645ed04,
+        type: 3}
+      propertyPath: reloadTime
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b733eb6b12ef51478892ed41645ed04, type: 3}
@@ -998,7 +1037,15 @@ MonoBehaviour:
   movementSpeed: 50
   healthPoints: 2000
   deathFX: {fileID: 8393316039139536883, guid: 97f9f33cc79ee174e94d38e965640d29, type: 3}
-  regeneration: 350
+  regeneration: 450
+  grenade: {fileID: 2098447020752643828, guid: 1e086c4c3befe634e9002a27216e99b9, type: 3}
+  grenadeRate: 5
+  tpDistance: 50
+  tpRate: 20
+  line: {fileID: 2043699242988826835, guid: 3fc9b7ec0a655c04e95539958ea5860e, type: 3}
+  tpIcon: {fileID: 2409908062805910685, guid: 8a054d32602f94346a2b6ce3237ee3e7, type: 3}
+  damageTaken: {fileID: 8300000, guid: aaa9dec9c400b944686809e29df7254b, type: 3}
+  teleportSound: {fileID: 8300000, guid: 48a47336bdf376343a65e5e7f41da30c, type: 3}
 --- !u!50 &1296970281
 Rigidbody2D:
   serializedVersion: 4
@@ -1030,7 +1077,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.5, y: -0.5}
