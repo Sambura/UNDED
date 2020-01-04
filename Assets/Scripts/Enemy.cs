@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour
 	private Animator animator;
 	private SpriteRenderer spriteRenderer;
 	private Controller controller;
+	private LinkedListNode<Enemy> thisNode;
 
 	private float hp;
 	public bool IsDead { get; private set; }
@@ -58,7 +59,8 @@ public class Enemy : MonoBehaviour
 		transform.Translate(new Vector3(0, deltaY));
 		hp = healthPoints;
 		if (weapon != null)
-		weapon.animator = animator;
+		weapon.SetAnimator(animator);
+		thisNode = controller.Enemies.AddLast(this);
 	}
 
 	private void Update()
@@ -150,14 +152,7 @@ public class Enemy : MonoBehaviour
 					player.GetHit(damage, transform.position.x);
 				} else
 				{
-					if (weapon.CanFire)
-					{
-						weapon.PerformShot(0);
-					}
-					if (weapon.CanReload)
-					{
-						weapon.PerformReload();
-					}
+					weapon.PerformAttack(0);
 				}
 			}
 		}
@@ -178,7 +173,10 @@ public class Enemy : MonoBehaviour
 
 	private IEnumerator Dying()
 	{
+		spriteRenderer.sortingOrder--;
+		if (weapon != null) weapon.CancelReload();
 		yield return new WaitForSeconds(0.07f);
+		controller.Enemies.Remove(thisNode);
 		Destroy(GetComponent<Collider2D>());
 		StartCoroutine(Destroing());
 	}

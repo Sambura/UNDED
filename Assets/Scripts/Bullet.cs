@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
 	public float damage;
 	public float angle;
 	public float damageLose;
+	public float minDamage;
 
 	public bool PlayerProperty { get; set; }
 	public int Direction { get; private set; }
@@ -40,15 +41,19 @@ public class Bullet : MonoBehaviour
 		transform.Translate(new Vector3(movementSpeed * Time.deltaTime, 0));
     }
 
+	private float GetDamage()
+	{
+		float distance = Mathf.Sqrt(Mathf.Abs(transform.position.x - startPoint.x));
+		return Mathf.Max(minDamage, damage - distance * damageLose);
+	}
+
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (!Active) return;
 		var enemy = collision.gameObject.GetComponent<Enemy>();
 		if (enemy != null && PlayerProperty)
 		{
-			float distance = Mathf.Pow(Sqr(transform.position.x - startPoint.x) + Sqr(transform.position.y - startPoint.y), 0.25f);
-			float dmg = Mathf.Max(0.1f, damage - distance * damageLose);
-			enemy.GetHit(dmg, transform.position.x);
+			enemy.GetHit(GetDamage(), transform.position.x);
 			Destroy(gameObject);
 			Active = false;
 			return;
@@ -56,9 +61,7 @@ public class Bullet : MonoBehaviour
 		var player = collision.gameObject.GetComponent<Player>();
 		if (player != null && !PlayerProperty)
 		{
-			float distance = Mathf.Pow(Sqr(transform.position.x - startPoint.x) + Sqr(transform.position.y - startPoint.y), 0.25f);
-			float dmg = Mathf.Max(0.1f, damage - distance * damageLose);
-			player.GetHit(dmg, transform.position.x);
+			player.GetHit(GetDamage(), transform.position.x);
 			Destroy(gameObject);
 			Active = false;
 			return;

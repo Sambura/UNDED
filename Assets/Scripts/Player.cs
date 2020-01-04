@@ -7,16 +7,17 @@ public class Player : MonoBehaviour
 {
 	public float movementSpeed;
 	public float healthPoints;
-	public ParticleSystem deathFX;
 	public float regeneration;
 	public GameObject grenade;
 	public float grenadeRate;
 	public float tpDistance;
-	public float tpRate;
+	public float tpChargeTime;
+	public int tpAccum;
 	public GameObject line;
-	public GameObject tpIcon;
+	public GameObject teleportSymbol;
 	public AudioClip damageTaken;
 	public AudioClip teleportSound;
+	public GameObject dmgSystem;
 
 	public bool IsDead { get; private set; }
 
@@ -28,21 +29,26 @@ public class Player : MonoBehaviour
 	private RawImage healthBarBG;
 	private RectTransform healthBarSize;
 	private Weapon weapon;
+	private Controller controller;
 
 	private int direction;
 	private float hp;
 	private bool tp;
 	private bool tpin;
-	private float tpTime;
+	private float lastTP;
 	private float lastGrenade;
 	private float tpSpeed = 0.2f;
 	private float throwingForce = 75;
 	private bool isThrowing;
-	private float throwingAngle;
+	private float throwingAngle = Mathf.PI / 4;
 	private GameObject Line;
 	private LineRenderer lineRenderer;
 	private bool uprise;
-	private SpriteRenderer TPIcon;
+	private Animator[] TPIcon;
+	private int tpCharged;
+	private float lastChargeTime;
+	private float lastHp;
+	private bool left;
 
 	void Start()
 	{
@@ -54,14 +60,14 @@ public class Player : MonoBehaviour
 		healthBarBG = GetComponentsInChildren<RawImage>()[0];
 		healthBarSize = GetComponentsInChildren<RectTransform>()[2];
 		weapon = GetComponentInChildren<Weapon>();
+		controller = FindObjectOfType<Controller>();
 		direction = 1;
 		hp = healthPoints;
-		InitBullets();
 		lastGrenade = Time.time - 60 / grenadeRate;
-		var f = Instantiate(tpIcon, transform);
-		f.transform.Translate(new Vector3(0, weapon.bulletsY + 5));
-		TPIcon = f.GetComponent<SpriteRenderer>();
-		tpTime = Time.time - 60 / tpRate;
+		lastTP = Time.time - 60 / tpChargeTime;
+		tpCharged = tpAccum;
+		InitBullets();
+		InitTeleport();
 	}
 
 	public void InitBullets()
@@ -69,12 +75,42 @@ public class Player : MonoBehaviour
 		weapon.InitBullets();
 	}
 
+	public void InitTeleport()
+	{
+		
+		if (TPIcon != null)
+		{
+			for (int i = 0; i < TPIcon.Length; i++)
+				Destroy(TPIcon[i].gameObject);
+		}
+		TPIcon = new Animator[tpAccum];
+		var corner = Camera.main.ScreenToWorldPoint(Vector3.zero);
+		float width = Mathf.Abs((corner.x - Camera.main.transform.position.x) * 2);
+		float sY = weapon.BulletsY - 5;
+		int left = tpAccum;
+		int index = 0;
+		while (left > 0)
+		{
+			int now = left;
+			while (now * 3 + 5 >= width) now--;
+			float sX = -8 * now / 2f + 1;// + Camera.main.transform.position.x;
+			for (int i = 0; i < now; i++)
+			{
+				TPIcon[index] = Instantiate(teleportSymbol, transform).GetComponent<Animator>();
+				TPIcon[index].transform.Translate(new Vector3(sX + i * 8, sY));
+				index++;
+			}
+			sY -= 4;
+			left -= now;
+		}
+	}
+
 	public void GetHit(float damage, float x)
 	{
 		hp -= damage;
 		if (!audioSource.isPlaying)
 			audioSource.PlayOneShot(damageTaken);
-		particleSystem.Play();
+		left = transform.position.x < x;
 	}
 
 	private void UpdateHealth()
@@ -89,7 +125,7 @@ public class Player : MonoBehaviour
 		{
 			healthBarBG.color = new Color(0, 0, 0, 0);
 			healthBar.color = new Color(0, 0, 0, 0);
-			Instantiate(deathFX, transform.position, Quaternion.identity);
+			particleSystem.Play();
 			animator.Play("Idle");
 			IsDead = true;
 		}
@@ -98,7 +134,7 @@ public class Player : MonoBehaviour
 			float percent = hp / healthPoints;
 			healthBarBG.color = new Color(0.8f, 0.8f, 0.8f);
 			healthBar.color = new Color(1 - percent, percent, 0, 1);
-			healthBarSize.sizeDelta = new Vector2(20 * percent, 2);
+			healthBarSize.sizeDelta = new Vector2(40 * percent, 2);
 			healthBarSize.anchoredPosition = new Vector2(0, 34);
 		}
 	}
@@ -107,24 +143,38 @@ public class Player : MonoBehaviour
 	{
 		isThrowing = false;
 		if (Line != null) Destroy(Line);
+		Time.timeScale = 1;
 	}
 
 	void Update()
 	{
 		if (IsDead) return;
+
+		if (lastHp > hp)
+		{
+			Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, left ? 0 : 180));
+		}
+
 		hp += regeneration / 60 * Time.deltaTime;
 		UpdateHealth();
+		lastHp = hp;
+
 		int delta = 0;
-		if (Time.time - tpTime >= 60 / tpRate)
+
+		if (Time.time - lastChargeTime >= tpChargeTime && tpCharged < tpAccum)
 		{
-			TPIcon.color = new Color(1, 1, 1, 1);
-		} else
-		{
-			TPIcon.color = new Color(1, 1, 1, 0.3f);
+			tpCharged++;
+			lastChargeTime = Time.time;
+			if (tpCharged < tpAccum)
+			{
+				TPIcon[tpCharged].speed = 1 / tpChargeTime;
+				TPIcon[tpCharged].Play("Tranzit");
+			}
 		}
+
 		if (tp)
 		{
-			if (Time.time - tpTime >= tpSpeed && !tpin)
+			if (Time.time - lastTP >= tpSpeed && !tpin)
 			{
 				tpin = true;
 				weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
@@ -136,14 +186,14 @@ public class Player : MonoBehaviour
 				}
 				transform.Translate(new Vector3(d, 0));
 			}
-			if (Time.time - tpTime >= tpSpeed * 2)
+			if (Time.time - lastTP >= tpSpeed * 2)
 			{
 				tpin = false;
 				tp = false;
 			}
 			return;
 		}
-		if (!weapon.IsShooting)
+		if (!weapon.IsAttacking)
 		{
 			if (Input.GetKey(KeyCode.D))
 			{
@@ -167,26 +217,30 @@ public class Player : MonoBehaviour
 			///
 			weapon.SetDirection(direction);
 			///
-			if (Input.GetKeyDown(KeyCode.F))
+			if (Input.GetKeyDown(KeyCode.F) && (!weapon.IsReloading || !weapon.ManualReload))
 			{
 				if (Time.time - lastGrenade >= 60 / grenadeRate)
 				{
+					weapon.CancelReload();
 					if (Line != null) Destroy(Line);
 					isThrowing = true;
 					Line = Instantiate(line, new Vector3(), Quaternion.identity);
 					lineRenderer = Line.GetComponent<LineRenderer>();
 					lineRenderer.positionCount = 10;
-					throwingAngle = Mathf.PI / 2.5f;
-					uprise = false;
+					//throwingAngle = Mathf.PI / 2.5f;
+					throwingForce = 20;
+					uprise = true;
+					Time.timeScale = 0.4f;
 				}
 			}
 			if (isThrowing)
 			{
 				{
 					var pos = new Vector3(transform.position.x + direction * 5, transform.position.y);
-					float acceleration = 1.2f;
-					float dY = throwingForce / 10 * Mathf.Sin(throwingAngle);
-					float dX = throwingForce / 10 * Mathf.Cos(throwingAngle) * direction;
+					float mass = grenade.GetComponent<Rigidbody2D>().mass;
+					float acceleration = 1.2f * mass;
+					float dY = throwingForce / 10 * Mathf.Sin(throwingAngle) / mass;
+					float dX = throwingForce / 10 * Mathf.Cos(throwingAngle) * direction / mass;
 					lineRenderer.positionCount = 30;
 					for (int v = 0; v < lineRenderer.positionCount; v++)
 					{
@@ -214,9 +268,12 @@ public class Player : MonoBehaviour
 						}
 					}
 				}
-				throwingAngle += (uprise ? 1 : -1) * 0.02f;
-				if (throwingAngle >= Mathf.PI / 2.5) uprise = false;
-				if (throwingAngle <= 0) uprise = true;
+				//throwingAngle += (uprise ? 1 : -1) * 0.02f;
+				//if (throwingAngle >= Mathf.PI / 2.5) uprise = false;
+				//if (throwingAngle <= 0) uprise = true;
+				throwingForce += (uprise ? 1 : -1) * 2;
+				if (throwingForce >= 100) uprise = false;
+				if (throwingForce <= 20) uprise = true;
 			}
 			if (Input.GetKeyUp(KeyCode.F))
 			{
@@ -227,6 +284,7 @@ public class Player : MonoBehaviour
 						direction * throwingForce * Mathf.Cos(throwingAngle),
 						throwingForce * Mathf.Sin(throwingAngle)), 
 						ForceMode2D.Impulse);
+					g.GetComponent<Rigidbody2D>().AddTorque(-5 * direction, ForceMode2D.Impulse);
 					lastGrenade = Time.time;
 					CancelThrowing();
 				}
@@ -243,31 +301,50 @@ public class Player : MonoBehaviour
 				animator.Play("Idle");
 				if (Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Return))
 				{
-					weapon.PerformShot(0);
+					weapon.PerformAttack(0);
 					CancelThrowing();
 				}
 				else if (Input.GetKey(KeyCode.Quote) || Input.GetKey(KeyCode.N))
 				{
-					weapon.PerformShot(1);
+					weapon.PerformAttack(1);
 					CancelThrowing();
 				}
 			}
 			///
-			if ((Input.GetKey(KeyCode.R) && !weapon.partialReload) || weapon.CanReload)
+			if ((Input.GetKey(KeyCode.R) && weapon.ManualReload) || (weapon.CanReload && !isThrowing))
 			{
 				weapon.PerformReload();
 				CancelThrowing();
 			}
-			if (!weapon.IsShooting && Input.GetKey(KeyCode.Space) && Time.time - tpTime >= 60 / tpRate)
+			if (!weapon.IsAttacking && Input.GetKey(KeyCode.Space))
 			{
-				CancelThrowing();
-				audioSource.PlayOneShot(teleportSound);
-				animator.speed = 1 / tpSpeed;
-				animator.Play("TPin");
-				tp = true;
-				tpin = false;
-				tpTime = Time.time;
-				weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+				if (tpCharged > 0)
+				{
+					CancelThrowing();
+					if (tpCharged != tpAccum)
+					{
+						TPIcon[tpCharged].transform.Translate(new Vector3(-8, 0));
+						TPIcon[tpCharged - 1].transform.Translate(new Vector3(8, 0));
+						var temp = TPIcon[tpCharged];
+						TPIcon[tpCharged] = TPIcon[tpCharged - 1];
+						TPIcon[tpCharged - 1] = temp;
+						TPIcon[tpCharged].Play("Empty");
+					}
+					else
+					{
+						lastChargeTime = Time.time;
+						TPIcon[tpCharged - 1].speed = 1 / tpChargeTime;
+						TPIcon[tpCharged - 1].Play("Tranzit");
+					}
+					tpCharged--;
+					audioSource.PlayOneShot(teleportSound);
+					animator.speed = 1 / tpSpeed;
+					animator.Play("TPin");
+					tp = true;
+					tpin = false;
+					lastTP = Time.time;
+					weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+				}
 			}
 		}
 	}
