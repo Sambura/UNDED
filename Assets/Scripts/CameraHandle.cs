@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class CameraHandle : MonoBehaviour
 {
+	public float kinematicAccelerationRatio;
+	public float kineaticDecreaseEffect;
+
 	private Player player;
+
+	private float kinematic;
 
 	private void Start()
 	{
@@ -13,8 +18,8 @@ public class CameraHandle : MonoBehaviour
 
 	void Update()
     {
-		float d = player.transform.position.x - transform.position.x;
-		//if (Mathf.Abs(d) < 1) return;
-		transform.Translate(new Vector3(d / 8, 0));       
+		kinematic += (player.transform.position.x - transform.position.x) / kinematicAccelerationRatio;
+		transform.Translate(new Vector3(kinematic, 0));
+		kinematic /= kineaticDecreaseEffect;
     }
 }

@@ -67,11 +67,14 @@
     <Compile Include="Assets\Scripts\CameraHandle.cs" />
     <Compile Include="Assets\Scripts\Controller.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy_weapon.cs" />
     <Compile Include="Assets\Scripts\Grenade.cs" />
     <Compile Include="Assets\Scripts\Label.cs" />
     <Compile Include="Assets\Scripts\ParticleSystemDestroyer.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Weapon_gun.cs" />
+    <Compile Include="Assets\Scripts\Weapon_knife.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
