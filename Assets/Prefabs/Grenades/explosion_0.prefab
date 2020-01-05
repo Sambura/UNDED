@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -8092295105046505211, guid: fec77beb477c4c14fa9d2fa37884655c,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -118,7 +118,10 @@ MonoBehaviour:
   damage: 500
   lifeTime: 0.5
   damageLose: 10
-  radius: 15
+  radius: 18
+  fragment: {fileID: 0}
+  fragsCount: 0
+  explosionForce: 10
 --- !u!82 &-7877397363659639074
 AudioSource:
   m_ObjectHideFlags: 0

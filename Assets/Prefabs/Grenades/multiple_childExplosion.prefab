@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -3608985598166974337, guid: 5014e3eb92102a04aaa9ba743d071cca,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -96,13 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45467c4e064d95448b729c9bf40f24b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 90
+  damage: 120
   lifeTime: 0.4
   damageLose: 0.8
   radius: 13
   fragment: {fileID: 0}
   fragsCount: 0
-  explosionForce: 0
+  explosionForce: 1
 --- !u!82 &5010154073674797282
 AudioSource:
   m_ObjectHideFlags: 0
@@ -115,7 +115,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 571ff0c591be0994ba22722766e09294, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.885
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0

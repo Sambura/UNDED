@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 	public GameObject dmgSystem;
 
 	public bool IsDead { get; private set; }
+	public float TpSpeed { get; set; } = 0.2f;
 
 	private SpriteRenderer spriteRenderer;
 	private Animator animator;
@@ -37,7 +38,6 @@ public class Player : MonoBehaviour
 	private bool tpin;
 	private float lastTP;
 	private float lastGrenade;
-	private float tpSpeed = 0.2f;
 	private float throwingForce = 75;
 	private bool isThrowing;
 	private float throwingAngle = Mathf.PI / 4;
@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
 	private float lastChargeTime;
 	private float lastHp;
 	private bool left;
+	private SpriteRenderer grenadeIcon;
 
 	void Start()
 	{
@@ -59,8 +60,8 @@ public class Player : MonoBehaviour
 		healthBar = GetComponentsInChildren<RawImage>()[1];
 		healthBarBG = GetComponentsInChildren<RawImage>()[0];
 		healthBarSize = GetComponentsInChildren<RectTransform>()[2];
-		weapon = GetComponentInChildren<Weapon>();
 		controller = FindObjectOfType<Controller>();
+		weapon = GetComponentInChildren<Weapon>();
 		direction = 1;
 		hp = healthPoints;
 		lastGrenade = Time.time - 60 / grenadeRate;
@@ -87,22 +88,26 @@ public class Player : MonoBehaviour
 		var corner = Camera.main.ScreenToWorldPoint(Vector3.zero);
 		float width = Mathf.Abs((corner.x - Camera.main.transform.position.x) * 2);
 		float sY = weapon.BulletsY - 5;
+		float sX = 0;
 		int left = tpAccum;
 		int index = 0;
 		while (left > 0)
 		{
 			int now = left;
 			while (now * 3 + 5 >= width) now--;
-			float sX = -8 * now / 2f + 1;// + Camera.main.transform.position.x;
+			sX = -8 * now / 2f + 1;
 			for (int i = 0; i < now; i++)
 			{
 				TPIcon[index] = Instantiate(teleportSymbol, transform).GetComponent<Animator>();
 				TPIcon[index].transform.Translate(new Vector3(sX + i * 8, sY));
 				index++;
 			}
+			sX = -8 * now / 2f + 1 + now * 8;
 			sY -= 4;
 			left -= now;
 		}
+		grenadeIcon = Instantiate(grenade.GetComponent<Grenade>().symbol, transform).GetComponent<SpriteRenderer>();
+		grenadeIcon.transform.Translate(new Vector3(sX, sY + 4));
 	}
 
 	public void GetHit(float damage, float x)
@@ -128,6 +133,7 @@ public class Player : MonoBehaviour
 			particleSystem.Play();
 			animator.Play("Idle");
 			IsDead = true;
+			CancelThrowing();
 		}
 		else
 		{
@@ -150,7 +156,7 @@ public class Player : MonoBehaviour
 	{
 		if (IsDead) return;
 
-		if (lastHp > hp)
+		if (lastHp > hp && controller.enableParticles)
 		{
 			Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, left ? 0 : 180));
 		}
@@ -160,6 +166,14 @@ public class Player : MonoBehaviour
 		lastHp = hp;
 
 		int delta = 0;
+
+		if (Time.time - lastGrenade >= 60 / grenadeRate)
+		{
+			grenadeIcon.color = new Color(1, 1, 1, 1);
+		} else
+		{
+			grenadeIcon.color = new Color(1, 1, 1, 0.4f);
+		}
 
 		if (Time.time - lastChargeTime >= tpChargeTime && tpCharged < tpAccum)
 		{
@@ -174,7 +188,7 @@ public class Player : MonoBehaviour
 
 		if (tp)
 		{
-			if (Time.time - lastTP >= tpSpeed && !tpin)
+			if (Time.time - lastTP >= TpSpeed && !tpin)
 			{
 				tpin = true;
 				weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
@@ -186,7 +200,7 @@ public class Player : MonoBehaviour
 				}
 				transform.Translate(new Vector3(d, 0));
 			}
-			if (Time.time - lastTP >= tpSpeed * 2)
+			if (Time.time - lastTP >= TpSpeed * 2)
 			{
 				tpin = false;
 				tp = false;
@@ -230,38 +244,27 @@ public class Player : MonoBehaviour
 					//throwingAngle = Mathf.PI / 2.5f;
 					throwingForce = 20;
 					uprise = true;
-					Time.timeScale = 0.4f;
+					Time.timeScale = 0.3f;
 				}
 			}
 			if (isThrowing)
 			{
 				{
 					var pos = new Vector3(transform.position.x + direction * 5, transform.position.y);
-					float mass = grenade.GetComponent<Rigidbody2D>().mass;
-					float acceleration = 1.2f * mass;
-					float dY = throwingForce / 10 * Mathf.Sin(throwingAngle) / mass;
-					float dX = throwingForce / 10 * Mathf.Cos(throwingAngle) * direction / mass;
-					lineRenderer.positionCount = 30;
+					//float mass = grenade.GetComponent<Rigidbody2D>().mass;
+					float ratio = 10;
+					float acceleration = 12 / ratio;
+					float dY = throwingForce / ratio * Mathf.Sin(throwingAngle);
+					float dX = throwingForce / ratio * Mathf.Cos(throwingAngle) * direction;
+					lineRenderer.positionCount = 50;
 					for (int v = 0; v < lineRenderer.positionCount; v++)
 					{
 						lineRenderer.SetPosition(v, pos);
 						pos.x += dX;
 						pos.y += dY;
 						dY -= acceleration;
-						if (pos.y <= -20)
+						if (Mathf.Abs(pos.y) > 20 || Mathf.Abs(pos.x) > 186)
 						{
-							var dZ = pos.y + 20;
-							pos.y = -20;
-							pos.x -= dZ / dY * dX;
-							lineRenderer.positionCount = v + 2;
-							lineRenderer.SetPosition(v + 1, pos);
-							break;
-						}
-						if (pos.y >= 20)
-						{
-							var dZ = pos.y - 20;
-							pos.y = 20;
-							pos.x -= dZ / dY * dX;
 							lineRenderer.positionCount = v + 2;
 							lineRenderer.SetPosition(v + 1, pos);
 							break;
@@ -338,7 +341,7 @@ public class Player : MonoBehaviour
 					}
 					tpCharged--;
 					audioSource.PlayOneShot(teleportSound);
-					animator.speed = 1 / tpSpeed;
+					animator.speed = 1 / TpSpeed;
 					animator.Play("TPin");
 					tp = true;
 					tpin = false;

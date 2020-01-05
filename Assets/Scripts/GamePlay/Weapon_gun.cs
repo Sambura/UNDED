@@ -32,16 +32,22 @@ public class Weapon_gun : Weapon
 	private float reloadStartTime;
 	private SpriteRenderer[] bullets;
 
-	private void Start()
+	private void Awake()
 	{
 		Load = magazine;
 		CanAttack = true;
 		CanReload = false;
+		ManualReload = !partialReload;
 		minIntake = intake[0];
 		foreach (var i in intake) minIntake = Mathf.Min(minIntake, i);
 		audioSource = GetComponent<AudioSource>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
+		UpdateDelays();
+	}
+
+	public void UpdateDelays()
+	{
 		fireDelay = new float[shotRate.Length];
 		for (int i = 0; i < fireDelay.Length; i++)
 			fireDelay[i] = 60 / shotRate[i];
@@ -127,7 +133,6 @@ public class Weapon_gun : Weapon
 				}
 				UpdateBullets();
 				IsReloading = false;
-				animator.speed = 1;
 			}
 		}
 		if (!IsAttacking && (!IsReloading || partialReload))
@@ -152,13 +157,15 @@ public class Weapon_gun : Weapon
 		CanReload = false; // Weapon can't be reloaded during shoting
 		IsAttacking = true; // Weapon is shooting now
 		IsReloading = false; // Weapon is not reloading now
-		animator.speed = 1; // Reset animator speed
 		shotStartTime = Time.time; // When this shot started
 		fireLeft = gunFireLength[index]; // Bullets to spend
 	}
 
 	private void Attack()
 	{
+		animator.speed = 1 / fireDelay[bulletIndex];
+		if (gunFireDelay[bulletIndex] != 0)
+			animator.speed = 1 / gunFireDelay[bulletIndex];
 		animator.Play("Shot");
 		audioSource.PlayOneShot(shot[bulletIndex], 1);
 		var b = Instantiate(bullet[bulletIndex], new Vector3(transform.position.x + offset.x * direction,

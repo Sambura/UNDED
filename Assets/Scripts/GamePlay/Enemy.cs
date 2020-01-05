@@ -17,24 +17,27 @@ public class Enemy : MonoBehaviour
 	/// Offset from ground
 	/// </summary>
 	public float deltaY;
+	public GameObject label;
+	public GameObject dmgSystem;
+	public float dodgeRate;
+	public float dodgeSpeed;
+	public float dodgeTime;
 	public float shotRate;
 	public float attackDelay;
+	public int attackLength;
+	public float subDelay;
 	public float damage;
 	public float attackDistance;
 	public float approachDistance;
 	public bool instantAttack;
-	public GameObject label;
-	public GameObject dmgSystem;
-	public Weapon weapon;
-	public float dodgeRate;
-	public float dodgeSpeed;
-	public float dodgeTime;
+	public AudioClip attackSound;
 
 	private Player player;
 	private Animator animator;
 	private SpriteRenderer spriteRenderer;
 	private Controller controller;
 	private LinkedListNode<Enemy> thisNode;
+	private AudioSource audioSource;
 
 	private float hp;
 	public bool IsDead { get; private set; }
@@ -45,21 +48,22 @@ public class Enemy : MonoBehaviour
 	private float lastAttack;
 	private float lastDodge;
 	private bool isDodging;
+	private float lastSubAttack;
+	private int subAttacks;
 
-	public void SetController(Controller c)
+	public void InitThis(Controller c, Player p)
 	{
 		controller = c;
+		player = p;
 	}
 
 	private void Start()
 	{
-		player = FindObjectOfType<Player>();
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
+		audioSource = GetComponent<AudioSource>();
 		transform.Translate(new Vector3(0, deltaY));
 		hp = healthPoints;
-		if (weapon != null)
-		weapon.SetAnimator(animator);
 		thisNode = controller.Enemies.AddLast(this);
 	}
 
@@ -67,10 +71,14 @@ public class Enemy : MonoBehaviour
 	{
 		if (lastHp > hp)
 		{
-			int delta = Mathf.RoundToInt(lastHp - hp);
-			var lb = Instantiate(label, transform.position, Quaternion.identity).GetComponentInChildren<Text>();
-			lb.text = Mathf.RoundToInt(delta).ToString();
-			Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, left ? 0 : 180));
+			if (controller.enableDamageText)
+			{
+				int delta = Mathf.RoundToInt(lastHp - hp);
+				var lb = Instantiate(label, transform.position, Quaternion.identity).GetComponentInChildren<Label>();
+				lb.SetNumber(Mathf.RoundToInt(delta));
+			}
+			if (controller.enableParticles)
+				Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, left ? 0 : 180));
 		}
 		lastHp = hp;
 		if (IsDead)
@@ -85,8 +93,6 @@ public class Enemy : MonoBehaviour
 		}
 		direction = (int)Mathf.Sign(player.transform.position.x - transform.position.x);
 		spriteRenderer.flipX = direction == -1;
-		weapon?.SetDirection(direction);
-
 		if (isDodging)
 		{
 			float d = -dodgeSpeed * direction * Time.deltaTime;
@@ -139,20 +145,24 @@ public class Enemy : MonoBehaviour
 		if (!attack)
 		{
 			animator.Play("Walk");
-			GetComponent<Rigidbody2D>().MovePosition(
-				new Vector2(transform.position.x + movementSpeed * direction * Time.deltaTime, transform.position.y));
-		} else
+			transform.Translate(new Vector3(movementSpeed * direction * Time.deltaTime, 0));
+		}
+		else
 		{
 			if (Time.time - lastAttack >= 60 / shotRate)
 			{
 				lastAttack = Time.time;
-				if (weapon == null)
+				subAttacks = attackLength;
+			}
+			if (subAttacks > 0)
+			{
+				if (Time.time - lastSubAttack >= subDelay)
 				{
+					lastSubAttack = Time.time;
 					animator.Play("Shot");
+					audioSource.PlayOneShot(attackSound);
 					player.GetHit(damage, transform.position.x);
-				} else
-				{
-					weapon.PerformAttack(0);
+					subAttacks--;
 				}
 			}
 		}
@@ -174,7 +184,6 @@ public class Enemy : MonoBehaviour
 	private IEnumerator Dying()
 	{
 		spriteRenderer.sortingOrder--;
-		if (weapon != null) weapon.CancelReload();
 		yield return new WaitForSeconds(0.07f);
 		controller.Enemies.Remove(thisNode);
 		Destroy(GetComponent<Collider2D>());
@@ -183,8 +192,8 @@ public class Enemy : MonoBehaviour
 
 	private IEnumerator Destroing()
 	{
-		yield return new WaitForSeconds(10);
-		for (float a = 1; a > 0; a -= 0.005f)
+		yield return new WaitForSeconds(1);
+		for (float a = 1; a > 0; a -= 0.01f)
 		{
 			transform.Translate(new Vector3(0, -0.04f));
 			spriteRenderer.color = new Color(1, 1, 1, a);

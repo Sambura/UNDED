@@ -6,6 +6,7 @@ public class Grenade : MonoBehaviour
 {
 	public float lifeTime;
 	public GameObject blast;
+	public GameObject symbol;
 
 	private void Start()
 	{

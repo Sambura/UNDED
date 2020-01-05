@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeTime: 1.5
   blast: {fileID: 7036553160761079824, guid: 0a0ebc7ce08a85143975d2c6546b8cfd, type: 3}
+  symbol: {fileID: 8310697529882597234, guid: 5cb2dc912b6646f41ae178880d008846, type: 3}
 --- !u!50 &-2365355691974794321
 Rigidbody2D:
   serializedVersion: 4

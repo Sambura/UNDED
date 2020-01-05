@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7186122389331759784}
   - component: {fileID: 2230586927926903392}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Energy_symbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 51
   m_Sprite: {fileID: 21300000, guid: 301257c214768bc408cb7eb71ca56024, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

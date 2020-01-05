@@ -9,10 +9,12 @@ public class Weapon_knife : Weapon
 	public float attackDistance;
 	public float damageLose;
 	public float attackTime;
+	public AudioClip attackSound;
 
 	private Controller controller;
 	private Animator animator;
 	private SpriteRenderer spriteRenderer;
+	private AudioSource audioSource;
 
 	private int direction;
 	private float lastAttack;
@@ -20,12 +22,18 @@ public class Weapon_knife : Weapon
 
 	private void Start()
 	{
-		attackDelay = 60 / attackRate;
+		UpdateDelays();
 		animator = GetComponent<Animator>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		controller = FindObjectOfType<Controller>();
+		audioSource = GetComponent<AudioSource>();
 		direction = 1;
 		CanAttack = true;
+	}
+
+	public void UpdateDelays()
+	{
+		attackDelay = 60 / attackRate;
 	}
 
 	public override void SetAnimator(Animator customAnimator)
@@ -46,6 +54,7 @@ public class Weapon_knife : Weapon
 			if (Time.time - lastAttack >= attackTime)
 			{
 				IsAttacking = false;
+				bool flag = false;
 				foreach (var enemy in controller.Enemies)
 				{
 					float distance = enemy.transform.position.x - transform.position.x;
@@ -53,12 +62,14 @@ public class Weapon_knife : Weapon
 					{
 						if (Mathf.Abs(distance) <= attackDistance)
 						{
+							flag = true;
 							distance = Mathf.Pow(Mathf.Abs(distance), 0.5f);
 							float dmg = Mathf.Max(0.1f, damage - distance * damageLose);
 							enemy.GetHit(dmg, transform.position.x);
 						}
 					}
 				}
+				if (flag) audioSource.PlayOneShot(attackSound);
 			}
 		}
 		if (Time.time - lastAttack >= attackDelay)
