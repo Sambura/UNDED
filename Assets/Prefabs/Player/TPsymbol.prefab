@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1362165037651337146}
   - component: {fileID: 2199267806988720960}
   - component: {fileID: 4053873958594797470}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TPsymbol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 51
   m_Sprite: {fileID: 918904415535190800, guid: 15be5b8b9298d4246b8b0b8b4894941c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

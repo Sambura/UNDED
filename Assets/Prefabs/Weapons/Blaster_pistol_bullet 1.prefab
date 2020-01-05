@@ -124,3 +124,4 @@ MonoBehaviour:
   damage: 50
   angle: 0
   damageLose: 0.5
+  minDamage: 0
