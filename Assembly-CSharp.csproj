@@ -67,7 +67,6 @@
     <Compile Include="Assets\Scripts\GamePlay\CameraHandle.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Controller.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Enemy.cs" />
-    <Compile Include="Assets\Scripts\GamePlay\Enemy_weapon.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Grenade.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Label.cs" />
     <Compile Include="Assets\Scripts\GamePlay\ParticleSystemDestroyer.cs" />

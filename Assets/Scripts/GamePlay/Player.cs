@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
 
 	public void InitTeleport()
 	{
-		
+		if (grenadeIcon != null) Destroy(grenadeIcon);
 		if (TPIcon != null)
 		{
 			for (int i = 0; i < TPIcon.Length; i++)
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
 		while (left > 0)
 		{
 			int now = left;
-			while (now * 3 + 5 >= width) now--;
+			while (now * 8 + 10 >= width) now--;
 			sX = -8 * now / 2f + 1;
 			for (int i = 0; i < now; i++)
 			{
@@ -128,7 +128,6 @@ public class Player : MonoBehaviour
 		}
 		else if (hp == 0)
 		{
-			healthBarBG.color = new Color(0, 0, 0, 0);
 			healthBar.color = new Color(0, 0, 0, 0);
 			particleSystem.Play();
 			animator.Play("Idle");
@@ -145,7 +144,7 @@ public class Player : MonoBehaviour
 		}
 	}
 
-	private void CancelThrowing()
+	public void CancelThrowing()
 	{
 		isThrowing = false;
 		if (Line != null) Destroy(Line);

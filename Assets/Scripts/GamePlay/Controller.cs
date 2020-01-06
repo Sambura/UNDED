@@ -10,6 +10,7 @@ public class Controller : MonoBehaviour
 	public Text spawnMonitor;
 	public Text enemiesMonitor;
 	public Text achievementMonitor;
+	public GameObject pauseScreen;
 	public float spawnX;
 	public float spawnY;
 	public float spawnReductor;
@@ -17,6 +18,7 @@ public class Controller : MonoBehaviour
 	public bool enableScreenShake;
 	public bool enableParticles;
 	public bool enableDamageText;
+	public float levelWidth;
 
 	public LinkedList<Enemy> Enemies { get; private set; }
 
@@ -25,6 +27,7 @@ public class Controller : MonoBehaviour
 
 	private float achieveDuration = 7.5f;
 	private float achieveTime;
+	private bool paused;
 
 	private void Start()
 	{
@@ -33,39 +36,52 @@ public class Controller : MonoBehaviour
 		{
 			player = Instantiate(data.Weapon, new Vector3(0, -8), Quaternion.identity).GetComponent<Player>();
 			player.grenade = data.Grenade;
+			enableScreenShake = data.ScreenShake;
+			enableParticles = data.Particles;
+			enableDamageText = data.Labels;
 			switch (data.Difficulty)
 			{
 				case 0:
-					spawnReductor = 0.005f;
-					spawnInc = 0.00001f;
-					player.regeneration = 1000;
-					player.healthPoints = 2500;
-					player.grenadeRate = 25;
-					player.tpAccum = 3;
-					player.tpChargeTime = 4;
-					player.movementSpeed = 60;
+					spawnReductor = 0.004f;
+					spawnInc = 0.000025f;
 					break;
 				case 1:
 					spawnReductor = 0.005f;
 					spawnInc = 0.00005f;
+					break;
+				case 2:
+					spawnReductor = 0.02f;
+					spawnInc = 0.0001f;
+					break;
+			}
+			switch (data.Stats)
+			{
+				case 2:
+					player.regeneration = 600;
+					player.healthPoints = 3000;
+					player.grenadeRate = 20;
+					player.tpAccum = 3;
+					player.tpChargeTime = 4;
+					player.movementSpeed = 55;
+					break;
+				case 1:
 					player.regeneration = 450;
 					player.healthPoints = 2000;
-					player.grenadeRate = 12;
+					player.grenadeRate = 11;
 					player.tpAccum = 2;
 					player.tpChargeTime = 5;
 					player.movementSpeed = 50;
 					break;
-				case 2:
-					spawnReductor = 0.05f;
-					spawnInc = 0.0001f;
+				case 0:
 					player.regeneration = 350;
 					player.healthPoints = 1000;
-					player.grenadeRate = 7;
+					player.grenadeRate = 6;
 					player.tpAccum = 1;
 					player.tpChargeTime = 6;
-					player.movementSpeed = 40;
+					player.movementSpeed = 45;
 					break;
 			}
+			Destroy(data.gameObject);
 		}
 		else player = FindObjectOfType<Player>();
 		Enemies = new LinkedList<Enemy>();
@@ -77,22 +93,54 @@ public class Controller : MonoBehaviour
 		achieveTime = Time.time;
 	}
 
-	private void Update()
+	private void LateUpdate()
+	{
+		enemiesMonitor.text = $"{Enemies.Count} Enem" + (Enemies.Count == 1 ? "y" : "ies");
+		if (Time.time - achieveTime >= achieveDuration)
+		{
+			achievementMonitor.text = "";
+		}
+		bool flag = false;
+		if (paused)
+		{
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				flag = true;
+				paused = false;
+				Time.timeScale = 1;
+				pauseScreen.SetActive(false);
+			}
+			if (Input.GetKeyDown(KeyCode.Backspace))
+			{
+				paused = false;
+				Time.timeScale = 1;
+				pauseScreen.SetActive(false);
+				UnityEngine.SceneManagement.SceneManager.LoadScene("StartMenu", UnityEngine.SceneManagement.LoadSceneMode.Single);
+			}
+		}
+		if (!player.IsDead && !paused && !flag)
+		{
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				player.CancelThrowing();
+				paused = true;
+				Time.timeScale = 0;
+				pauseScreen.SetActive(true);
+			}
+		}
+	}
+
+	private void FixedUpdate()
 	{
 		if (player.IsDead) return;
 		float localReductor = spawnReductor;
 		while (Random.value < localReductor)
 		{
-			int side = Random.Range(1, 3);
-			if (side == 2) side = -1;
+			int side = Random.Range(0, 2);
+			if (side == 0) side = -1;
 			var f = Instantiate(enemy[Random.Range(0, enemy.Length)], new Vector3(spawnX * side, spawnY), Quaternion.identity);
 			f.GetComponent<Enemy>().InitThis(this, player);
 			localReductor--;
-		}
-		enemiesMonitor.text = $"{Enemies.Count} Enem" + (Enemies.Count == 1 ? "y" : "ies");
-		if (Time.time - achieveTime >= achieveDuration)
-		{
-			achievementMonitor.text = "";
 		}
 	}
 
