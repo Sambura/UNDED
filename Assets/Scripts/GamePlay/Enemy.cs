@@ -109,14 +109,13 @@ public class Enemy : MonoBehaviour
 		}
 
 		if (dodgeRate != 0)
-			if (Time.time - lastDodge >= 60 / dodgeRate)
+			if (Time.time - lastDodge >= 60 / dodgeRate && Mathf.Abs(transform.position.x) < controller.levelWidth)
 			{
 				var bullets = FindObjectsOfType<Bullet>();
 				bool flag = false;
 				foreach (var i in bullets)
 				{
 					if (!i.Active) continue;
-					if (!i.PlayerProperty) continue;
 					bool left = transform.position.x > i.transform.position.x;
 					if (i.Direction == -1 ^ left)
 					{
@@ -176,7 +175,7 @@ public class Enemy : MonoBehaviour
 			controller.KillsPlusPlus();
 			IsDead = true;
 			attack = false;
-			animator.Play("Death");
+			animator?.Play("Death");
 			StartCoroutine(Dying());
 		}
 	}
@@ -192,7 +191,7 @@ public class Enemy : MonoBehaviour
 
 	private IEnumerator Destroing()
 	{
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(5);
 		for (float a = 1; a > 0; a -= 0.01f)
 		{
 			transform.Translate(new Vector3(0, -0.04f));

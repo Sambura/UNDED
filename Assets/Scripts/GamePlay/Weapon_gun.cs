@@ -21,6 +21,7 @@ public class Weapon_gun : Weapon
 	private AudioSource audioSource;
 	private SpriteRenderer spriteRenderer;
 	private Animator animator;
+	private Controller controller;
 	private float[] fireDelay;
 
 	private int direction;
@@ -43,6 +44,7 @@ public class Weapon_gun : Weapon
 		audioSource = GetComponent<AudioSource>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
+		controller = FindObjectOfType<Controller>();
 		UpdateDelays();
 	}
 
@@ -171,7 +173,7 @@ public class Weapon_gun : Weapon
 		var b = Instantiate(bullet[bulletIndex], new Vector3(transform.position.x + offset.x * direction,
 			transform.position.y + offset.y), Quaternion.identity).GetComponent<Bullet>();
 		b.SetDirection(direction);
-		b.PlayerProperty = true;
+		b.SetController(controller);
 		Load -= intake[bulletIndex];
 		fireLeft--;
 		lastShot = Time.time;

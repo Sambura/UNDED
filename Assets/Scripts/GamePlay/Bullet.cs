@@ -11,11 +11,17 @@ public class Bullet : MonoBehaviour
 	public float damageLose;
 	public float minDamage;
 
-	public bool PlayerProperty { get; set; }
+	private Controller controller;
+
 	public int Direction { get; private set; }
 	public bool Active { get; private set;}
 
 	private Vector3 startPoint;
+
+	public void SetController(Controller c)
+	{
+		controller = c;
+	}
 
 	public void SetDirection(int d)
 	{
@@ -36,9 +42,15 @@ public class Bullet : MonoBehaviour
 		return n * n;
 	}
 
-    void Update()
+    void FixedUpdate()
     {
 		transform.Translate(new Vector3(movementSpeed * Time.deltaTime, 0));
+		if (Mathf.Abs(transform.position.x) > controller.levelWidth)
+		{
+			Destroy(gameObject);
+			Active = false;
+			return;
+		} 
     }
 
 	private float GetDamage()
@@ -51,23 +63,9 @@ public class Bullet : MonoBehaviour
 	{
 		if (!Active) return;
 		var enemy = collision.gameObject.GetComponent<Enemy>();
-		if (enemy != null && PlayerProperty)
+		if (enemy != null)
 		{
 			enemy.GetHit(GetDamage(), transform.position.x);
-			Destroy(gameObject);
-			Active = false;
-			return;
-		}
-		var player = collision.gameObject.GetComponent<Player>();
-		if (player != null && !PlayerProperty)
-		{
-			player.GetHit(GetDamage(), transform.position.x);
-			Destroy(gameObject);
-			Active = false;
-			return;
-		}
-		if (collision.gameObject.CompareTag("World"))
-		{
 			Destroy(gameObject);
 			Active = false;
 			return;
