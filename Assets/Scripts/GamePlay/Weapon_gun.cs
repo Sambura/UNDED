@@ -45,6 +45,7 @@ public class Weapon_gun : Weapon
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
 		controller = FindObjectOfType<Controller>();
+		audioSource.volume *= controller.sfxVolume;
 		UpdateDelays();
 	}
 
@@ -126,7 +127,7 @@ public class Weapon_gun : Weapon
 			{
 				if (partialReload)
 				{
-					audioSource.PlayOneShot(reload, 1);
+					audioSource.PlayOneShot(reload);
 					Load = Mathf.Min(magazine, Load + partialLoad);
 				}
 				else
@@ -169,7 +170,7 @@ public class Weapon_gun : Weapon
 		if (gunFireDelay[bulletIndex] != 0)
 			animator.speed = 1 / gunFireDelay[bulletIndex];
 		animator.Play("Shot");
-		audioSource.PlayOneShot(shot[bulletIndex], 1);
+		audioSource.PlayOneShot(shot[bulletIndex]);
 		var b = Instantiate(bullet[bulletIndex], new Vector3(transform.position.x + offset.x * direction,
 			transform.position.y + offset.y), Quaternion.identity).GetComponent<Bullet>();
 		b.SetDirection(direction);
@@ -188,7 +189,7 @@ public class Weapon_gun : Weapon
 		animator.speed = 1 / reloadTime;
 		animator.Play("Reload");
 		if (!partialReload)
-			audioSource.PlayOneShot(reload, 1);
+			audioSource.PlayOneShot(reload);
 		reloadStartTime = Time.time;
 		CanReload = false;
 		IsReloading = true;

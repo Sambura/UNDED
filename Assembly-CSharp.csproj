@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\GamePlay\Bullet.cs" />
     <Compile Include="Assets\Scripts\GamePlay\CameraHandle.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Controller.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\EffectorBlast.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Enemy.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Grenade.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Label.cs" />
@@ -75,6 +76,11 @@
     <Compile Include="Assets\Scripts\GamePlay\Weapon_gun.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Weapon_knife.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
+    <Compile Include="Assets\Scripts\Physics_test\Blast_PhysicsTest.cs" />
+    <Compile Include="Assets\Scripts\Physics_test\PhyscisController.cs" />
+    <Compile Include="Assets\Scripts\UI\CheckButton.cs" />
+    <Compile Include="Assets\Scripts\UI\ScrollViewScript.cs" />
+    <Compile Include="Assets\Scripts\UI\TextButton.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

@@ -102,7 +102,7 @@ MonoBehaviour:
   radius: 15
   fragment: {fileID: 2980477417782126364, guid: 82c08f09c14c59749b3ebe86a038c003,
     type: 3}
-  fragsCount: 30
+  fragsCount: 15
   explosionForce: 8
 --- !u!82 &2419441917375970667
 AudioSource:

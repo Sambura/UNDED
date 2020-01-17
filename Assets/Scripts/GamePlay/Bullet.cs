@@ -45,7 +45,7 @@ public class Bullet : MonoBehaviour
     void FixedUpdate()
     {
 		transform.Translate(new Vector3(movementSpeed * Time.deltaTime, 0));
-		if (Mathf.Abs(transform.position.x) > controller.levelWidth)
+		if (Mathf.Abs(transform.position.x) > controller.LevelWidth)
 		{
 			Destroy(gameObject);
 			Active = false;
