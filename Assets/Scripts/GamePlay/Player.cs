@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
 	private float lastHp;
 	private bool left;
 	private SpriteRenderer grenadeIcon;
+	private float grenadeMass;
+	private float grenadeGravityScale;
 
 	void Start()
 	{
@@ -69,6 +71,14 @@ public class Player : MonoBehaviour
 		tpCharged = tpAccum;
 		InitBullets();
 		InitTeleport();
+		grenadeMass = grenade.GetComponent<Rigidbody2D>().mass;
+		grenadeGravityScale = grenade.GetComponent<Rigidbody2D>().gravityScale;
+		audioSource.volume *= controller.sfxVolume;
+	}
+
+	public void GetHealth(float health)
+	{
+		hp += health;
 	}
 
 	public void InitBullets()
@@ -130,8 +140,9 @@ public class Player : MonoBehaviour
 		{
 			healthBar.color = new Color(0, 0, 0, 0);
 			particleSystem.Play();
-			animator.Play("Idle");
+			animator.Play("Death");
 			IsDead = true;
+			StartCoroutine(controller.Death());
 			CancelThrowing();
 		}
 		else
@@ -153,7 +164,7 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		if (IsDead) return;
+		if (IsDead || controller.IsPaused) return;
 
 		if (lastHp > hp && controller.enableParticles)
 		{
@@ -250,18 +261,17 @@ public class Player : MonoBehaviour
 			{
 				{
 					var pos = new Vector3(transform.position.x + direction * 5, transform.position.y);
-					//float mass = grenade.GetComponent<Rigidbody2D>().mass;
-					float ratio = 10;
-					float acceleration = 12 / ratio;
-					float dY = throwingForce / ratio * Mathf.Sin(throwingAngle);
-					float dX = throwingForce / ratio * Mathf.Cos(throwingAngle) * direction;
+					float deltaL = 0.1f;
+					float acceleration = -9.81f * grenadeGravityScale;
+					float dY = throwingForce * Mathf.Sin(throwingAngle) / grenadeMass;
+					float dX = throwingForce * Mathf.Cos(throwingAngle) * direction / grenadeMass;
 					lineRenderer.positionCount = 50;
 					for (int v = 0; v < lineRenderer.positionCount; v++)
 					{
 						lineRenderer.SetPosition(v, pos);
-						pos.x += dX;
-						pos.y += dY;
-						dY -= acceleration;
+						pos.x += dX * deltaL;
+						pos.y += dY * deltaL;
+						dY += acceleration * deltaL;
 						if (Mathf.Abs(pos.y) > 20 || Mathf.Abs(pos.x) > 186)
 						{
 							lineRenderer.positionCount = v + 2;
@@ -270,10 +280,8 @@ public class Player : MonoBehaviour
 						}
 					}
 				}
-				//throwingAngle += (uprise ? 1 : -1) * 0.02f;
-				//if (throwingAngle >= Mathf.PI / 2.5) uprise = false;
-				//if (throwingAngle <= 0) uprise = true;
-				throwingForce += (uprise ? 1 : -1) * 2;
+				throwingForce += ((uprise ? 1 : -1) * 60) * Time.unscaledDeltaTime;
+				throwingForce = Mathf.Clamp(throwingForce, 20, 100);
 				if (throwingForce >= 100) uprise = false;
 				if (throwingForce <= 20) uprise = true;
 			}
@@ -281,12 +289,13 @@ public class Player : MonoBehaviour
 			{
 				if (isThrowing)
 				{
-					var g = Instantiate(grenade, new Vector3(transform.position.x + direction * 5, transform.position.y), Quaternion.identity);
-					g.GetComponent<Rigidbody2D>().AddForce(new Vector2(
+					var g = Instantiate(grenade, new Vector2(transform.position.x + direction * 5, transform.position.y), Quaternion.identity);
+					var rb = g.GetComponent<Rigidbody2D>();
+					rb.AddForce(new Vector2(
 						direction * throwingForce * Mathf.Cos(throwingAngle),
 						throwingForce * Mathf.Sin(throwingAngle)), 
 						ForceMode2D.Impulse);
-					g.GetComponent<Rigidbody2D>().AddTorque(-5 * direction, ForceMode2D.Impulse);
+					rb.AddTorque(-5 * direction, ForceMode2D.Impulse);
 					lastGrenade = Time.time;
 					CancelThrowing();
 				}

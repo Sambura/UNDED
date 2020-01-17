@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
 	/// Offset from ground
 	/// </summary>
 	public float deltaY;
-	public GameObject label;
 	public GameObject dmgSystem;
 	public float dodgeRate;
 	public float dodgeSpeed;
@@ -65,18 +64,14 @@ public class Enemy : MonoBehaviour
 		transform.Translate(new Vector3(0, deltaY));
 		hp = healthPoints;
 		thisNode = controller.Enemies.AddLast(this);
+		audioSource.volume *= controller.sfxVolume;
 	}
 
 	private void Update()
 	{
 		if (lastHp > hp)
 		{
-			if (controller.enableDamageText)
-			{
-				int delta = Mathf.RoundToInt(lastHp - hp);
-				var lb = Instantiate(label, transform.position, Quaternion.identity).GetComponentInChildren<Label>();
-				lb.SetNumber(Mathf.RoundToInt(delta));
-			}
+			controller.InstantiateDamageLabel(transform.position, Mathf.RoundToInt(lastHp - hp));
 			if (controller.enableParticles)
 				Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, left ? 0 : 180));
 		}
@@ -109,7 +104,7 @@ public class Enemy : MonoBehaviour
 		}
 
 		if (dodgeRate != 0)
-			if (Time.time - lastDodge >= 60 / dodgeRate && Mathf.Abs(transform.position.x) < controller.levelWidth)
+			if (Time.time - lastDodge >= 60 / dodgeRate && Mathf.Abs(transform.position.x) < controller.LevelWidth)
 			{
 				var bullets = FindObjectsOfType<Bullet>();
 				bool flag = false;
@@ -144,7 +139,7 @@ public class Enemy : MonoBehaviour
 		if (!attack)
 		{
 			animator.Play("Walk");
-			transform.Translate(new Vector3(movementSpeed * direction * Time.deltaTime, 0));
+			transform.Translate(new Vector2(movementSpeed * direction * Time.deltaTime, 0));
 		}
 		else
 		{

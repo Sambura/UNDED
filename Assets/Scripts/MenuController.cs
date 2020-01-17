@@ -6,23 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
-	public RawImage[] weapons;
-	public RawImage[] grenades;
-	public RawImage[] difficulties;
-	public RawImage[] stats;
+	public ScrollViewScript weaponSelector;
+	public ScrollViewScript grenadeSelector;
+	public ScrollViewScript statSelector;
+	public ScrollViewScript difficultySelector;
+	public GameObject[] screens;
 	public GameObject[] Weapons;
 	public GameObject[] Grenades;
 	public RawImage fader;
-	public GameObject GameSet;
-	public GameObject Settings;
-	public RawImage screenShake;
-	public RawImage particles;
-	public RawImage labels;	
+
+	[Tooltip("Crossfade's duration")]
+	[Range(0f, 10f)]
+	[SerializeField] private float tranzitionDuration;
 
 	private int weaponIndex;
 	private int grenadeIndex;
 	private bool active;
 	private int screen;
+	private int lastScreen;
 
 	public GameObject Weapon { get; set; }
 	public GameObject Grenade { get; set; }
@@ -31,131 +32,122 @@ public class MenuController : MonoBehaviour
 	public bool ScreenShake { get; set; }
 	public bool Particles { get; set; }
 	public bool Labels { get; set; }
-
+	
 
 	private void Start()
 	{
 		DontDestroyOnLoad(this);
-		weaponIndex = Random.Range(0, weapons.Length);
-		grenadeIndex = Random.Range(0, grenades.Length);
-		Difficulty = Random.Range(0, difficulties.Length);
-		Stats = Random.Range(0, stats.Length);
 		ScreenShake = true;
 		Particles = true;
 		Labels = true;
 		active = true;
-		Settings.SetActive(false);
+		for (int i = 0; i < screens.Length; i++) screens[i].SetActive(false);
+		StartCoroutine(FadeOut());
+		SwitchScreen(0);
 	}
 
-	private void Update()
+	public void Exit()
 	{
-		if (!active) return;
-		if (screen == 0)
+		StartCoroutine(Fader(new System.Action(() => 
 		{
-			for (var i = 0; i < weapons.Length; i++)
-			{
-				if (weaponIndex == i) weapons[i].color = new Color(1, 1, 1, 0.2f); else weapons[i].color = new Color(1, 1, 1, 0.05f);
-			}
+			#if UNITY_EDITOR
+				UnityEditor.EditorApplication.isPlaying = false;
+			#else
+				Application.Quit();
+			#endif
+		})));
+	}
 
-			for (var i = 0; i < grenades.Length; i++)
-			{
-				if (grenadeIndex == i) grenades[i].color = new Color(1, 1, 1, 0.2f); else grenades[i].color = new Color(1, 1, 1, 0.05f);
-			}
-
-			for (var i = 0; i < difficulties.Length; i++)
-			{
-				if (Difficulty == i) difficulties[i].color = new Color(1, 1, 1, 0.2f); else difficulties[i].color = new Color(1, 1, 1, 0.05f);
-			}
-
-			for (var i = 0; i < stats.Length; i++)
-			{
-				if (Stats == i) stats[i].color = new Color(1, 1, 1, 0.2f); else stats[i].color = new Color(1, 1, 1, 0.05f);
-			}
-
-			if (Input.GetKey(KeyCode.Alpha1)) weaponIndex = 0;
-			if (Input.GetKey(KeyCode.Alpha2)) weaponIndex = 1;
-			if (Input.GetKey(KeyCode.Alpha3)) weaponIndex = 2;
-			if (Input.GetKey(KeyCode.Alpha4)) weaponIndex = 3;
-			if (Input.GetKey(KeyCode.Alpha5)) grenadeIndex = 0;
-			if (Input.GetKey(KeyCode.Alpha6)) grenadeIndex = 1;
-			if (Input.GetKey(KeyCode.Alpha7)) grenadeIndex = 2;
-			if (Input.GetKey(KeyCode.Alpha8)) Stats = 0;
-			if (Input.GetKey(KeyCode.Alpha9)) Stats = 1;
-			if (Input.GetKey(KeyCode.Alpha0)) Stats = 2;
-			if (Input.GetKey(KeyCode.E)) Difficulty = 0;
-			if (Input.GetKey(KeyCode.M)) Difficulty = 1;
-			if (Input.GetKey(KeyCode.H)) Difficulty = 2;
-
-			if (Input.GetKeyDown(KeyCode.Return))
-			{
-				Weapon = Weapons[weaponIndex];
-				Grenade = Grenades[grenadeIndex];
-				screen++;
-				active = false;
-				StartCoroutine(ToSettings());
-			}
-		} else
+	public void StartNewGame()
+	{
+		StartCoroutine(Fader(new System.Action(() =>
 		{
-			if (ScreenShake) screenShake.color = new Color(1, 1, 1, 0.2f); else screenShake.color = new Color(1, 1, 1, 0.05f);
-			if (Particles) particles.color = new Color(1, 1, 1, 0.2f); else particles.color = new Color(1, 1, 1, 0.05f);
-			if (Labels) labels.color = new Color(1, 1, 1, 0.2f); else labels.color = new Color(1, 1, 1, 0.05f);
+			SwitchScreen(1);
+			weaponSelector.GoToPanel(Random.Range(0, weaponSelector.ItemsCount));
+			grenadeSelector.GoToPanel(Random.Range(0, grenadeSelector.ItemsCount));
+			statSelector.GoToPanel(Random.Range(0, statSelector.ItemsCount));
+			difficultySelector.GoToPanel(Random.Range(0, difficultySelector.ItemsCount));
+		})));
+	}
 
-			if (Input.GetKeyDown(KeyCode.Alpha1)) ScreenShake = !ScreenShake;
-			if (Input.GetKeyDown(KeyCode.Alpha2)) Particles = !Particles;
-			if (Input.GetKeyDown(KeyCode.Alpha3)) Labels = !Labels;
-
-			if (Input.GetKeyDown(KeyCode.Return))
-			{
-				active = false;
-				StartCoroutine(ToGame());
-			}
-		}
-
-		if (Input.GetKeyDown(KeyCode.Escape))
+	public void GoToSettings()
+	{
+		StartCoroutine(Fader(new System.Action(() =>
 		{
+			SwitchScreen(2);
+		})));
+	}
+
+	public void GoToMainMenu()
+	{
+		StartCoroutine(Fader(new System.Action(() =>
+		{
+			SwitchScreen(0);
+		})));
+	}
+
+	public void SetScreenShake(bool status)
+	{
+		ScreenShake = status;
+	}
+
+	public void SetParticles(bool status)
+	{
+		Particles = status;
+	}
+
+	public void SetDamageText(bool status)
+	{
+		Labels = status;
+	}
+
+	public void StartTheGame()
+	{
+		active = false;
+		var process = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+		process.allowSceneActivation = false;
+		Weapon = Weapons[weaponIndex];
+		Grenade = Grenades[grenadeIndex];
+		StartCoroutine(Fader(new System.Action(() =>
+		{
+			Weapon = Weapons[weaponSelector.SelectedIndex];
+			Grenade = Grenades[grenadeSelector.SelectedIndex];
+			Stats = statSelector.SelectedIndex;
+			Difficulty = difficultySelector.SelectedIndex;
 			active = false;
-			StartCoroutine(Quit());
-		}
+			process.allowSceneActivation = true;
+			return;
+		})));
 	}
 
-	private IEnumerator ToSettings()
+	private void SwitchScreen(int toScreen)
 	{
-		for (float a = 0; a < 1; a+= 0.01f)
+		lastScreen = screen;
+		screens[screen].SetActive(false);
+		if (toScreen == -1) return;
+		screen = toScreen;
+		screens[screen].SetActive(true);
+	}
+	
+	private IEnumerator Fader(System.Action action)
+	{
+		float startTime = Time.time;
+		for (float a = 0; a < 1; a = Mathf.Lerp(0, 1, (Time.time - startTime) / tranzitionDuration))
 		{
 			fader.color = new Color(0, 0, 0, a);
-			yield return new WaitForSeconds(0.01f);
+			yield return null;
 		}
-		active = true;
-		GameSet.SetActive(false);
-		Settings.SetActive(true);
-		for (float a = 1; a > 0; a -= 0.01f)
-		{
-			fader.color = new Color(0, 0, 0, a);
-			yield return new WaitForSeconds(0.01f);
-		}
+		action();
+		StartCoroutine(FadeOut());
 	}
 
-	private IEnumerator ToGame()
+	private IEnumerator FadeOut()
 	{
-		for (float a = 0; a < 1; a += 0.01f)
+		float startTime = Time.time;
+		for (float a = 1; a > 0; a = Mathf.Lerp(1, 0, (Time.time - startTime) / tranzitionDuration))
 		{
 			fader.color = new Color(0, 0, 0, a);
-			yield return new WaitForSeconds(0.01f);
+			yield return null;
 		}
-		SceneManager.LoadScene("GamePlay", new LoadSceneParameters(LoadSceneMode.Single));
-	}
-
-	private IEnumerator Quit()
-	{
-		for (float a = 0; a < 1; a += 0.01f)
-		{
-			fader.color = new Color(0, 0, 0, a);
-			yield return new WaitForSeconds(0.01f);
-		}
-		#if UNITY_EDITOR
-			UnityEditor.EditorApplication.isPlaying = false;
-		#else
-            Application.Quit();
-		#endif
 	}
 }

@@ -19,6 +19,7 @@ public class Blast : MonoBehaviour
 	{
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
+		audioSource.volume *= controller.sfxVolume;
 		Camera.main.gameObject.GetComponent<CameraHandle>().Shake(explosionForce);
 		var player = FindObjectOfType<Player>();
 		float distance = Mathf.Abs(transform.position.x - player.transform.position.x);

@@ -27,6 +27,7 @@ public class Weapon_knife : Weapon
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		controller = FindObjectOfType<Controller>();
 		audioSource = GetComponent<AudioSource>();
+		audioSource.volume *= controller.sfxVolume;
 		direction = 1;
 		CanAttack = true;
 	}
