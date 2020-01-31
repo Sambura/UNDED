@@ -17,7 +17,7 @@ public class TextButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 	private void Start()
 	{
 		percent = 0;
-		text = GetComponentInChildren<Text>();
+		//text = GetComponentInChildren<Text>();
 	}
 
 	private void OnEnable()
@@ -29,7 +29,7 @@ public class TextButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
 	private void Update()
 	{
-		text.transform.localScale = new Vector2(1 + percent * (hoveredScale - 1), 1 + percent * (hoveredScale - 1));
+		transform.localScale = new Vector2(1 + percent * (hoveredScale - 1), 1 + percent * (hoveredScale - 1));
 	}
 
 	private IEnumerator Fade()
@@ -37,7 +37,7 @@ public class TextButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 		float fadeTime = 0.2f;
 		while (true)
 		{
-			percent = Mathf.Clamp(percent + Time.deltaTime * inc / fadeTime, 0, 1);
+			percent = Mathf.Clamp(percent + Time.unscaledDeltaTime * inc / fadeTime, 0, 1);
 			yield return null;
 		}
 	}

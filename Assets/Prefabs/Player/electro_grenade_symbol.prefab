@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2957185773719358414}
   - component: {fileID: 2335043939950400753}
+  - component: {fileID: 5172029346154716705}
   m_Layer: 5
   m_Name: electro_grenade_symbol
   m_TagString: Untagged
@@ -66,10 +67,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2023740451
+  m_SortingLayer: 1
   m_SortingOrder: 51
-  m_Sprite: {fileID: -4166723689478141992, guid: 8163c7cd2c07e0a43b61bade7240a6fe,
+  m_Sprite: {fileID: 5321421390686653601, guid: d21647fc83657a0408212989b5d8b615,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -81,3 +82,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5172029346154716705
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6524380286718488225}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 295cca87ca0a7bb43849feff031145e3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -8,41 +8,49 @@ public class EffectorBlast : MonoBehaviour
 	public float damageTime;
 	public float lifeTime;
 	public float damageDelta;
-	public float radius;
 	public float damageDelay;
 	public float explosionForce;
 
 	private AudioSource audioSource;
 	private Controller controller;
+	private ParticleSystem particle;
+	private float radius;
+	private ParticleSystem.Particle[] particles;
 
 	private void Start()
 	{
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
-		audioSource.volume *= controller.sfxVolume;
+		particle = GetComponent<ParticleSystem>();
+		particles = new ParticleSystem.Particle[particle.main.maxParticles];
 		Camera.main.gameObject.GetComponent<CameraHandle>().Shake(explosionForce);
 		if (controller.LevelHeight - Mathf.Abs(transform.position.y) < 7)
 			transform.Translate(new Vector2(0, -7 * Mathf.Sign(transform.position.y)));
 		StartCoroutine(Life());
 	}
 
+	private void DamageEntity(Entity entity)
+	{
+		float distance = Mathf.Abs(transform.position.x - entity.transform.position.x);
+		if (distance <= radius + entity.collideWidth)
+		{
+			float dmg = Mathf.Max(0, (damagePerSecond + Random.Range(-damageDelta, damageDelta)) * damageDelay);
+			entity.GetHit(dmg, transform.position.x, DamageType.Poison);
+		}
+	}
+
 	private void InflictDamage()
 	{
-		var player = FindObjectOfType<Player>();
-		float distance = Mathf.Abs(transform.position.x - player.transform.position.x);
-		if (distance <= radius)
+
+		int count = particle.GetParticles(particles);
+		for (int i = 0; i < count; i++)
 		{
-			float dmg = Mathf.Max(0, damagePerSecond * damageDelay + Random.Range(-damageDelta, damageDelta));
-			player.GetHit(dmg, transform.position.x);
+			radius = Mathf.Max(radius, Mathf.Abs(particles[i].position.x) + 5);
 		}
+		DamageEntity(controller.Player);
 		foreach (var enemy in controller.Enemies)
 		{
-			distance = Mathf.Abs(transform.position.x - enemy.transform.position.x);
-			if (distance <= radius)
-			{
-				float dmg = Mathf.Max(0, damagePerSecond * damageDelay + Random.Range(-damageDelta, damageDelta));
-				enemy.GetHit(dmg, transform.position.x);
-			}
+			DamageEntity(enemy);
 		}
 	}
 

@@ -11,6 +11,7 @@ public class Grenade : MonoBehaviour
 	private void Start()
 	{
 		StartCoroutine(CountDown());
+		var f = GetComponent<Blast>();
 	}
 
 	private IEnumerator CountDown()

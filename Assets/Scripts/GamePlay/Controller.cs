@@ -8,6 +8,7 @@ public class Controller : MonoBehaviour
 	#region Inspector fields
 	[Header("Enemies")] [Tooltip("Enemies that will be spawned during game process")]
 	[SerializeField] private GameObject[] enemies;
+	[SerializeField] private int spawnTypeReductor;
 	[Header("UI elements")]
 	[Tooltip("Text UI element that have to display kills count")]
 	[SerializeField] private Text killsMonitor;
@@ -20,7 +21,7 @@ public class Controller : MonoBehaviour
 	[SerializeField] private GameObject pauseScreen;
 	[SerializeField] private GameObject worldCanvas;
 	[SerializeField] private GameObject damageLabel;
-	[SerializeField] private RawImage deathScreen;
+	[SerializeField] private GameObject deathScreen;
 	[SerializeField] private RawImage Fader;
 	[Header("Location properties")]
 	[Tooltip("Determines absolute x-coordinate, where enemies should be spawned")]
@@ -35,17 +36,13 @@ public class Controller : MonoBehaviour
 	[SerializeField] [Range(0, 1)] private float spawnReductor;
 	[SerializeField] [Range(0, 1)] private float spawnInc;
 	[SerializeField] [Range(0, 1)] private float maxReductor;
-	[Header("Game settings")]
-	public bool enableScreenShake;
-	public bool enableParticles;
-	public bool enableDamageText;
-	[Range(0, 1)] public float sfxVolume;
 	[Header("Other settings")]
 	[Tooltip("Determines, how long one achievement should be displayed")]
 	[SerializeField] private float achievementDisplayDuration;
 	[Tooltip("Determines delay before the death splash display")]
 	[SerializeField] private float deathSpalshDelay;
 	[SerializeField] private float fadeToMainMenuDuration;
+	public AudioClip[] music;
 	#endregion
 
 	private bool _isPaused;
@@ -58,12 +55,12 @@ public class Controller : MonoBehaviour
 			_isPaused = value;
 			if (value)
 			{
-				player.CancelThrowing();
+				//Player.CancelThrowing();
 				Time.timeScale = 0;
 				pauseScreen.SetActive(true);
 			} else
 			{
-				Time.timeScale = 0;
+				Time.timeScale = 1;
 				pauseScreen.SetActive(false);
 			}
 		}
@@ -74,40 +71,123 @@ public class Controller : MonoBehaviour
 	public LinkedList<Enemy> Enemies { get; private set; }
 	public float LevelWidth { get => levelWidth; }
 	public float LevelHeight { get => levelHeight; }
+	public Player Player { get; private set; }
 
-	private Player player;
 	private int kills;
 	/// <summary>
 	/// Last time any achievement was gotten, used to calculate hide time
 	/// </summary>
 	private float achievementTime;
 	private Vector3 spawnPositive, spawnNegative;
+	private MenuController controller;
+
+	private Weapon_gun w;
+	private Weapon_knife k;
+	private TeleportAcc tp;
+	private AudioSource speaker;
+
+	private bool exit;
 
 	public void InstantiateDamageLabel(Vector2 position, float value)
 	{
-		if (!enableDamageText) return;
+		if (!Settings.damageText) return;
 		Instantiate(damageLabel, position, Quaternion.identity, worldCanvas.transform)
 			.GetComponent<Label>().SetNumber(Mathf.RoundToInt(value));
 	}
 
-	private void Start()
+	private void Awake()
 	{
+		exit = true;
 		Enemies = new LinkedList<Enemy>();
 		spawnPositive = new Vector2(spawnX, spawnY);
 		spawnNegative = new Vector2(-spawnX, spawnY);
-		var data = FindObjectOfType<MenuController>();
-		if (data != null)
+		controller = FindObjectOfType<MenuController>();
+		Player = FindObjectOfType<Player>();
+		speaker = GetComponent<AudioSource>();
+		tp = Player.equipment;
+		w = Player.GetComponentInChildren<Weapon>() as Weapon_gun;
+		k = Player.GetComponentInChildren<Weapon>() as Weapon_knife;
+		if (controller != null)
 		{
-			player = Instantiate(data.Weapon, new Vector3(0, -8), Quaternion.identity).GetComponent<Player>();
-			player.grenade = data.Grenade;
-			enableScreenShake = data.ScreenShake;
-			enableParticles = data.Particles;
-			enableDamageText = data.Labels;
-			switch (data.Difficulty)
+			//Player.grenade = controller.Grenade;
+			var weapons = Player.GetComponentsInChildren<Weapon>(true);
+			foreach (var weapon in weapons)
+			{
+				if (weapon.name != controller.Weapon)
+				{
+					Destroy(weapon.gameObject);
+				} else
+				{
+					weapon.gameObject.SetActive(true);
+				}
+			}
+			w = Player.GetComponentInChildren<Weapon>() as Weapon_gun;
+			k = Player.GetComponentInChildren<Weapon>() as Weapon_knife;
+			switch (controller.Stats)
+			{
+				case 3:
+					Player.regeneration = 10000;
+					Player.healthPoints = 100000;
+					//Player.grenadeRate = 150;
+					tp.tpAccum = 5;
+					tp.tpChargeTime = 1;
+					tp.TpSpeed = 0.05f;
+					tp.tpDistance = 100;
+					Player.movementSpeed = 75;
+					if (w != null)
+					{
+						w.dmgMultiplier = 6.66f;
+					}
+					if (k != null)
+					{
+						k.damage *= 6.66f;
+						k.attackDistance *= 2;
+					}
+					break;
+				case 2:
+					Player.regeneration = 500;
+					Player.healthPoints = 2500;
+					//Player.grenadeRate = 55;
+					tp.tpAccum = 3;
+					tp.tpChargeTime = 4;
+					tp.TpSpeed = 0.1f;
+					tp.tpDistance = 70;
+					Player.movementSpeed = 50;
+					break;
+				case 1:
+					Player.regeneration = 250;
+					Player.healthPoints = 8000;
+					//Player.grenadeRate = 8;
+					tp.tpAccum = 1;
+					tp.tpChargeTime = 5;
+					tp.TpSpeed = 0.2f;
+					tp.tpDistance = 50;
+					Player.movementSpeed = 40;
+					if (k != null)
+					{
+						k.damage *= 2f;
+					}
+					break;
+				case 0:
+					Player.regeneration = 750;
+					Player.healthPoints = 1000;
+					//Player.grenadeRate = 10;
+					tp.tpAccum = 5;
+					tp.tpChargeTime = 3;
+					tp.TpSpeed = 0.08f;
+					tp.tpDistance = 90;
+					Player.movementSpeed = 60;
+					if (w != null)
+					{
+						w.dmgMultiplier = 1.5f;
+					}
+					break;
+			}
+			switch (controller.Difficulty)
 			{
 				case 0:
 					spawnReductor = 0.008f;
-					spawnInc = 0.000003f;
+					spawnInc = 0.00003f;
 					maxReductor = 0.1f;
 					break;
 				case 1:
@@ -125,51 +205,23 @@ public class Controller : MonoBehaviour
 					spawnInc = 0.0001f;
 					maxReductor = 0.4f;
 					break;
-			}
-			switch (data.Stats)
-			{
-				case 3:
-					player.regeneration = 10000;
-					player.healthPoints = 100000;
-					player.grenadeRate = 60;
-					player.tpAccum = 5;
-					player.tpChargeTime = 2;
-					player.movementSpeed = 75;
-					break;
-				case 2:
-					player.regeneration = 600;
-					player.healthPoints = 3000;
-					player.grenadeRate = 20;
-					player.tpAccum = 3;
-					player.tpChargeTime = 4;
-					player.movementSpeed = 55;
-					break;
-				case 1:
-					player.regeneration = 450;
-					player.healthPoints = 2000;
-					player.grenadeRate = 11;
-					player.tpAccum = 2;
-					player.tpChargeTime = 5;
-					player.movementSpeed = 50;
-					break;
-				case 0:
-					player.regeneration = 350;
-					player.healthPoints = 1000;
-					player.grenadeRate = 6;
-					player.tpAccum = 1;
-					player.tpChargeTime = 6;
-					player.movementSpeed = 45;
+				case 4:
+					spawnReductor = 0.1f;
+					spawnInc = 0.0002f;
+					maxReductor = 1f;
+					Player.regeneration *= 10;
 					break;
 			}
-			Destroy(data.gameObject);
+			Destroy(controller.gameObject);
 		}
-		else player = FindObjectOfType<Player>();
+		Player.GetWeapon();
 		if (spawnReductor == 0) spawnReductor = spawnInc;
 		killsMonitor.text = "0 Kills";
 		spawnMonitor.text = $"Spawn rate: {System.Math.Round(spawnReductor * 100, 1)}%";
 		enemiesMonitor.text = "0 Enemies";
 		achievementMonitor.text = "Good luck, soldier!";
 		achievementTime = Time.time;
+		StartCoroutine(MusicPlayer());
 	}
 
 	private void LateUpdate()
@@ -180,6 +232,11 @@ public class Controller : MonoBehaviour
 			achievementMonitor.text = "";
 		}
 		bool flag = false;
+		if (Input.anyKey && Player.IsDead && !exit)
+		{
+			exit = true;
+			GoToMainMenu();
+		}
 		if (IsPaused)
 		{
 			if (Input.GetKeyDown(KeyCode.Escape))
@@ -187,36 +244,40 @@ public class Controller : MonoBehaviour
 				flag = true;
 				IsPaused = false;
 			}
-			if (Input.GetKeyDown(KeyCode.Backspace))
-			{
-				IsPaused = false;
-				StartCoroutine(MainMenuOpen());
-			}
 		}
 		if (!IsPaused && !flag)
 		{
 			if (Input.GetKeyDown(KeyCode.Escape))
 			{
-				if (!player.IsDead)
+				if (!Player.IsDead)
 				{
 					IsPaused = true;
-				} else
-				{
-					StartCoroutine(MainMenuOpen());
 				}
 			}
 		}
 	}
 
+	private IEnumerator MusicPlayer()
+	{
+		while (!Player.IsDead)
+		{
+			if (!speaker.isPlaying)
+			{
+				speaker.PlayOneShot(music[Random.Range(0, music.Length)]);
+			}
+			yield return new WaitForSecondsRealtime(3);
+		}
+	}
+
 	private void FixedUpdate()
 	{
-		if (player.IsDead) return;
+		if (Player.IsDead) return;
 		float localReductor = spawnReductor;
 		while (Random.value < localReductor)
 		{
-			var f = Instantiate(enemies[Random.Range(0, enemies.Length)], 
+			var f = Instantiate(enemies[Random.Range(0, spawnTypeReductor)], 
 				Random.Range(0, 2) == 0 ? spawnNegative : spawnPositive, Quaternion.identity);
-			f.GetComponent<Enemy>().InitThis(this, player);
+			f.GetComponent<Enemy>().InitThis(this, Player);
 			localReductor--;
 		}
 	}
@@ -225,19 +286,17 @@ public class Controller : MonoBehaviour
 	{
 		kills++;
 		{
-			killsMonitor.text = $"{kills} Kills";
+			killsMonitor.text = $"{kills} Kill" + (kills == 1 ? "" : "s");
 			spawnReductor = Mathf.Clamp(spawnReductor + spawnInc, 0, maxReductor);
 			spawnMonitor.text = $"Spawn rate: {System.Math.Round(spawnReductor * 100, 1)}%";
 		}
 		bool achieveFlag = false;
-		var w = player.GetComponentInChildren<Weapon_gun>();
-		var k = player.GetComponentInChildren<Weapon_knife>();
 		if (kills % 50 == 0)
 		{
-			if (player.movementSpeed < 100)
+			if (Player.movementSpeed < 100)
 			{
-				player.movementSpeed++;
-				achievementMonitor.text = $"Congrats! Your movement speed now = {player.movementSpeed}";
+				Player.movementSpeed++;
+				achievementMonitor.text = $"Congrats! Your movement speed now = {Player.movementSpeed}";
 				achievementTime = Time.time;
 				achieveFlag = true;
 			}
@@ -262,35 +321,35 @@ public class Controller : MonoBehaviour
 				achieveFlag = true;
 			}
 		}
-		if (kills % 100 == 0 && player.healthPoints < 100000)
+		if (kills % 100 == 0 && Player.healthPoints < 100000)
 		{
-			float delta = player.healthPoints * 1.1f - player.healthPoints;
-			player.healthPoints += delta;
-			player.GetHealth(delta);
-			achievementMonitor.text = $"Congrats! Your maxHealth now = {Mathf.RoundToInt(player.healthPoints)}";
+			float delta = Player.healthPoints * 1.1f - Player.healthPoints;
+			Player.healthPoints += delta;
+			Player.GetHealth(delta);
+			achievementMonitor.text = $"Congrats! Your maxHealth now = {Mathf.RoundToInt(Player.healthPoints)}";
 			achievementTime = Time.time;
 			achieveFlag = true;
 		}
 		if (kills % 125 == 0)
 		{
-			player.grenadeRate *= 1.1f;
-			achievementMonitor.text = $"Congrats! You now can throw {Mathf.RoundToInt(player.grenadeRate)} grenades a minute!";
+			/*Player.grenadeRate *= 1.1f;
+			achievementMonitor.text = $"Congrats! You now can throw {Mathf.RoundToInt(Player.grenadeRate)} grenades a minute!";
 			achievementTime = Time.time;
-			achieveFlag = true;
+			achieveFlag = true;*/
 		}
-		if (kills % 250 == 0)
+		if (kills % 250 == 0 && Player.regeneration < 20000)
 		{
-			player.regeneration *= 1.25f;
-			achievementMonitor.text = $"Congrats! Your regeneration now = {Mathf.RoundToInt(player.regeneration)}";
+			Player.regeneration *= 1.25f;
+			achievementMonitor.text = $"Congrats! Your regeneration now = {Mathf.RoundToInt(Player.regeneration)}";
 			achievementTime = Time.time;
 			achieveFlag = true;
 		}
 		if (kills % 375 == 0)
 		{
-			player.tpChargeTime *= 0.92f;
-			if (player.TpSpeed > 0.08f)
-				player.TpSpeed -= 0.01f;
-			achievementMonitor.text = $"Congrats! Your teleport now can be charged in {System.Math.Round(player.tpChargeTime, 1)} seconds!";
+			tp.tpChargeTime *= 0.92f;
+			if (tp.TpSpeed > 0.08f)
+				tp.TpSpeed -= 0.01f;
+			achievementMonitor.text = $"Congrats! Your teleport now can be charged in {System.Math.Round(tp.tpChargeTime, 1)} seconds!";
 			achievementTime = Time.time;
 			achieveFlag = true;
 		}
@@ -299,8 +358,8 @@ public class Controller : MonoBehaviour
 			if (w != null)
 			{
 				w.magazine *= 1.1f;
-				player.InitBullets();
-				player.InitTeleport();
+				Player.InitBullets();
+				Player.InitOther();
 				achievementMonitor.text = $"Congrats! Your magazine capacity now = {Mathf.RoundToInt(w.magazine)}";
 				achievementTime = Time.time;
 				achieveFlag = true;
@@ -315,8 +374,8 @@ public class Controller : MonoBehaviour
 		}
 		if (kills % 625 == 0)
 		{
-			player.tpDistance += 2;
-			achievementMonitor.text = $"Congrats! Your teleport distance now = {player.tpDistance}!";
+			tp.tpDistance += 2;
+			achievementMonitor.text = $"Congrats! Your teleport distance now = {tp.tpDistance}!";
 			achievementTime = Time.time;
 			achieveFlag = true;
 		}
@@ -337,7 +396,7 @@ public class Controller : MonoBehaviour
 				k.attackRate *= 1.1f;
 				k.attackTime *= 0.95f;
 				k.UpdateDelays();
-				achievementMonitor.text = $"Congrats! Your attack rate now = {Mathf.RoundToInt(k.attackRate)} seconds";
+				achievementMonitor.text = $"Congrats! Your attack rate now = {Mathf.RoundToInt(k.attackRate)}";
 				achievementTime = Time.time;
 				achieveFlag = true;
 			}
@@ -347,8 +406,8 @@ public class Controller : MonoBehaviour
 			if (Camera.main.orthographicSize < 100)
 			{
 				Camera.main.orthographicSize += 4;
-				player.InitBullets();
-				player.InitTeleport();
+				Player.InitBullets();
+				Player.InitOther();
 				achievementMonitor.text = "Congrats! You've increased your filed of view!";
 				achievementTime = Time.time;
 				achieveFlag = true;
@@ -356,13 +415,28 @@ public class Controller : MonoBehaviour
 		}
 		if (kills % 1500 == 0)
 		{
-			player.tpAccum++;
-			player.InitTeleport();
-			achievementMonitor.text = $"Congrats! Your teleport now have {player.tpAccum} bars of energy!";
+			tp.tpAccum++;
+			Player.InitOther();
+			achievementMonitor.text = $"Congrats! Your teleport now have {tp.tpAccum} bars of energy!";
 			achievementTime = Time.time;
 			achieveFlag = true;
 		}
+		if (kills % 2000 == 0)
+		{
+			if (w != null)
+			{
+				w.dmgMultiplier *= 1.1f;
+				achievementMonitor.text = $"Congrats! Your weapon became stronger!";
+				achievementTime = Time.time;
+				achieveFlag = true;
+			}
+		}
 		if (achieveFlag) achievementMonitor.text += $" ({kills} kills)";
+	}
+
+	public void GoToMainMenu()
+	{
+		StartCoroutine(MainMenuOpen());
 	}
 
 	private IEnumerator MainMenuOpen()
@@ -370,9 +444,9 @@ public class Controller : MonoBehaviour
 		var open = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("StartMenu",
 						UnityEngine.SceneManagement.LoadSceneMode.Single);
 		open.allowSceneActivation = false;
-		float startTime = Time.time;
+		float startTime = Time.unscaledTime;
 		Color color = new Color(0, 0, 0, 0);
-		for (float a = 0; a < 1; a = Mathf.Lerp(0, 1, (Time.time - startTime) / fadeToMainMenuDuration))
+		for (float a = 0; a < 1; a = Mathf.Lerp(0, 1, (Time.unscaledTime - startTime) / fadeToMainMenuDuration))
 		{
 			color.a = a;
 			Fader.color = color;
@@ -383,22 +457,11 @@ public class Controller : MonoBehaviour
 
 	public IEnumerator Death()
 	{
-		yield return new WaitForSeconds(deathSpalshDelay);
-		var killsMonitorTransform = killsMonitor.GetComponent<RectTransform>();
-		float dx = killsMonitorTransform.anchoredPosition.x;
-		float dy = killsMonitorTransform.anchoredPosition.y;
-		Vector2 anchorMin = killsMonitorTransform.anchorMin;
-		Vector2 anchorMax = killsMonitorTransform.anchorMax;
-		killsMonitor.alignment = TextAnchor.MiddleCenter;
+		speaker.Stop();
+		yield return new WaitForSecondsRealtime(deathSpalshDelay);
 		var text1 = deathScreen.GetComponentInChildren<Text>();
-		for (float a = 0; a < 1; a += 0.01f)
-		{
-			deathScreen.color = new Color(deathScreen.color.r, deathScreen.color.g, deathScreen.color.b, a);
-			text1.color = new Color(text1.color.r, text1.color.g, text1.color.b, a);
-			killsMonitorTransform.anchoredPosition = new Vector2(Mathf.Lerp(dx, 0, a), Mathf.Lerp(dy, 0, a));
-			killsMonitorTransform.anchorMin = new Vector2(Mathf.Lerp(anchorMin.x, 0.1f, a), Mathf.Lerp(anchorMin.y, 0.2f, a));
-			killsMonitorTransform.anchorMax = new Vector2(Mathf.Lerp(anchorMax.x, 0.9f, a), Mathf.Lerp(anchorMax.y, 0.6f, a));
-			yield return null;
-		}
+		text1.text = $"{kills} Kill" + (kills == 1 ? "" : "s");
+		deathScreen.SetActive(true);
+		exit = false;
 	}
 }

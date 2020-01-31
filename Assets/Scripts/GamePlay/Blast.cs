@@ -5,39 +5,22 @@ using UnityEngine;
 public class Blast : MonoBehaviour
 {
 	public float damage;
-	public float lifeTime;
 	public float damageLose;
 	public float radius;
 	public GameObject fragment;
 	public int fragsCount;
 	public float explosionForce;
+	public DamageType damageType;
 
 	private AudioSource audioSource;
-	private Controller controller;
+	protected Controller controller;
 
 	private void Start()
 	{
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
-		audioSource.volume *= controller.sfxVolume;
 		Camera.main.gameObject.GetComponent<CameraHandle>().Shake(explosionForce);
-		var player = FindObjectOfType<Player>();
-		float distance = Mathf.Abs(transform.position.x - player.transform.position.x);
-		if (distance <= radius)
-		{
-			distance = Mathf.Sqrt(distance);
-			float dmg = Mathf.Max(0, damage - distance * damageLose);
-			player.GetHit(dmg, transform.position.x);
-		}
-		foreach (var enemy in controller.Enemies)
-		{
-			distance = Mathf.Abs(transform.position.x - enemy.transform.position.x);
-			if (distance <= radius)
-			{
-				float dmg = Mathf.Max(0, damage - Mathf.Sqrt(distance) * damageLose);
-				enemy.GetHit(dmg, transform.position.x);
-			}
-		}
+		InflictDamage();
 		for (int i = 0; i < fragsCount; i++)
 		{
 			var frag = Instantiate(fragment, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
@@ -49,11 +32,33 @@ public class Blast : MonoBehaviour
 		StartCoroutine(Life());
 	}
 
-	private IEnumerator Life()
+	protected virtual void DamageEntity(Entity entity)
 	{
-		yield return new WaitForSeconds(lifeTime);
-		Destroy(GetComponent<SpriteRenderer>());
+		float distance = Mathf.Abs(transform.position.x - entity.transform.position.x);
+		if (distance <= radius + entity.collideWidth)
+		{
+			float dmg = Mathf.Max(0, damage - Mathf.Sqrt(distance) * damageLose);
+			entity.GetHit(dmg, transform.position.x, damageType);
+		}
+	}
+
+	protected virtual void InflictDamage()
+	{
+		DamageEntity(controller.Player);
+		foreach (var enemy in controller.Enemies)
+		{
+			DamageEntity(enemy);
+		}
+	}
+
+	private IEnumerator Life()
+	{ 
 		yield return new WaitWhile(() => audioSource.isPlaying);
 		Destroy(gameObject);
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.DrawWireSphere(transform.position, radius);
 	}
 }

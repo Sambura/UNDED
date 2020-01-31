@@ -10,48 +10,37 @@ public class Bullet : MonoBehaviour
 	public float angle;
 	public float damageLose;
 	public float minDamage;
+	public DamageType damageType;
+	public TrailRenderer trail;
+	public Rigidbody2D rb;
+	public BoxCollider2D boxCollider;
+	public SpriteRenderer spriteRenderer;
 
-	private Controller controller;
+	private Collider2D lastCollider;
 
-	public int Direction { get; private set; }
 	public bool Active { get; private set;}
 
 	private Vector3 startPoint;
-
-	public void SetController(Controller c)
-	{
-		controller = c;
-	}
 
 	public void SetDirection(int d)
 	{
 		float deltaAngle = Random.Range(-angle, angle);
 		if (d == -1) deltaAngle += 180;
 		transform.Rotate(new Vector3(0, 0, deltaAngle));
-		Direction = d;
+	}
+
+	public void MultiplyDamage(float multiplier)
+	{
+		damage *= multiplier;
+		damageLose *= multiplier;
 	}
 
     void Start()
     {
 		startPoint = transform.position;
 		Active = true;
-    }
-
-	float Sqr(float n)
-	{
-		return n * n;
+		rb.velocity = transform.right * movementSpeed;
 	}
-
-    void FixedUpdate()
-    {
-		transform.Translate(new Vector3(movementSpeed * Time.deltaTime, 0));
-		if (Mathf.Abs(transform.position.x) > controller.LevelWidth)
-		{
-			Destroy(gameObject);
-			Active = false;
-			return;
-		} 
-    }
 
 	private float GetDamage()
 	{
@@ -59,16 +48,44 @@ public class Bullet : MonoBehaviour
 		return Mathf.Max(minDamage, damage - distance * damageLose);
 	}
 
-	private void OnTriggerEnter2D(Collider2D collision)
+	private void OnCollision(Collider2D collision)
 	{
 		if (!Active) return;
-		var enemy = collision.gameObject.GetComponent<Enemy>();
-		if (enemy != null)
+		if (collision == lastCollider) return;
+		lastCollider = collision;
+		var entity = collision.GetComponent<Entity>();
+		if (entity != null)
 		{
-			enemy.GetHit(GetDamage(), transform.position.x);
-			Destroy(gameObject);
-			Active = false;
-			return;
+			if (!entity.GetHit(GetDamage(), transform.position.x, damageType)) return;
 		}
+		trail.emitting = false;
+		Active = false;
+		boxCollider.enabled = false;
+		spriteRenderer.enabled = false;
+		if (trail != null)
+			StartCoroutine(Destroying(trail.time));
+		else
+			Destroy(gameObject);
+	}
+	
+	private void OnTriggerStay2D(Collider2D collision)
+	{
+		OnCollision(collision);
+	}
+	
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		OnCollision(collision);
+	}
+	
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		OnCollision(collision);
+	}
+
+	private IEnumerator Destroying(float duration)
+	{
+		yield return new WaitForSeconds(duration);
+		Destroy(gameObject);
 	}
 }

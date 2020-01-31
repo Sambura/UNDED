@@ -51,7 +51,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -95,6 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66adcac1a9c7fdf46817109d564ac19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tpOverlay: {fileID: 6298537528039160438, guid: f38240bf97754bf42a584cd77d97e7db,
+    type: 3}
   damage: 80
   attackRate: 120
   attackDistance: 20
@@ -129,7 +131,8 @@ AudioSource:
   m_GameObject: {fileID: 4944666780263596}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b6e8854f326497a489051c428accb597,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.7

@@ -13,8 +13,16 @@ public class Label : MonoBehaviour
 
 	public void SetNumber(float num)
 	{
-		text.text = num.ToString();
-		color = Mathf.CorrelatedColorTemperatureToRGB(6700 - num * 10);
+		if (num >= 0)
+		{
+			text.text = num.ToString();
+			color = Mathf.CorrelatedColorTemperatureToRGB(6700 - num * 10);
+		}
+		else
+		{
+			text.text = $"+{-num}";
+			color = Color.green;
+		}
 	}
 
 	private void Awake()

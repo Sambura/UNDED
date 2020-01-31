@@ -602,7 +602,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 10000
+    maxNumParticles: 200
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -4771,12 +4771,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac448c823b7916e40a309ce6220758f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePerSecond: 65
+  damagePerSecond: 30
   damageTime: 10
-  lifeTime: 20
-  damageDelta: 10
-  radius: 45
-  damageDelay: 0.1
+  lifeTime: 15
+  damageDelta: 5
+  damageDelay: 0.25
   explosionForce: 1
 --- !u!199 &4411621718819972847
 ParticleSystemRenderer:
@@ -4796,8 +4795,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2100000, guid: cc73c169f268694459926143f6d6e1a4, type: 2}
+  - {fileID: 2100000, guid: 30630913aabc44e4fb9c68ae31e7e981, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4817,7 +4816,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 90
+  m_SortingOrder: 15
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4850,7 +4849,8 @@ AudioSource:
   m_GameObject: {fileID: 4411621718819972844}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b6e8854f326497a489051c428accb597,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 7e51b404398a29e4ba389f40ba83164b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
