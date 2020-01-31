@@ -1,0 +1,383 @@
+fileFormatVersion: 2
+guid: 768382491510f8c4b8d8671e9b20cabb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6342474238084161103
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_0"
+  - first:
+      213: -5815402729526566364
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_1"
+  - first:
+      213: 8951645065604811717
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_2"
+  - first:
+      213: 3340258541347474182
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_3"
+  - first:
+      213: 840891859925184582
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_4"
+  - first:
+      213: 5743280960324023088
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_5"
+  - first:
+      213: -6735405512008989256
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_6"
+  - first:
+      213: -6574801482962455440
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_7"
+  - first:
+      213: -7783161674799002842
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_8"
+  - first:
+      213: 7653534681399430195
+    second: "\u043A\u0441 \u0440\u0443\u043A\u0438 \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430
+      \u0442\u043F_9"
+  - first:
+      213: 2963920420298580104
+    second: RifleTPin_0
+  - first:
+      213: 1577979651754506690
+    second: RifleTPin_1
+  - first:
+      213: -4247796139854095992
+    second: RifleTPin_2
+  - first:
+      213: -4154216520833532169
+    second: RifleTPin_3
+  - first:
+      213: 8356901820764061401
+    second: RifleTPin_4
+  - first:
+      213: 5495485996867594563
+    second: RifleTPin_5
+  - first:
+      213: 9052167144303229478
+    second: RifleTPin_6
+  - first:
+      213: 1266261911034614204
+    second: RifleTPin_7
+  - first:
+      213: 7071650043188273251
+    second: RifleTPin_8
+  - first:
+      213: -5307260992531083366
+    second: RifleTPin_9
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: RifleTPin_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f316c872cb9a64441a2647e07ca6e303
+      internalID: 2963920420298580104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RifleTPin_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d32d3e54a41004b4aafdfa420e728483
+      internalID: 1577979651754506690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RifleTPin_2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3084fa77d6e060449858082e20e27fb
+      internalID: -4247796139854095992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RifleTPin_3
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f3d74158dbe2f2489686bd41290e44a
+      internalID: -4154216520833532169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RifleTPin_4
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d31cfb23c0f63647855150e12d6d869
+      internalID: 8356901820764061401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RifleTPin_5
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d81ea9ba7d936d45946a16cb70345f4
+      internalID: 5495485996867594563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RifleTPin_6
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cac58667e68907844b7ae85e990a44d8
+      internalID: 9052167144303229478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RifleTPin_7
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69c7ebc8cd47c3a46bc5ef705793138b
+      internalID: 1266261911034614204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RifleTPin_8
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eea2f359ebf2a64f988d54f8a42a2bc
+      internalID: 7071650043188273251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RifleTPin_9
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50187e1785f25584dab9ee45f573f87b
+      internalID: -5307260992531083366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

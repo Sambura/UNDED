@@ -27,6 +27,11 @@ public class CheckButton : MonoBehaviour
 
 	private void Start()
 	{
+		Init();
+	}
+
+	private void Init()
+	{
 		checkedBlock = new ColorBlock
 		{
 			highlightedColor = HighlightedColorChecked,
@@ -51,6 +56,7 @@ public class CheckButton : MonoBehaviour
 
 	public void ChangeState(bool state)
 	{
+		if (target == null) Init();
 		if (state)
 		{
 			target.colors = checkedBlock;

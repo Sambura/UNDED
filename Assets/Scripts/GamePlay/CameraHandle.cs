@@ -24,7 +24,7 @@ public class CameraHandle : MonoBehaviour
 
 	public void Shake(float force)
 	{
-		if (!controller.enableScreenShake) return;
+		if (!Settings.screenShake) return;
 		isShaking = true;
 		shakeForce += force;
 		if (shakeForce > maxShake) shakeForce = maxShake;

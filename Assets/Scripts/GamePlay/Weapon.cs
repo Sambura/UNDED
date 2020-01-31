@@ -2,17 +2,15 @@
 
 public abstract class Weapon : MonoBehaviour
 {
+	public GameObject tpOverlay;
 	public bool CanAttack { get; set; }
 	public bool CanReload { get; set; }
 	public bool IsAttacking { get; set; }
 	public bool IsReloading { get; set; }
 	public float Load { get; set; }
-	public float BulletsY { get; set; }
 	public bool ManualReload { get; set; }
 
-	public abstract void SetAnimator(Animator customAnimator);
-
-	public abstract void InitBullets();
+	public abstract Vector2 InitBullets(Vector2 drawPosition, Transform parent);
 
 	public abstract void SetDirection(int direction);
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Weapon_gun : Weapon
 {
+	public Transform shotPoint;
 	public float[] shotRate;
 	public int[] gunFireLength;
 	public float[] gunFireDelay;
@@ -15,8 +16,8 @@ public class Weapon_gun : Weapon
 	public bool partialReload;
 	public float partialLoad;
 	public GameObject fakeBullet;
-	public Vector2 offset;
 	public AudioClip reload;
+	public float dmgMultiplier = 1;
 
 	private AudioSource audioSource;
 	private SpriteRenderer spriteRenderer;
@@ -26,7 +27,7 @@ public class Weapon_gun : Weapon
 
 	private int direction;
 	private int bulletIndex;
-	private float lastShot;
+	private float nextShot;
 	private float minIntake;
 	private float shotStartTime;
 	private int fireLeft;
@@ -45,7 +46,6 @@ public class Weapon_gun : Weapon
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
 		controller = FindObjectOfType<Controller>();
-		audioSource.volume *= controller.sfxVolume;
 		UpdateDelays();
 	}
 
@@ -56,12 +56,7 @@ public class Weapon_gun : Weapon
 			fireDelay[i] = 60 / shotRate[i];
 	}
 
-	public override void SetAnimator(Animator customAnimator)
-	{
-		animator = customAnimator;
-	}
-
-	public override void InitBullets()
+	public override Vector2 InitBullets(Vector2 drawPosition, Transform parent)
 	{
 		if (bullets != null)
 		{
@@ -72,7 +67,7 @@ public class Weapon_gun : Weapon
 		bullets = new SpriteRenderer[total];
 		var corner = Camera.main.ScreenToWorldPoint(Vector3.zero);
 		float width = Mathf.Abs((corner.x - Camera.main.transform.position.x) * 2);
-		float sY = -15;
+		float sY = drawPosition.y;
 		int left = total;
 		int index = 0;
 		while (left > 0)
@@ -82,15 +77,15 @@ public class Weapon_gun : Weapon
 			float sX = -3 * now / 2f + 1;// + Camera.main.transform.position.x;
 			for (int i = 0; i < now; i++)
 			{
-				bullets[index] = Instantiate(fakeBullet, GetComponentsInParent<Transform>()[1]).GetComponent<SpriteRenderer>();
+				bullets[index] = Instantiate(fakeBullet, parent).GetComponent<SpriteRenderer>();
 				bullets[index].transform.Translate(new Vector3(sX + i * 3, sY));
 				index++;
 			}
 			sY -= 4;
 			left -= now;
 		}
-		BulletsY = sY + 4;
 		UpdateBullets();
+		return new Vector2(0, sY);
 	}
 
 	private void UpdateBullets()
@@ -102,13 +97,12 @@ public class Weapon_gun : Weapon
 	public override void SetDirection(int direction)
 	{
 		this.direction = direction;
-		spriteRenderer.flipX = direction == -1;
+		//spriteRenderer.flipX = direction == -1;
 	}
 
 
-	private void Update()
+	private void FixedUpdate()
 	{
-
 		if (IsAttacking)
 		{
 			if (intake[bulletIndex] > Load || fireLeft == 0) // Breaking shot
@@ -116,7 +110,7 @@ public class Weapon_gun : Weapon
 				IsAttacking = false;
 			}
 			else
-			if (Time.time - lastShot >= gunFireDelay[bulletIndex])
+			if (Time.time >= nextShot)
 			{
 				Attack();
 			}
@@ -169,15 +163,14 @@ public class Weapon_gun : Weapon
 		animator.speed = 1 / fireDelay[bulletIndex];
 		if (gunFireDelay[bulletIndex] != 0)
 			animator.speed = 1 / gunFireDelay[bulletIndex];
-		animator.Play("Shot");
+		animator.SetTrigger("Shot");
 		audioSource.PlayOneShot(shot[bulletIndex]);
-		var b = Instantiate(bullet[bulletIndex], new Vector3(transform.position.x + offset.x * direction,
-			transform.position.y + offset.y), Quaternion.identity).GetComponent<Bullet>();
-		b.SetDirection(direction);
-		b.SetController(controller);
+		var b = Instantiate(bullet[bulletIndex], shotPoint.position, Quaternion.identity).GetComponent<Bullet>();
+		b.SetDirection((int)transform.right.x);
+		b.MultiplyDamage(dmgMultiplier);
 		Load -= intake[bulletIndex];
 		fireLeft--;
-		lastShot = Time.time;
+		nextShot = Time.time + gunFireDelay[bulletIndex];
 		UpdateBullets();
 	}
 
@@ -187,7 +180,7 @@ public class Weapon_gun : Weapon
 		if (IsAttacking) return;
 		if (Load == magazine) return;
 		animator.speed = 1 / reloadTime;
-		animator.Play("Reload");
+		animator.SetTrigger("Reload");
 		if (!partialReload)
 			audioSource.PlayOneShot(reload);
 		reloadStartTime = Time.time;
