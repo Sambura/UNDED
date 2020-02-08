@@ -14,4 +14,11 @@ public class Entity : MonoBehaviour
 	}
 }
 
-public enum DamageType { Untagged, SolidBullet, PlasmBullet, Fire, Electricity, Poison, Melee}
+public enum DamageType { Untagged, SolidBullet, PlasmBullet, Fire, Electricity, Poison, Melee, Explosion}
+
+[System.Serializable]
+public struct DamageSpec
+{
+	public DamageType damageType;
+	public float multiplier;
+}

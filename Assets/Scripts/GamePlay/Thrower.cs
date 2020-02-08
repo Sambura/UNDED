@@ -35,10 +35,15 @@ public class Thrower : MonoBehaviour
 		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
+	public void UpdateDelay()
+	{
+		grenadeDelay = 60 / grenadeRate;
+	}
+
 	public Vector2 InitThrower(Vector2 drawPosition, Transform parent)
 	{
 		if (grenadeIcon != null)
-				Destroy(grenadeIcon);
+				Destroy(grenadeIcon.gameObject);
 		var corner = Camera.main.ScreenToWorldPoint(Vector3.zero);
 		float width = Mathf.Abs((corner.x - Camera.main.transform.position.x) * 2);
 		if (drawPosition.x + 6 > width / 2)

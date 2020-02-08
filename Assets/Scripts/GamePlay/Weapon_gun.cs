@@ -20,12 +20,10 @@ public class Weapon_gun : Weapon
 	public float dmgMultiplier = 1;
 
 	private AudioSource audioSource;
-	private SpriteRenderer spriteRenderer;
 	private Animator animator;
 	private Controller controller;
 	private float[] fireDelay;
 
-	private int direction;
 	private int bulletIndex;
 	private float nextShot;
 	private float minIntake;
@@ -43,7 +41,6 @@ public class Weapon_gun : Weapon
 		minIntake = intake[0];
 		foreach (var i in intake) minIntake = Mathf.Min(minIntake, i);
 		audioSource = GetComponent<AudioSource>();
-		spriteRenderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
 		controller = FindObjectOfType<Controller>();
 		UpdateDelays();
@@ -93,13 +90,6 @@ public class Weapon_gun : Weapon
 		for (int j = 0; j < bullets.Length; j++)
 			bullets[j].color = new Color(1, 1, 1, j < (int)Load ? 1 : 0.4f);
 	}
-
-	public override void SetDirection(int direction)
-	{
-		this.direction = direction;
-		//spriteRenderer.flipX = direction == -1;
-	}
-
 
 	private void FixedUpdate()
 	{
@@ -164,6 +154,7 @@ public class Weapon_gun : Weapon
 		if (gunFireDelay[bulletIndex] != 0)
 			animator.speed = 1 / gunFireDelay[bulletIndex];
 		animator.SetTrigger("Shot");
+		audioSource.pitch = 1;
 		audioSource.PlayOneShot(shot[bulletIndex]);
 		var b = Instantiate(bullet[bulletIndex], shotPoint.position, Quaternion.identity).GetComponent<Bullet>();
 		b.SetDirection((int)transform.right.x);
@@ -182,7 +173,10 @@ public class Weapon_gun : Weapon
 		animator.speed = 1 / reloadTime;
 		animator.SetTrigger("Reload");
 		if (!partialReload)
+		{
+			audioSource.pitch = reload.length / reloadTime;
 			audioSource.PlayOneShot(reload);
+		}
 		reloadStartTime = Time.time;
 		CanReload = false;
 		IsReloading = true;

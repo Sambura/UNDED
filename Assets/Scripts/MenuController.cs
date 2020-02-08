@@ -14,6 +14,7 @@ public class MenuController : MonoBehaviour
 	public GameObject[] Grenades;
 	public RawImage fader;
 	public string[] weapons;
+	public GameObject loadingScreen;
 
 	[Tooltip("Crossfade's duration")]
 	[Range(0f, 10f)]
@@ -24,20 +25,47 @@ public class MenuController : MonoBehaviour
 	private int screen;
 	private int lastScreen;
 	private bool fadeOut;
+	private bool fading;
 
 	public string Weapon { get; set; }
 	public GameObject Grenade { get; set; }
 	public int Difficulty { get; set; }
 	public int Stats { get; set; }
+	public bool Loaded { get; set; }
 
 	private void Start()
 	{
+		Screen.orientation = ScreenOrientation.Landscape;
+		Screen.autorotateToPortraitUpsideDown = false;
+		Screen.autorotateToPortrait = false;
+		Screen.autorotateToLandscapeLeft = true;
+		Screen.autorotateToLandscapeRight = true;
 		Time.timeScale = 1;
 		DontDestroyOnLoad(this);
 		Settings.LoadSettings();
 		for (int i = 0; i < screens.Length; i++) screens[i].SetActive(false);
 		StartCoroutine(FadeOut());
 		SwitchScreen(0);
+		{
+			var path = Application.persistentDataPath + "/data.usf";
+			var file = new System.IO.FileInfo(path);
+			if (!file.Exists)
+			{
+				ResetHighScore();
+			}
+		}
+	}
+
+	public void ResetHighScore()
+	{
+		var path = Application.persistentDataPath + "/data.usf";
+		var stream = new System.IO.FileStream(path, System.IO.FileMode.Create);
+		var writer = new System.IO.BinaryWriter(stream);
+		for (int d = 0; d < 5; d++)
+		{
+			writer.Write(0);
+		}
+		stream.Close();
 	}
 
 	public void Exit()
@@ -52,52 +80,19 @@ public class MenuController : MonoBehaviour
 		})));
 	}
 
-	public void StartNewGame()
+	public void GoToScreen(int screen)
 	{
 		StartCoroutine(Fader(new System.Action(() =>
 		{
-			SwitchScreen(1);
-			weaponSelector.GoToPanel(Random.Range(0, weaponSelector.ItemsCount));
-			grenadeSelector.GoToPanel(Random.Range(0, grenadeSelector.ItemsCount));
-			statSelector.GoToPanel(Random.Range(0, statSelector.ItemsCount));
-			difficultySelector.GoToPanel(Random.Range(0, difficultySelector.ItemsCount));
+			SwitchScreen(screen);
 		})));
-	}
-
-	public void GoToSettings()
-	{
-		StartCoroutine(Fader(new System.Action(() =>
-		{
-			SwitchScreen(2);
-		})));
-	}
-
-	public void GoToMainMenu()
-	{
-		StartCoroutine(Fader(new System.Action(() =>
-		{
-			SwitchScreen(0);
-		})));
-	}
-
-	public void PauseGame()
-	{
-		SwitchScreen(3);
 	}
 
 	public void StartTheGame()
 	{
-		var process = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
-		process.allowSceneActivation = false;
 		StartCoroutine(Fader(new System.Action(() =>
 		{
-			Weapon = weapons[weaponSelector.SelectedIndex];
-			Grenade = Grenades[grenadeSelector.SelectedIndex];
-			Stats = statSelector.SelectedIndex;
-			Difficulty = difficultySelector.SelectedIndex;
-			process.allowSceneActivation = true;
-			fadeOut = false;
-			SwitchScreen(-1);
+			StartCoroutine(LevelLoader());
 		})));
 	}
 
@@ -112,6 +107,8 @@ public class MenuController : MonoBehaviour
 	
 	private IEnumerator Fader(System.Action action)
 	{
+		if (fading) yield break;
+		fading = true;
 		float startTime = Time.time;
 		fadeOut = true;
 		for (float a = 0; a < 1; a = Mathf.Lerp(0, 1, (Time.time - startTime) / tranzitionDuration))
@@ -120,6 +117,7 @@ public class MenuController : MonoBehaviour
 			yield return null;
 		}
 		action();
+		fading = false;
 		if (fadeOut)
 		StartCoroutine(FadeOut());
 	}
@@ -132,5 +130,24 @@ public class MenuController : MonoBehaviour
 			fader.color = new Color(0, 0, 0, a);
 			yield return null;
 		}
+	}
+
+	private IEnumerator LevelLoader()
+	{
+		loadingScreen.SetActive(true);
+		yield return null;
+		Weapon = weapons[weaponSelector.SelectedIndex];
+		Grenade = Grenades[grenadeSelector.SelectedIndex];
+		Stats = statSelector.SelectedIndex;
+		Difficulty = difficultySelector.SelectedIndex;
+		yield return null;
+		var process = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
+		process.allowSceneActivation = false;
+		fadeOut = false;
+		SwitchScreen(-1);
+		yield return new WaitWhile(() => process.progress < 0.9f);
+		loadingScreen.GetComponent<Animator>().SetTrigger("fadeOut");
+		yield return new WaitForSeconds(0.5f);
+		process.allowSceneActivation = true;
 	}
 }

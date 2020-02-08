@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4534840788215036425}
   - component: {fileID: 4000123872540091702}
+  - component: {fileID: 7253894118258511024}
   m_Layer: 5
   m_Name: multiple_grenade_symbol
   m_TagString: Untagged
@@ -45,6 +46,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -69,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 2023740451
   m_SortingLayer: 1
   m_SortingOrder: 51
-  m_Sprite: {fileID: -1952370511707383376, guid: 8163c7cd2c07e0a43b61bade7240a6fe,
+  m_Sprite: {fileID: -7424946123404559245, guid: ce1b0f416aa577f45bf54a3cc936ae9a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -81,3 +83,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7253894118258511024
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5579876569079963494}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: ff60041e381863348a791b4c50a4128b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -1,0 +1,520 @@
+fileFormatVersion: 2
+guid: 555d37acf03ebc34ab8341d66f02ff56
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8063003848498176374
+    second: SpearHermit_attack_0
+  - first:
+      213: 7540709113411474257
+    second: SpearHermit_attack_1
+  - first:
+      213: -1938690307524625561
+    second: SpearHermit_attack_2
+  - first:
+      213: -4809977208213564213
+    second: SpearHermit_attack_3
+  - first:
+      213: 3150061038791943692
+    second: SpearHermit_attack_4
+  - first:
+      213: -8047126898345322190
+    second: SpearHermit_attack_5
+  - first:
+      213: -3562673398955371104
+    second: SpearHermit_attack_6
+  - first:
+      213: -5239075351992533072
+    second: SpearHermit_attack_7
+  - first:
+      213: 4833071951965235433
+    second: SpearHermit_attack_8
+  - first:
+      213: -2154460612116621826
+    second: SpearHermit_attack_9
+  - first:
+      213: -6811182666204824592
+    second: SpearHermit_attack_10
+  - first:
+      213: -7494227630726488083
+    second: SpearHermit_attack_11
+  - first:
+      213: -7949113804082382567
+    second: SpearHermit_attack_12
+  - first:
+      213: 8539734979015216657
+    second: SpearHermit_attack_13
+  - first:
+      213: 6753159732685713544
+    second: SpearHermit_attack_14
+  - first:
+      213: -8411625519549934098
+    second: SpearHermit_attack_0
+  - first:
+      213: 492221281689381320
+    second: SpearHermit_attack_1
+  - first:
+      213: 6150750581143345254
+    second: SpearHermit_attack_2
+  - first:
+      213: 550656258233009506
+    second: SpearHermit_attack_3
+  - first:
+      213: -3119380651388168043
+    second: SpearHermit_attack_4
+  - first:
+      213: -3221397134125463730
+    second: SpearHermit_attack_5
+  - first:
+      213: 6657333622274421572
+    second: SpearHermit_attack_6
+  - first:
+      213: 6198469909829732873
+    second: SpearHermit_attack_7
+  - first:
+      213: -819744756191399809
+    second: SpearHermit_attack_8
+  - first:
+      213: 971077275134500182
+    second: SpearHermit_attack_9
+  - first:
+      213: 794407780051921714
+    second: SpearHermit_attack_10
+  - first:
+      213: 3413619734327768107
+    second: SpearHermit_attack_11
+  - first:
+      213: 5472338218800729719
+    second: SpearHermit_attack_12
+  - first:
+      213: 7281234017562867025
+    second: SpearHermit_attack_13
+  - first:
+      213: 5964213215943465689
+    second: SpearHermit_attack_14
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SpearHermit_attack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee59d9b1827e34b80800000000000000
+      internalID: -8411625519549934098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_1
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c9abf5d5a8b4d600800000000000000
+      internalID: 492221281689381320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_2
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6689313c01bdb5550800000000000000
+      internalID: 6150750581143345254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_3
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 265035903f254a700800000000000000
+      internalID: 550656258233009506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_4
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59818c223dbb5b4d0800000000000000
+      internalID: -3119380651388168043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_5
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e478dfbcf5c4b43d0800000000000000
+      internalID: -3221397134125463730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_6
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4437eea48a9936c50800000000000000
+      internalID: 6657333622274421572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_7
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a4956ca83650650800000000000000
+      internalID: 6198469909829732873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_8
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f70f8b8cc7eaf94f0800000000000000
+      internalID: -819744756191399809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_9
+      rect:
+        serializedVersion: 2
+        x: 486
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65d98d103a5f97d00800000000000000
+      internalID: 971077275134500182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_10
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23b2dc0caad460b00800000000000000
+      internalID: 794407780051921714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_11
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b24bedeef0d9f5f20800000000000000
+      internalID: 3413619734327768107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_12
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77e4966cd96a1fb40800000000000000
+      internalID: 5472338218800729719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_13
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1553357e2c32c0560800000000000000
+      internalID: 7281234017562867025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpearHermit_attack_14
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 0
+        width: 54
+        height: 24
+      alignment: 9
+      pivot: {x: 0.4074074, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9da1005f15425c250800000000000000
+      internalID: 5964213215943465689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

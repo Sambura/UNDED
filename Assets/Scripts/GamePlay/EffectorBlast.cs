@@ -10,6 +10,8 @@ public class EffectorBlast : MonoBehaviour
 	public float damageDelta;
 	public float damageDelay;
 	public float explosionForce;
+	public DamageType damageType;
+	public float scoreValue;
 
 	private AudioSource audioSource;
 	private Controller controller;
@@ -29,29 +31,21 @@ public class EffectorBlast : MonoBehaviour
 		StartCoroutine(Life());
 	}
 
-	private void DamageEntity(Entity entity)
-	{
-		float distance = Mathf.Abs(transform.position.x - entity.transform.position.x);
-		if (distance <= radius + entity.collideWidth)
-		{
-			float dmg = Mathf.Max(0, (damagePerSecond + Random.Range(-damageDelta, damageDelta)) * damageDelay);
-			entity.GetHit(dmg, transform.position.x, DamageType.Poison);
-		}
-	}
-
 	private void InflictDamage()
 	{
 
 		int count = particle.GetParticles(particles);
 		for (int i = 0; i < count; i++)
 		{
-			radius = Mathf.Max(radius, Mathf.Abs(particles[i].position.x) + 5);
+			radius = Mathf.Max(radius, Mathf.Abs(particles[i].position.x));
 		}
-		DamageEntity(controller.Player);
-		foreach (var enemy in controller.Enemies)
+		var victims = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 200, 512);
+		foreach (var entity in victims)
 		{
-			DamageEntity(enemy);
+			float dmg = Mathf.Max(0, (damagePerSecond + Random.Range(-damageDelta, damageDelta)) * damageDelay);
+			entity.collider.GetComponent<Entity>().GetHit(dmg, transform.position.x, damageType);
 		}
+		controller.IncreaseScore(Mathf.Max(0, victims.Length - 1) * scoreValue);
 	}
 
 	private IEnumerator Life()

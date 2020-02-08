@@ -49,6 +49,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 13
   m_Sprite: {fileID: 21300000, guid: 310fb79b9d72223478ec3072375b6cda, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -97,10 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 400
-  damage: 55
+  damage: 50
   angle: 1
   damageLose: 0.5
-  minDamage: 25
+  minDamage: 20
   damageType: 1
   trail: {fileID: 6123551241340484494}
   rb: {fileID: 6949904132252950869}
@@ -145,9 +146,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 0
-  m_GravityScale: 0
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 0
@@ -160,11 +161,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3745166788013875738}
     m_Modifications:
-    - target: {fileID: 9083491623022827702, guid: 20219db347a80574e97edec67b5e4c48,
-        type: 3}
-      propertyPath: m_Name
-      value: Trail
-      objectReference: {fileID: 0}
     - target: {fileID: 7186901006735749887, guid: 20219db347a80574e97edec67b5e4c48,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -219,6 +215,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9083491623022827702, guid: 20219db347a80574e97edec67b5e4c48,
+        type: 3}
+      propertyPath: m_Name
+      value: Trail
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20219db347a80574e97edec67b5e4c48, type: 3}

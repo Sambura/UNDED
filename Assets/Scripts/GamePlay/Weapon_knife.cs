@@ -4,30 +4,30 @@ using UnityEngine;
 
 public class Weapon_knife : Weapon
 {
+	public Transform shotPoint;
 	public float damage;
 	public float attackRate;
 	public float attackDistance;
+	public float maxAttackDistance;
 	public float damageLose;
-	public float attackTime;
 	public AudioClip attackSound;
+	public DamageType damageType;
 
 	private Controller controller;
 	private Animator animator;
-	private SpriteRenderer spriteRenderer;
 	private AudioSource audioSource;
+	private Player parent;
 
-	private int direction;
-	private float lastAttack;
+	private float nextAttack;
 	private float attackDelay;
 
 	private void Start()
 	{
 		UpdateDelays();
 		animator = GetComponent<Animator>();
-		spriteRenderer = GetComponent<SpriteRenderer>();
 		controller = FindObjectOfType<Controller>();
 		audioSource = GetComponent<AudioSource>();
-		direction = 1;
+		parent = GetComponentInParent<Player>();
 		CanAttack = true;
 	}
 
@@ -36,52 +36,36 @@ public class Weapon_knife : Weapon
 		attackDelay = 60 / attackRate;
 	}
 
-	public override void SetDirection(int direction)
+	public void Attack()
 	{
-		this.direction = direction;
-		spriteRenderer.flipX = direction == -1;
+		IsAttacking = false;
+		animator.SetBool("isAttacking", false);
+		bool flag = false;
+		var victims = Physics2D.CircleCastAll(shotPoint.position, attackDistance, Vector2.zero, 100, 512);
+		foreach (var entity in victims)
+		{
+			var entityComp = entity.collider.GetComponent<Entity>();
+			if (entityComp == parent) continue;
+			flag = true;
+			float dmg = Mathf.Max(0.1f, damage - Vector2.Distance(shotPoint.position, entity.transform.position) * damageLose);
+			entityComp.GetHit(dmg, transform.position.x, damageType);
+		}
+		if (flag) audioSource.PlayOneShot(attackSound);
 	}
-
-	private void Update()
+	
+	public void SetAttack()
 	{
-		if (IsAttacking)
-		{
-			if (Time.time - lastAttack >= attackTime)
-			{
-				IsAttacking = false;
-				bool flag = false;
-				foreach (var enemy in controller.Enemies)
-				{
-					float distance = enemy.transform.position.x - transform.position.x;
-					if (Mathf.Sign(distance) == direction)
-					{
-						if (Mathf.Abs(distance) <= attackDistance + enemy.collideWidth)
-						{
-							flag = true;
-							distance = Mathf.Pow(Mathf.Abs(distance), 0.5f);
-							float dmg = Mathf.Max(0.1f, damage - distance * damageLose);
-							enemy.GetHit(dmg, transform.position.x, DamageType.Untagged);
-						}
-					}
-				}
-				if (flag) audioSource.PlayOneShot(attackSound);
-			}
-		}
-		if (Time.time - lastAttack >= attackDelay)
-		{
-			CanAttack = true;
-		}
+		animator.SetBool("isAttacking", true);
 	}
 
 	public override void PerformAttack(int index)
 	{
 		if (IsAttacking) return;
-		if (!CanAttack) return;
-		animator.Play("Shot");
-		animator.speed = 1 / attackDelay;
-		CanAttack = false;
+		if (nextAttack > Time.time) return;
+		animator.SetFloat("attackSpeed", 1 / attackDelay);
+		animator.SetTrigger("Shot");
 		IsAttacking = true;
-		lastAttack = Time.time;
+		nextAttack = Time.time + attackDelay;
 	}
 
 	public override void CancelReload()
@@ -97,5 +81,11 @@ public class Weapon_knife : Weapon
 	public override void PerformReload()
 	{
 		return;
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		if (shotPoint == null) return;
+		Gizmos.DrawWireSphere(shotPoint.position, attackDistance);
 	}
 }

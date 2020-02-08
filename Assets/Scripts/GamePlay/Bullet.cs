@@ -17,6 +17,8 @@ public class Bullet : MonoBehaviour
 	public SpriteRenderer spriteRenderer;
 
 	private Collider2D lastCollider;
+	private float startTime;
+	private float playerTresholdTime = 0.3f;
 
 	public bool Active { get; private set;}
 
@@ -27,19 +29,17 @@ public class Bullet : MonoBehaviour
 		float deltaAngle = Random.Range(-angle, angle);
 		if (d == -1) deltaAngle += 180;
 		transform.Rotate(new Vector3(0, 0, deltaAngle));
+		startPoint = transform.position;
+		Active = true;
+		rb.velocity = transform.right * movementSpeed;
+		startTime = Time.time;
 	}
 
 	public void MultiplyDamage(float multiplier)
 	{
 		damage *= multiplier;
 		damageLose *= multiplier;
-	}
-
-    void Start()
-    {
-		startPoint = transform.position;
-		Active = true;
-		rb.velocity = transform.right * movementSpeed;
+		minDamage *= multiplier;
 	}
 
 	private float GetDamage()
@@ -52,12 +52,13 @@ public class Bullet : MonoBehaviour
 	{
 		if (!Active) return;
 		if (collision == lastCollider) return;
-		lastCollider = collision;
 		var entity = collision.GetComponent<Entity>();
 		if (entity != null)
 		{
+			if (entity is Player && Time.time - startTime < playerTresholdTime) return;
+			lastCollider = collision; // Do not remove / replace
 			if (!entity.GetHit(GetDamage(), transform.position.x, damageType)) return;
-		}
+		} else lastCollider = collision;
 		trail.emitting = false;
 		Active = false;
 		boxCollider.enabled = false;
