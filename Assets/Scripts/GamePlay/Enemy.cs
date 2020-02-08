@@ -26,6 +26,7 @@ public class Enemy : Entity
 	public float approachDistance;
 	public bool instantAttack;
 	public AudioClip attackSound;
+	public AudioClip deathSound;
 	public float ressurectionProbability;
 	public float ressurectionDecrease;
 	public int maxRessurectionCount;
@@ -34,8 +35,9 @@ public class Enemy : Entity
 	public float healthIncrease;
 	public float damageIncrease;
 	public float distanceIncrease;
-	[SerializeField] private List<DamageType> dmgSpecifications;
-	[SerializeField] private List<float> dmgMultipliers;
+	public float scoreValue;
+	[SerializeField] private DamageSpec[] damageSpecifications;
+	public Dictionary<DamageType, float> dmgSpec;
 
 	private Player player;
 	private Animator animator;
@@ -45,7 +47,6 @@ public class Enemy : Entity
 	private AudioSource audioSource;
 
 	private float hp;
-	private int direction;
 	private bool attack;
 	private float lastHp;
 	private bool left;
@@ -56,7 +57,7 @@ public class Enemy : Entity
 	private int subAttacks;
 	private bool damageSystemPlay;
 	private float currentRessurectionProbability;
-	private bool hasBeenKilled;
+	private int ressurectionCount;
 
 	public void InitThis(Controller c, Player p)
 	{
@@ -74,7 +75,16 @@ public class Enemy : Entity
 		lastHp = healthPoints;
 		thisNode = controller.Enemies.AddLast(this);
 		currentRessurectionProbability = ressurectionProbability;
-		direction = 1;
+		dmgSpec = new Dictionary<DamageType, float>();
+		foreach (var i in damageSpecifications)
+		{
+			dmgSpec.Add(i.damageType, i.multiplier);
+		}
+		foreach (var i in System.Enum.GetValues(typeof(DamageType)))
+		{
+			if (dmgSpec.ContainsKey((DamageType)i)) continue;
+			dmgSpec.Add((DamageType)i, 1);
+		}
 	}
 
 	private void Update()
@@ -82,69 +92,26 @@ public class Enemy : Entity
 		if (lastHp != hp)
 		{
 			controller.InstantiateDamageLabel(transform.position, Mathf.RoundToInt(lastHp - hp));
+			controller.IncreaseScore((lastHp - hp) / 25);
 			if (Settings.particles && damageSystemPlay)
 				Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, left ? 0 : 180));
 		}
 		lastHp = hp;
-		if (IsDead)
-		{
-			//animator.Play("Death");
-			return;
-		}
+		if (IsDead) return;
 		if (player.IsDead)
 		{
-			animator.Play("Idle");
+			animator.SetBool("isWalking", false);
 			return;
 		}
 		if (Time.time - lastDodge < dodgeTime) return;
 		var dir = (int)Mathf.Sign(player.transform.position.x - transform.position.x);
-		if (dir != direction) transform.Rotate(Vector3.up, 180);
-		direction = dir;
-		//spriteRenderer.flipX = direction == -1;
-		/*
-		if (isDodging)
-		{
-			float d = -dodgeSpeed * direction * Time.deltaTime;
-			if (Mathf.Abs(transform.position.x + d) >= 175)
-			{
-				d = Mathf.Sign(transform.position.x) * 175 - transform.position.x;
-			}
-			transform.Translate(new Vector3(d, 0));
-			if (Time.time - lastDodge >= dodgeTime)
-			{
-				isDodging = false;
-			}
-			else return;
-		}
-
-		if (dodgeRate != 0)
-			if (Time.time - lastDodge >= 60 / dodgeRate && Mathf.Abs(transform.position.x) < controller.LevelWidth)
-			{
-				var bullets = FindObjectsOfType<Bullet>();
-				bool flag = false;
-				foreach (var i in bullets)
-				{
-					if (!i.Active) continue;
-					bool left = transform.position.x > i.transform.position.x;
-					if (i.Direction == -1 ^ left)
-					{
-						flag = true;
-						break;
-					}
-				}
-				if (flag)
-				{
-					lastDodge = Time.time;
-					isDodging = true;
-					animator.Play("Dodge");
-				}
-			}
-			*/
+		if (dir != transform.right.x) transform.Rotate(Vector3.up, 180);
+		if (Mathf.Abs(transform.position.x) + collideWidth < controller.LevelWidth)
 		if (Mathf.Abs(player.transform.position.x - transform.position.x) <= approachDistance && !attack)
 		{
 			attack = true;
-			animator.Play("Idle");
-			if (!instantAttack) lastAttack = Time.time + attackDelay;
+			animator.SetBool("isWalking", false);
+			if (!instantAttack) lastAttack = Mathf.Max(Time.time + attackDelay - 60 / shotRate, lastAttack);
 		}
 		if (attack && Mathf.Abs(player.transform.position.x - transform.position.x) > attackDistance)
 		{
@@ -152,7 +119,7 @@ public class Enemy : Entity
 		}
 		if (!attack)
 		{
-			animator.Play("Walk");
+			animator.SetBool("isWalking", true);
 			transform.Translate(new Vector2(movementSpeed * Time.deltaTime, 0));
 		}
 		else
@@ -167,7 +134,7 @@ public class Enemy : Entity
 				if (Time.time - lastSubAttack >= subDelay)
 				{
 					lastSubAttack = Time.time;
-					animator.Play("Shot");
+					animator.SetTrigger("Shot");
 					audioSource.PlayOneShot(attackSound);
 					player.GetHit(damage, transform.position.x, DamageType.Untagged);
 					subAttacks--;
@@ -179,30 +146,26 @@ public class Enemy : Entity
 	public override bool GetHit(float damage, float x, DamageType damageType)
 	{
 		if (hp <= 0) return false;
-		if (Random.value < dodgePossibility && Time.time - lastDodge >= dodgeTime 
-			&& (damageType.HasFlag(DamageType.SolidBullet) || damageType.HasFlag(DamageType.PlasmBullet)))
+		if ((Random.value < dodgePossibility) && (Time.time - lastDodge >= dodgeTime)
+			&& (damageType == DamageType.SolidBullet || damageType == DamageType.PlasmBullet))
 		{
-			animator.Play("Dodge");
+			animator.SetTrigger("Dodge");
 			lastDodge = Time.time;
 			subAttacks = 0;
 			return false;
 		}
-		damageSystemPlay = !damageType.HasFlag(DamageType.Poison) && !damageType.HasFlag(DamageType.Electricity);
-		var mIndex = dmgSpecifications.FindIndex((DamageType dt) => dt == damageType);
-		if (mIndex == -1)
-		hp -= damage; else
-		{
-			hp -= damage * dmgMultipliers[mIndex];
-		}
+		damageSystemPlay = damageType != DamageType.Poison && damageType != DamageType.Electricity;
+		hp -= damage * dmgSpec[damageType];
 		left = transform.position.x < x;
 		if (hp <= 0)
 		{
-			//if (!hasBeenKilled)
 			controller.KillsPlusPlus();
-			hasBeenKilled = true;
+			controller.IncreaseScore(scoreValue);
 			IsDead = true;
 			attack = false;
-			animator?.Play("Death");
+			animator.SetBool("isDead", true);
+			audioSource.pitch = Random.Range(0.97f, 1.1f);
+			audioSource.PlayOneShot(deathSound);
 			StartCoroutine(Dying());
 		}
 		return true;
@@ -222,7 +185,7 @@ public class Enemy : Entity
 	private IEnumerator Destroing()
 	{
 		yield return new WaitForSeconds(2);
-		if (Random.value < currentRessurectionProbability)
+		if (Random.value < currentRessurectionProbability && ressurectionCount < maxRessurectionCount)
 		{
 			StartCoroutine(Ressurect());
 			yield break;
@@ -244,7 +207,8 @@ public class Enemy : Entity
 	private IEnumerator Ressurect()
 	{
 		currentRessurectionProbability *= ressurectionDecrease;
-		animator?.Play("Ressurection");
+		ressurectionCount++;
+		animator.SetTrigger("Ressurection");
 		spriteRenderer.sortingOrder++;
 		healthPoints *= healthIncrease;
 		damage *= damageIncrease;

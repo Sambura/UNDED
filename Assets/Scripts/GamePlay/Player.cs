@@ -7,39 +7,64 @@ public class Player : Entity
 {
 	public float movementSpeed;
 	public float regeneration;
+	public float dmgLockScale;
+	public float dmgLockTime;
+	public float unlockSpeed;
+	public float stillRegenScaleInc;
 	public AudioClip damageTaken;
 	public GameObject dmgSystem;
 	public Transform UISpawnPoint;
 
-	private SpriteRenderer spriteRenderer;
 	private Animator animator;
 	private AudioSource audioSource;
-	public RawImage healthBar;
-	public RawImage healthBarBG;
-	public RectTransform healthBarSize;
 	private Weapon weapon;
 	private Controller controller;
 	public TeleportAcc equipment;
 	public Thrower thrower;
+	public HealthBar healthBar;
+	[SerializeField] private DamageSpec[] damageSpecifications;
+	public Dictionary<DamageType, float> dmgSpec;
+	
 
-	private int direction;
-	private float hp;
+	public float hp { get; private set; }
 	private float lastHp;
 	private bool left;
 	private float iconY;
 	private bool damageSystemPlay;
+	private float regenerationScale;
+	private float regenUnlockTime;
+	private float regenLockScale;
+
+#if UNITY_ANDROID
+	public bool Space { get; set; }
+	public bool F { get; set; }
+	public bool R { get; set; }
+	public bool Fire1 { get; set; }
+	public bool Fire2 { get; set; }
+	public float movingControls { get; set; }
+#endif
+
+	public void InitSpecs()
+	{
+		dmgSpec = new Dictionary<DamageType, float>();
+		foreach (var i in damageSpecifications)
+		{
+			dmgSpec.Add(i.damageType, i.multiplier);
+		}
+		foreach (var i in System.Enum.GetValues(typeof(DamageType)))
+		{
+			if (dmgSpec.ContainsKey((DamageType)i)) continue;
+			dmgSpec.Add((DamageType)i, 1);
+		}
+	}
 
 	void Start()
 	{
-		spriteRenderer = GetComponent<SpriteRenderer>();
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
-		//healthBar = GetComponentsInChildren<RawImage>()[1];
-		//healthBarBG = GetComponentsInChildren<RawImage>()[0];
-		//healthBarSize = GetComponentsInChildren<RectTransform>()[2];
 		controller = FindObjectOfType<Controller>();
-		direction = 1;
 		hp = healthPoints;
+		healthBar.Init(hp / healthPoints);
 	}
 
 	public void GetWeapon()
@@ -70,48 +95,32 @@ public class Player : Entity
 	public override bool GetHit(float damage, float x, DamageType damageType)
 	{
 		if (IsDead) return false;
-		damageSystemPlay = !damageType.HasFlag(DamageType.Poison) && !damageType.HasFlag(DamageType.Electricity);
-		hp -= damage;
+		damageSystemPlay = damageType != DamageType.Poison && damageType != DamageType.Electricity;
+		float dmg = damage * dmgSpec[damageType];
+		if (dmg == 0) return true;
+		hp -= dmg;
 		if (!audioSource.isPlaying)
 			audioSource.PlayOneShot(damageTaken);
 		left = transform.position.x < x;
+		regenerationScale = dmgLockScale;
+		regenUnlockTime = Time.time + dmgLockTime;
 		return true;
 	}
 
 	private void UpdateHealth()
 	{
-		hp = Mathf.Max(0, Mathf.Min(healthPoints, hp));
-		if (hp == healthPoints)
+		hp = Mathf.Clamp(hp, 0, healthPoints);
+		healthBar.UpdateHealth(hp / healthPoints);
+		if (hp == 0)
 		{
-			healthBarBG.color = new Color(0.8f, 0.8f, 0.8f, 0);
-			healthBar.color = new Color(0, 0, 0, 0);
-		}
-		else if (hp == 0)
-		{
-			healthBar.color = new Color(0, 0, 0, 0);
-			animator.speed = 1;
-			animator.Play("Death2");
+			animator.SetBool("isDead", true);
 			IsDead = true;
 			StartCoroutine(controller.Death());
+			weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
 			//CancelThrowing();
 		}
-		else
-		{
-			float percent = hp / healthPoints;
-			healthBarBG.color = new Color(0.8f, 0.8f, 0.8f);
-			healthBar.color = new Color(1 - percent, percent, 0, 1);
-			healthBarSize.sizeDelta = new Vector2(40 * percent, 2);
-			//healthBarSize.anchoredPosition = new Vector2(0, 34);
-		}
 	}
-	/*
-	public void CancelThrowing()
-	{
-		isThrowing = false;
-		if (Line != null) Destroy(Line);
-		Time.timeScale = 1;
-	}
-	*/
+
 	public void GetAccessoryAction(int idx)
 	{
 		equipment.GetAccessoryAction(idx);
@@ -126,148 +135,117 @@ public class Player : Entity
 			Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, left ? 0 : 180));
 		}
 
-		hp += regeneration / 60 * Time.deltaTime;
+		hp += regeneration / 60 * Time.deltaTime * regenerationScale;
 		UpdateHealth();
 		if (IsDead) return;
 		lastHp = hp;
 
-		int delta = 0;
-		/*
-		if (Time.time - lastGrenade >= 60 / grenadeRate)
+		if (Time.time > regenUnlockTime)
 		{
-			grenadeIcon.color = new Color(1, 1, 1, 1);
-		} else
-		{
-			grenadeIcon.color = new Color(1, 1, 1, 0.4f);
+			regenerationScale = Mathf.Clamp01(regenerationScale + unlockSpeed * Time.deltaTime);
 		}
-		*/
-		if (equipment.isTping) return;
 
-		//if (!weapon.IsAttacking)
+		if (equipment.isTping) return;
+		int delta = 0;
+#if UNITY_STANDALONE
+		if (Input.GetKey(KeyCode.D))
+#elif UNITY_ANDROID
+		if (movingControls > 0)
+#endif
 		{
-			if (Input.GetKey(KeyCode.D))
+			delta = 1;
+			if (transform.right.x < 0)
+				if (!thrower.IsThrowing)
+					transform.Rotate(Vector3.up, 180);
+				else delta = -1;
+			animator.SetFloat("walkSpeed", movementSpeed / 75);
+			animator.SetBool("isWalking", true);
+		}
+		else
+#if UNITY_STANDALONE
+		if (Input.GetKey(KeyCode.A))
+#elif UNITY_ANDROID
+		if (movingControls < 0)
+#endif
+		{
+			delta = 1;
+			if (transform.right.x > 0)
+				if (!thrower.IsThrowing)
+					transform.Rotate(Vector3.up, 180);
+				else delta = -1;
+			animator.SetFloat("walkSpeed", movementSpeed / 75);
+			animator.SetBool("isWalking", true);
+		}
+		else
+		{
+			animator.SetBool("isWalking", false);
+			hp += regeneration / 60 * Time.deltaTime * regenerationScale * stillRegenScaleInc;
+		}
+		if (
+#if UNITY_STANDALONE
+		Input.GetKeyUp(KeyCode.F)
+#elif UNITY_ANDROID
+		F
+#endif
+			&& (!weapon.IsReloading || !weapon.ManualReload))
+		{
+			thrower.PerformThrow();
+		}
+
+		float d = movementSpeed * Time.deltaTime * delta;
+		transform.Translate(new Vector3(d, 0));
+		if (Mathf.Abs(transform.position.x) > 175)
+		{
+			transform.Translate(new Vector3(175 - Mathf.Abs(transform.position.x), 0));
+		}
+	}
+
+	private void FixedUpdate()
+	{
+		if (IsDead || controller.IsPaused) return;
+
+		if (equipment.isTping) return;
+		
+		if (!thrower.IsThrowing) {
+
+#if UNITY_STANDALONE
+		if (Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Return))
+#elif UNITY_ANDROID
+		if (Fire1)
+#endif
 			{
-				if (direction == -1) transform.Rotate(Vector3.up, 180);
-				delta = 1;
-				direction = 1;
-				//spriteRenderer.flipX = false;
-				animator.Play("Walk");
-				animator.speed = 1;
-				//CancelThrowing();
+				weapon.PerformAttack(0);
 			}
 			else
-				if (Input.GetKey(KeyCode.A))
+#if UNITY_STANDALONE
+		if (Input.GetKey(KeyCode.Quote) || Input.GetKey(KeyCode.N))
+#elif UNITY_ANDROID
+		if (Fire2)
+#endif
 			{
-				delta = 1;
-				if (direction == 1) transform.Rotate(Vector3.up, 180);
-				direction = -1;
-				//spriteRenderer.flipX = true;
-				animator.Play("Walk");
-				animator.speed = 1;
-				//CancelThrowing();
+				weapon.PerformAttack(1);
 			}
-			///
-
-			equipment.SetDirection(direction);
-			weapon.SetDirection(direction);
-
-
-			if (Input.GetKeyUp(KeyCode.F) && (!weapon.IsReloading || !weapon.ManualReload))
-			{
-				thrower.PerformThrow();
-			}
-
-			///
-			/*
-			if (Input.GetKeyDown(KeyCode.F) && (!weapon.IsReloading || !weapon.ManualReload))
-			{
-				if (Time.time - lastGrenade >= 60 / grenadeRate)
-				{
-					weapon.CancelReload();
-					if (Line != null) Destroy(Line);
-					isThrowing = true;
-					Line = Instantiate(line, new Vector3(), Quaternion.identity);
-					lineRenderer = Line.GetComponent<LineRenderer>();
-					throwingForce = 20 * grenadeMass;
-					uprise = true;
-					Time.timeScale = 0.3f;
-				}
-			}
-			if (isThrowing)
-			{
-				{
-					var pos = new Vector3(transform.position.x + direction * 5, transform.position.y);
-					float deltaL = 0.05f;
-					float acceleration = -9.81f * grenadeGravityScale;
-					float dY = throwingForce * Mathf.Sin(throwingAngle) / grenadeMass;
-					float dX = throwingForce * Mathf.Cos(throwingAngle) * direction / grenadeMass;
-					lineRenderer.positionCount = 50;
-					for (int v = 0; v < lineRenderer.positionCount; v++)
-					{
-						lineRenderer.SetPosition(v, pos);
-						pos.x += dX * deltaL;
-						pos.y += dY * deltaL;
-						dY += acceleration * deltaL;
-						if (Mathf.Abs(pos.y) > 20 || Mathf.Abs(pos.x) > 186)
-						{
-							lineRenderer.positionCount = v + 2;
-							lineRenderer.SetPosition(v + 1, pos);
-							break;
-						}
-					}
-				}
-				throwingForce += ((uprise ? 1 : -1) * 70 * grenadeMass) * Time.unscaledDeltaTime;
-				throwingForce = Mathf.Clamp(throwingForce, 18 * grenadeMass, 102 * grenadeMass);
-				if (throwingForce >= 100 * grenadeMass) uprise = false;
-				if (throwingForce <= 20 * grenadeMass) uprise = true;
-			}
-			if (Input.GetKeyUp(KeyCode.F))
-			{
-				if (isThrowing)
-				{
-					var g = Instantiate(grenade, new Vector2(transform.position.x + direction * 5, transform.position.y), Quaternion.identity);
-					var rb = g.GetComponent<Rigidbody2D>();
-					rb.AddForce(new Vector2(
-						direction * throwingForce * Mathf.Cos(throwingAngle),
-						throwingForce * Mathf.Sin(throwingAngle)), 
-						ForceMode2D.Impulse);
-					rb.AddTorque(-5 * direction, ForceMode2D.Impulse);
-					lastGrenade = Time.time;
-					CancelThrowing();
-				}
-			}
-			*/
-			float d = movementSpeed * Time.deltaTime* delta;
-			if (Mathf.Abs(transform.position.x + d * direction) >= 175)
-			{
-				d = Mathf.Sign(transform.position.x) * 175 - transform.position.x;
-			}
-			transform.Translate(new Vector3(d, 0));
-			///
-			if (delta == 0) animator.Play("Idle");
-			{
-				
-				if (Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Return))
-				{
-					weapon.PerformAttack(0);
-					//CancelThrowing();
-				}
-				else if (Input.GetKey(KeyCode.Quote) || Input.GetKey(KeyCode.N))
-				{
-					weapon.PerformAttack(1);
-					//CancelThrowing();
-				}
-			}
-			///
-			if ((Input.GetKey(KeyCode.R) && weapon.ManualReload) || (weapon.CanReload && !thrower.IsThrowing))
-			{
-				weapon.PerformReload();
-				//CancelThrowing();
-			}
-			if (!weapon.IsAttacking && Input.GetKey(KeyCode.Space))
-			{
-				equipment.InvokeTP();
-			}
+		}
+		///
+		if ((
+#if UNITY_STANDALONE
+		Input.GetKey(KeyCode.R)
+#elif UNITY_ANDROID
+		R
+#endif
+			&& weapon.ManualReload) || (weapon.CanReload && !thrower.IsThrowing))
+		{
+			weapon.PerformReload();
+		}
+		if (!weapon.IsAttacking &&
+#if UNITY_STANDALONE
+		Input.GetKey(KeyCode.Space)
+#elif UNITY_ANDROID
+		Space
+#endif
+			)
+		{
+			equipment.InvokeTP();
 		}
 	}
 }

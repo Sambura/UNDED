@@ -12,8 +12,6 @@ public abstract class Weapon : MonoBehaviour
 
 	public abstract Vector2 InitBullets(Vector2 drawPosition, Transform parent);
 
-	public abstract void SetDirection(int direction);
-
 	public abstract void PerformAttack(int index);
 
 	public abstract void PerformReload();

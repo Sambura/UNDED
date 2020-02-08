@@ -50,6 +50,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -216,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPoints: 100
   collideWidth: 5
-  movementSpeed: 90
+  movementSpeed: 80
   deltaY: 8
   dmgSystem: {fileID: 6199028226064837274, guid: ef400222032846b4a9fd517e06b84fdc,
     type: 3}
@@ -234,7 +235,7 @@ MonoBehaviour:
   attackSound: {fileID: 8300000, guid: 3b156957cc00d3b4fb02dfeb81441aa9, type: 3}
   ressurectionProbability: 0.6
   ressurectionDecrease: 0.8
-  maxRessurectionCount: 5
+  maxRessurectionCount: 4
   scaleIncrease: 1.2
   speedIncrease: 0.95
   healthIncrease: 2
@@ -243,6 +244,9 @@ MonoBehaviour:
   dmgSpecifications: 05000000
   dmgMultipliers:
   - 0.05
+  damageSpecifications:
+  - damageType: 5
+    multiplier: 0.05
 --- !u!61 &-2681181336312910656
 BoxCollider2D:
   m_ObjectHideFlags: 0

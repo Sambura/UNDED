@@ -50,6 +50,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -146,6 +147,9 @@ MonoBehaviour:
   dmgSpecifications: 05000000
   dmgMultipliers:
   - 0.1
+  damageSpecifications:
+  - damageType: 5
+    multiplier: 0.1
 --- !u!82 &5282581436094341992
 AudioSource:
   m_ObjectHideFlags: 0

@@ -49,6 +49,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 13
   m_Sprite: {fileID: 21300000, guid: df2fced8651c0e543a37e9eceb3c0bb7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -137,7 +138,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 3.5, y: 0}
@@ -160,11 +161,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2963526077917862479}
     m_Modifications:
-    - target: {fileID: 9083491623022827702, guid: 20219db347a80574e97edec67b5e4c48,
-        type: 3}
-      propertyPath: m_Name
-      value: Bullet_Trail
-      objectReference: {fileID: 0}
     - target: {fileID: 7186901006735749887, guid: 20219db347a80574e97edec67b5e4c48,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -219,6 +215,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9083491623022827702, guid: 20219db347a80574e97edec67b5e4c48,
+        type: 3}
+      propertyPath: m_Name
+      value: Bullet_Trail
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20219db347a80574e97edec67b5e4c48, type: 3}

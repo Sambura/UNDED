@@ -11,8 +11,11 @@ public class ScrollViewScript : MonoBehaviour
 	[Range(0, 10)] [SerializeField] private float gripDuration;
 	[Range(0, 1)] [SerializeField] private float unselectedScaling;
 	[Range(0, 1)] [SerializeField] private float scalingSpeed;
+	[SerializeField] private Text selectedName;
+	[SerializeField] private Text selectedDescription;
 
 	private Button[] items;
+	private ScrollViewItem[] itemsData;
 	private ScrollRect scrollRect;
 	private bool isScrolling;
 	private float gripTime;
@@ -33,7 +36,7 @@ public class ScrollViewScript : MonoBehaviour
 		gripCompeted = false;
 		scrollRect.inertia = true;
 	}
-	
+
 	public void OnEndDrag()
 	{
 		isScrolling = false;
@@ -42,28 +45,49 @@ public class ScrollViewScript : MonoBehaviour
 	public void GoToPanel(int panel)
 	{
 		SelectedIndex = panel;
+		UpdateData(panel);
 		gripTime = Time.time;
 		isGripped = true;
 		gripPosition = position.anchoredPosition.x;
 		scrollRect.inertia = false;
 	}
 
+	public void Increment()
+	{
+		if (SelectedIndex >= ItemsCount - 1) return;
+		GoToPanel(SelectedIndex + 1);
+	}
+
+	public void Decrement()
+	{
+		if (SelectedIndex == 0) return;
+		GoToPanel(SelectedIndex - 1);
+	}
+
 	void Awake()
-    {
+	{
 		items = GetComponentsInChildren<Button>();
 		ItemsCount = items.Length;
+		itemsData = new ScrollViewItem[ItemsCount];
 		scrollRect = GetComponentInParent<ScrollRect>();
 		positions = new RectTransform[ItemsCount];
 		for (int i = 0; i < ItemsCount; i++)
 		{
 			positions[i] = items[i].GetComponent<RectTransform>();
+			itemsData[i] = items[i].gameObject.GetComponent<ScrollViewItem>();
 		}
 		position = GetComponent<RectTransform>();
 		leftBound = -positions[ItemsCount - 1].anchoredPosition.x - positions[ItemsCount - 1].sizeDelta.x / 2;
 		rightBound = positions[0].sizeDelta.x / 2;
+		UpdateData(0);
 	}
 
-	// Update is called once per frame
+	private void UpdateData(int index)
+	{
+		selectedName.text = itemsData[index].itemName;
+		selectedDescription.text = itemsData[index].itemDescription;
+	}
+
 	void Update()
 	{
 		int nearestIndex = 0;
@@ -80,7 +104,7 @@ public class ScrollViewScript : MonoBehaviour
 				minDistance = distance;
 			}
 		}
-
+		UpdateData(nearestIndex);
 		if (!isScrolling && position.anchoredPosition.x != Mathf.Clamp(position.anchoredPosition.x, leftBound, rightBound))
 		{
 			scrollRect.inertia = false;
@@ -93,6 +117,7 @@ public class ScrollViewScript : MonoBehaviour
 			gripPosition = position.anchoredPosition.x;
 			scrollRect.inertia = false;
 			SelectedIndex = nearestIndex;
+			UpdateData(SelectedIndex);
 		}
 
 		if (isGripped)

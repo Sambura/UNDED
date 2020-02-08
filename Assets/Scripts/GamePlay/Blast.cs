@@ -11,6 +11,7 @@ public class Blast : MonoBehaviour
 	public int fragsCount;
 	public float explosionForce;
 	public DamageType damageType;
+	public float scoreValue;
 
 	private AudioSource audioSource;
 	protected Controller controller;
@@ -19,7 +20,7 @@ public class Blast : MonoBehaviour
 	{
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
-		Camera.main.gameObject.GetComponent<CameraHandle>().Shake(explosionForce);
+		Camera.main.gameObject.GetComponentInParent<CameraHandle>().Shake(explosionForce);
 		InflictDamage();
 		for (int i = 0; i < fragsCount; i++)
 		{
@@ -32,27 +33,29 @@ public class Blast : MonoBehaviour
 		StartCoroutine(Life());
 	}
 
-	protected virtual void DamageEntity(Entity entity)
-	{
-		float distance = Mathf.Abs(transform.position.x - entity.transform.position.x);
-		if (distance <= radius + entity.collideWidth)
-		{
-			float dmg = Mathf.Max(0, damage - Mathf.Sqrt(distance) * damageLose);
-			entity.GetHit(dmg, transform.position.x, damageType);
-		}
-	}
-
 	protected virtual void InflictDamage()
 	{
-		DamageEntity(controller.Player);
-		foreach (var enemy in controller.Enemies)
+		var victims = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 100, 512);
+		foreach (var enemy in victims)
 		{
-			DamageEntity(enemy);
+			float dmg = Mathf.Max(0, damage - Mathf.Sqrt(Vector2.Distance(transform.position, enemy.transform.position)) * damageLose);
+			enemy.collider.gameObject.GetComponent<Entity>().GetHit(dmg, transform.position.x, damageType);
 		}
+		controller.IncreaseScore(Mathf.Max(0, victims.Length - 1) * scoreValue);
 	}
 
 	private IEnumerator Life()
-	{ 
+	{
+		/*
+		float timeScale = 0.5f;
+		Time.timeScale = timeScale;
+		float startTime = Time.time;
+		for (float a = timeScale; a < 1; a = Mathf.Lerp(timeScale, 1.05f, Time.time - startTime))
+		{
+			Time.timeScale = a;
+			yield return null;
+		}
+		Time.timeScale = 1;*/
 		yield return new WaitWhile(() => audioSource.isPlaying);
 		Destroy(gameObject);
 	}

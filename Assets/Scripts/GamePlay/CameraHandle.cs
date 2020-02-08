@@ -10,24 +10,26 @@ public class CameraHandle : MonoBehaviour
 
 	private Player player;
 	private Controller controller;
+	private new Camera camera;
 
 	private float kinematic;
 	private float lastDelta;
 	private bool isShaking;
-	private float shakeForce;
+	private float magnitude;
 
 	private void Start()
 	{
 		player = FindObjectOfType<Player>();
 		controller = FindObjectOfType<Controller>();
+		camera = Camera.main;
 	}
 
 	public void Shake(float force)
 	{
 		if (!Settings.screenShake) return;
 		isShaking = true;
-		shakeForce += force;
-		if (shakeForce > maxShake) shakeForce = maxShake;
+		magnitude += force;
+		if (magnitude > maxShake) magnitude = maxShake;
 	}
 
 	void Update()
@@ -39,16 +41,13 @@ public class CameraHandle : MonoBehaviour
 		kinematic /= kinematicDecreaseEffect;
 		if (isShaking)
 		{
-			var delta = Random.insideUnitSphere;
-			delta.Scale(new Vector3(shakeForce, shakeForce, 0));
-			if (Mathf.Sign(transform.position.y) == Mathf.Sign(delta.y)) delta.y *= -1;
-			transform.Translate(delta);
-			shakeForce /= kinematicDecreaseEffect;
-			if (shakeForce < 0.01f)
+			camera.transform.localPosition = Random.insideUnitCircle * magnitude;
+			magnitude /= kinematicDecreaseEffect;
+			if (magnitude < 0.01f)
 			{
 				isShaking = false;
-				shakeForce = 0;
-				transform.Translate(new Vector3(0, -transform.position.y));
+				magnitude = 0;
+				camera.transform.localPosition = Vector3.zero;
 			}
 		}
     }

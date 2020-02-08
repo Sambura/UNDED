@@ -18,8 +18,8 @@ public class TeleportAcc : MonoBehaviour
 	private AudioSource audioSource;
 	private Controller controller;
 	private Weapon weapon;
+	private Player parent;
 
-	private int direction;
 	private Animator[] TPIcon;
 	private int tpCharged;
 
@@ -29,18 +29,10 @@ public class TeleportAcc : MonoBehaviour
 		animator = GetComponentInParent<Animator>();
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
-		//weapon = controller.Player.GetComponentInChildren<Weapon>();
-		weapon = GetComponentInParent<Player>().GetComponentInChildren<Weapon>();
-		direction = 1;
+		parent = GetComponentInParent<Player>();
+		weapon = parent.GetComponentInChildren<Weapon>();
 		tpCharged = tpAccum;
 		StartCoroutine(Charger());
-	}
-
-	public void SetDirection(int direction)
-	{
-		this.direction = direction;
-		if (spriteRenderer != null)
-			spriteRenderer.flipX = direction == -1;
 	}
 
 	public Vector2 InitAccessory(Vector2 drawPosition, Transform parent)
@@ -91,12 +83,11 @@ public class TeleportAcc : MonoBehaviour
 		}
 		tpCharged--;
 		audioSource.PlayOneShot(teleportSound);
-		animator.speed = 1 / TpSpeed;
-		animator.Play("TPin");
+		animator.SetFloat("TPspeed", 1 / TpSpeed);
+		animator.SetTrigger("TP");
 		isTping = true;
-		var go = Instantiate(weapon.tpOverlay, controller.Player.transform);
+		var go = Instantiate(weapon.tpOverlay, weapon.transform);
 		spriteRenderer = go.GetComponent<SpriteRenderer>();
-		//spriteRenderer.flipX = direction == -1;
 		go.GetComponent<Animator>().speed = 1 / TpSpeed;
 		spriteRenderer.color = new Color(0, 0, 0, 0);
 	}
@@ -133,8 +124,7 @@ public class TeleportAcc : MonoBehaviour
 		{
 			d = 175 - Mathf.Abs(controller.Player.transform.position.x);
 		}
-		controller.Player.transform.Translate(new Vector2(d, 0));
-		animator.Play("TPout");
+		parent.transform.Translate(new Vector2(d, 0));
 		spriteRenderer.gameObject.GetComponent<Animator>().Play("TPout");
 	}
 
@@ -151,7 +141,7 @@ public class TeleportAcc : MonoBehaviour
 
 	private IEnumerator Charger()
 	{
-		while (!controller.Player.IsDead)
+		while (!parent.IsDead)
 		{
 			yield return new WaitUntil(() => tpCharged < tpAccum);
 			TPIcon[tpCharged].speed = 1 / tpChargeTime;

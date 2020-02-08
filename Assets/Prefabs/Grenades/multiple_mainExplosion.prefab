@@ -54,6 +54,8 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 2.76
@@ -119,6 +121,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -168,14 +171,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
-  lifeTime: 0.2
   damageLose: 0.1
-  radius: 8
+  radius: 4
   fragment: {fileID: 2980477417782126364, guid: 82c08f09c14c59749b3ebe86a038c003,
     type: 3}
   fragsCount: 15
   explosionForce: 8
-  damageType: 0
+  damageType: 7
+  scoreValue: 1
 --- !u!82 &2419441917375970667
 AudioSource:
   m_ObjectHideFlags: 0
