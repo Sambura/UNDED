@@ -24,6 +24,7 @@ public class Player : Entity
 	public HealthBar healthBar;
 	[SerializeField] private DamageSpec[] damageSpecifications;
 	public Dictionary<DamageType, float> dmgSpec;
+	public Shield shield;
 	
 
 	public float hp { get; private set; }
@@ -43,6 +44,19 @@ public class Player : Entity
 	public bool Fire2 { get; set; }
 	public float movingControls { get; set; }
 #endif
+
+	#region Singleton
+	public static Player Instance;
+
+	private void Awake()
+	{
+		if (Instance == null)
+		{
+			Instance = this;
+		}
+		else Destroy(gameObject);
+	}
+	#endregion
 
 	public void InitSpecs()
 	{
@@ -83,7 +97,7 @@ public class Player : Entity
 	{
 		iconY = -2.5f;
 		weapon.gameObject.SetActive(true);
-		iconY = weapon.InitBullets(new Vector2(0, iconY), UISpawnPoint).y;
+		iconY = weapon.InitUIElements(new Vector2(0, iconY), UISpawnPoint).y;
 	}
 
 	public void InitOther()
@@ -95,9 +109,14 @@ public class Player : Entity
 	public override bool GetHit(float damage, float x, DamageType damageType)
 	{
 		if (IsDead) return false;
-		damageSystemPlay = damageType != DamageType.Poison && damageType != DamageType.Electricity;
+		if (shield != null)
+			if (shield.toBlockSet.Contains(damageType))
+			{
+				damage = shield.GetHit(damage, x);
+			}
 		float dmg = damage * dmgSpec[damageType];
 		if (dmg == 0) return true;
+		damageSystemPlay = damageType != DamageType.Poison && damageType != DamageType.Electricity;
 		hp -= dmg;
 		if (!audioSource.isPlaying)
 			audioSource.PlayOneShot(damageTaken);
@@ -133,6 +152,7 @@ public class Player : Entity
 		if (lastHp > hp && Settings.particles && damageSystemPlay)
 		{
 			Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, left ? 0 : 180));
+			controller.InstantiateDamageLabel(transform.position + new Vector3(0, 10), Mathf.RoundToInt(lastHp - hp));
 		}
 
 		hp += regeneration / 60 * Time.deltaTime * regenerationScale;

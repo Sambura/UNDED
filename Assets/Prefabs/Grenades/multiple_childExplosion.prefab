@@ -145,7 +145,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 15
   m_Sprite: {fileID: -3608985598166974337, guid: 5014e3eb92102a04aaa9ba743d071cca,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -178,6 +178,7 @@ MonoBehaviour:
   explosionForce: 1
   damageType: 7
   scoreValue: 0.2
+  randomRotation: 1
 --- !u!82 &5010154073674797282
 AudioSource:
   m_ObjectHideFlags: 0

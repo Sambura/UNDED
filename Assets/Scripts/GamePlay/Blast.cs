@@ -12,12 +12,15 @@ public class Blast : MonoBehaviour
 	public float explosionForce;
 	public DamageType damageType;
 	public float scoreValue;
+	[SerializeField] private bool randomRotation;
 
 	private AudioSource audioSource;
 	protected Controller controller;
 
 	private void Start()
 	{
+		if (randomRotation)
+			transform.Rotate(Vector3.back, Random.Range(0f, 360f));
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
 		Camera.main.gameObject.GetComponentInParent<CameraHandle>().Shake(explosionForce);
@@ -39,7 +42,8 @@ public class Blast : MonoBehaviour
 		foreach (var enemy in victims)
 		{
 			float dmg = Mathf.Max(0, damage - Mathf.Sqrt(Vector2.Distance(transform.position, enemy.transform.position)) * damageLose);
-			enemy.collider.gameObject.GetComponent<Entity>().GetHit(dmg, transform.position.x, damageType);
+			if (enemy.collider.GetComponent<Entity>() is Enemy && gameObject.CompareTag("Enemy")) dmg *= 0.08f;
+			enemy.collider.GetComponent<Entity>().GetHit(dmg, transform.position.x, damageType);
 		}
 		controller.IncreaseScore(Mathf.Max(0, victims.Length - 1) * scoreValue);
 	}

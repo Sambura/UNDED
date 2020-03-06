@@ -6,6 +6,7 @@ TagManager:
   tags:
   - World
   - UI:TextButton
+  - Enemy
   layers:
   - Default
   - TransparentFX

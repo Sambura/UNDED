@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6375850765149443701}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 11, y: -2.5, z: 0}
+  m_LocalPosition: {x: -0.16, y: 8.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5601857685301004637}
@@ -45,21 +45,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.78
-  m_Color: {r: 0.9622642, g: 0.8320607, b: 0.19517623, a: 1}
-  m_Intensity: 0
+  m_FalloffIntensity: 1
+  m_Color: {r: 1, g: 0.504717, b: 0.75832176, a: 1}
+  m_Intensity: 1
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
-  m_UseNormalMap: 0
+  m_UseNormalMap: 1
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 0
   m_ShadowVolumeIntensity: 0
-  m_PointLightInnerAngle: 199.55
+  m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 40
+  m_PointLightInnerRadius: 2.48
+  m_PointLightOuterRadius: 31.78
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -72,6 +72,36 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &8052587627830078205
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8180041788335166481}
+  m_Layer: 9
+  m_Name: ThrowPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8180041788335166481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8052587627830078205}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.13, y: -5.96, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5601857685301004637}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8630107215321074208
 GameObject:
   m_ObjectHideFlags: 0
@@ -82,14 +112,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5601857685301004637}
   - component: {fileID: 1643714108373927956}
-  - component: {fileID: 7844100720327395816}
+  - component: {fileID: 6236688370085134115}
   - component: {fileID: 5770802066116746318}
   - component: {fileID: 572438025252673327}
   - component: {fileID: 6045164282846348653}
   - component: {fileID: 2117966727850843563}
   m_Layer: 9
   m_Name: Spear_Hermit
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,6 +136,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7112876976261165550}
+  - {fileID: 8180041788335166481}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -159,7 +190,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7844100720327395816
+--- !u!114 &6236688370085134115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,38 +199,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 8630107215321074208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a57eab23a79df4c926ef832acd96a3, type: 3}
+  m_Script: {fileID: 11500000, guid: bbba771f2704e8a4db8ba534a1effa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 450
+  healthPoints: 300
   collideWidth: 7
   movementSpeed: 55
   deltaY: 12
   dmgSystem: {fileID: 7763362860647767537, guid: 57df31e9db5b76f4facfef791d23f372,
     type: 3}
-  dodgePossibility: 0
-  dodgeSpeed: 0
-  dodgeTime: 0
   shotRate: 60
-  attackDelay: 0.5
-  attackLength: 1
-  subDelay: 0
+  attackDelay: 0
   damage: 100
-  attackDistance: 22
+  attackDistance: 23
   approachDistance: 17
-  instantAttack: 0
+  deltaDistance: 2.5
+  playSoundOnMiss: 0
+  scoreValue: 4
   attackSound: {fileID: 8300000, guid: 968b87c2bc5d60f43a2b51059852cf45, type: 3}
   deathSound: {fileID: 8300000, guid: 6dadca71f3fcfb2468f31ffd3071ea85, type: 3}
-  ressurectionProbability: 0
-  ressurectionDecrease: 0
-  maxRessurectionCount: 0
-  scaleIncrease: 0
-  speedIncrease: 0
-  healthIncrease: 0
-  damageIncrease: 0
-  distanceIncrease: 0
-  scoreValue: 2
+  damageType: 6
   damageSpecifications: []
+  grenade: {fileID: 2098447020752643828, guid: 1e086c4c3befe634e9002a27216e99b9, type: 3}
+  throwProbability: 0.3
+  throwForce: 50
+  throwAngle: 0.7853982
+  throwDelay: 7
+  throwPoint: {fileID: 8180041788335166481}
 --- !u!95 &5770802066116746318
 Animator:
   serializedVersion: 3

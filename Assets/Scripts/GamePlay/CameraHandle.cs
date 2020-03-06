@@ -32,7 +32,7 @@ public class CameraHandle : MonoBehaviour
 		if (magnitude > maxShake) magnitude = maxShake;
 	}
 
-	void Update()
+	void FixedUpdate()
     {
 		kinematic += (player.transform.position.x - transform.position.x) / mass;
 		float currentDelta = (kinematic + lastDelta) / 2;

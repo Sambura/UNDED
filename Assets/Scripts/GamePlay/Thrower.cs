@@ -69,6 +69,7 @@ public class Thrower : MonoBehaviour
 	{
 		var g = Instantiate(grenade, throwPoint.position, Quaternion.identity);
 		var rb = g.GetComponent<Rigidbody2D>();
+		g.tag = gameObject.tag;
 		rb.AddForce(new Vector2(
 			throwingForce * Mathf.Cos(throwingAngle) * transform.right.x,
 			throwingForce * Mathf.Sin(throwingAngle)),

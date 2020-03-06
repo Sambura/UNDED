@@ -53,7 +53,7 @@ public class PhyscisController : MonoBehaviour
 		grip.z = 0;
 		if (trail != null) Destroy(trail.gameObject);
 		trail = Instantiate(trace).GetComponent<LineRenderer>();
-		trail.positionCount = 100;
+		trail.positionCount = 5000;
 	}
 
 	private void OnMouseDrag()
@@ -67,10 +67,10 @@ public class PhyscisController : MonoBehaviour
 
 		float dx = pos.x;
 		float dy = pos.y;
-		float delta = 0.1f;
+		float delta = 0.003f;
 		float xV = force * Mathf.Cos(angle) / mass;
 		float yV = force * Mathf.Sin(angle) / mass;
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 5000; i++)
 		{
 			trail.SetPosition(i, new Vector3(dx, dy));
 			dx += xV * delta;

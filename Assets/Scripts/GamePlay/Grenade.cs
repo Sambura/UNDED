@@ -18,6 +18,6 @@ public class Grenade : MonoBehaviour
 	{
 		yield return new WaitForSeconds(lifeTime);
 		Destroy(gameObject);
-		Instantiate(blast, transform.position, Quaternion.identity);
+		Instantiate(blast, transform.position, Quaternion.identity).tag = gameObject.tag;
 	}
 }

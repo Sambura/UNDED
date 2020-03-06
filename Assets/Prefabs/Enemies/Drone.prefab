@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217462332463191492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6219067395296598879}
@@ -99,7 +99,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4382314531645927376}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 5, y: -2.5, z: 0}
+  m_LocalPosition: {x: 5, y: -2.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6219067395296598879}
@@ -171,7 +171,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4588462518868851836}
   m_LocalRotation: {x: -0, y: -0, z: -0.65320027, w: 0.7571852}
-  m_LocalPosition: {x: 0, y: 1.82, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6219067395296598879}
@@ -235,7 +235,7 @@ GameObject:
   - component: {fileID: 3768404186917267197}
   m_Layer: 9
   m_Name: Drone
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -325,28 +325,17 @@ MonoBehaviour:
   deltaY: 12
   dmgSystem: {fileID: 7763362860647767537, guid: 491f7b8f0b9b217449639b8989780ff4,
     type: 3}
-  dodgePossibility: 0
-  dodgeSpeed: 0
-  dodgeTime: 0
   shotRate: 35
   attackDelay: 0.5
-  attackLength: 3
-  subDelay: 0.2
   damage: 15
   attackDistance: 40
   approachDistance: 25
-  instantAttack: 0
+  deltaDistance: 0
+  playSoundOnMiss: 1
+  scoreValue: 1.6
   attackSound: {fileID: 8300000, guid: c888dcdd513b0c4408100c8795e61e5d, type: 3}
   deathSound: {fileID: 8300000, guid: 571ff0c591be0994ba22722766e09294, type: 3}
-  ressurectionProbability: 0
-  ressurectionDecrease: 0
-  maxRessurectionCount: 0
-  scaleIncrease: 0
-  speedIncrease: 0
-  healthIncrease: 0
-  damageIncrease: 0
-  distanceIncrease: 0
-  scoreValue: 1.6
+  damageType: 1
   damageSpecifications:
   - damageType: 4
     multiplier: 12.34
@@ -464,7 +453,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 2}
+  m_Offset: {x: 0, y: 2.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -475,7 +464,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12, y: 12}
+  m_Size: {x: 12, y: 11}
   m_EdgeRadius: 0
 --- !u!50 &5393919531062747432
 Rigidbody2D:
