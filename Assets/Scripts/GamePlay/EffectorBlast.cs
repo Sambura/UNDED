@@ -25,7 +25,7 @@ public class EffectorBlast : MonoBehaviour
 		controller = FindObjectOfType<Controller>();
 		particle = GetComponent<ParticleSystem>();
 		particles = new ParticleSystem.Particle[particle.main.maxParticles];
-		Camera.main.gameObject.GetComponent<CameraHandle>().Shake(explosionForce);
+		Camera.main.GetComponentInParent<CameraHandle>().Shake(explosionForce);
 		if (controller.LevelHeight - Mathf.Abs(transform.position.y) < 7)
 			transform.Translate(new Vector2(0, -7 * Mathf.Sign(transform.position.y)));
 		StartCoroutine(Life());

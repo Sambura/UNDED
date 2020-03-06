@@ -101,7 +101,7 @@ Transform:
   m_GameObject: {fileID: 8646306175766720609}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 2850269555401159500}
   m_Father: {fileID: 0}
@@ -145,7 +145,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 15
   m_Sprite: {fileID: -3441874758494215801, guid: b8ab9bef7e43ff641a8f084cd3635942,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -170,14 +170,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b7142ccffe5bc4bb631195de93ef0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 80
+  damage: 100
   damageLose: 0.1
-  radius: 48
+  radius: 39
   fragment: {fileID: 0}
   fragsCount: 0
   explosionForce: 3
   damageType: 4
   scoreValue: 0.8
+  randomRotation: 1
 --- !u!82 &357718051408346799
 AudioSource:
   m_ObjectHideFlags: 0

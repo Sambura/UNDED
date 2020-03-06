@@ -53,7 +53,7 @@ public class Weapon_gun : Weapon
 			fireDelay[i] = 60 / shotRate[i];
 	}
 
-	public override Vector2 InitBullets(Vector2 drawPosition, Transform parent)
+	public override Vector2 InitUIElements(Vector2 drawPosition, Transform parent)
 	{
 		if (bullets != null)
 		{

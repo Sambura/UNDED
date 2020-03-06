@@ -54,6 +54,10 @@ public class Controller : MonoBehaviour
 #pragma warning restore IDE0044
 	#endregion
 
+	#region Singleton
+	public static Controller Instance;
+	#endregion
+
 	private bool _isPaused;
 	/// <summary>
 	/// Is the game currently paused?
@@ -66,10 +70,12 @@ public class Controller : MonoBehaviour
 			{
 				//Player.CancelThrowing();
 				Time.timeScale = 0;
+				Settings.sfxMixer.SetFloat("Pitch", 0);
 				pauseScreen.SetActive(true);
 			} else
 			{
 				Time.timeScale = 1;
+				Settings.sfxMixer.SetFloat("Pitch", 1);
 				pauseScreen.SetActive(false);
 			}
 		}
@@ -77,7 +83,8 @@ public class Controller : MonoBehaviour
 	/// <summary>
 	/// Alive enemies array
 	/// </summary>
-	public LinkedList<Enemy> Enemies { get; private set; }
+	[HideInInspector]
+	public int Enemies;
 	public float LevelWidth { get => levelWidth; }
 	public float LevelHeight { get => levelHeight; }
 	public Player Player { get; private set; }
@@ -111,8 +118,8 @@ public class Controller : MonoBehaviour
 
 	private void Awake()
 	{
+		if (Instance == null) Instance = this;
 		exit = true;
-		Enemies = new LinkedList<Enemy>();
 		spawnPositive = new Vector2(spawnX, spawnY);
 		spawnNegative = new Vector2(-spawnX, spawnY);
 		controller = FindObjectOfType<MenuController>();
@@ -451,7 +458,7 @@ public class Controller : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		enemiesMonitor.text = $"{Enemies.Count} Enem" + (Enemies.Count == 1 ? "y" : "ies");
+		enemiesMonitor.text = $"{Enemies} Enem" + (Enemies == 1 ? "y" : "ies");
 		if (Time.time - achievementTime >= achievementDisplayDuration)
 		{
 			achievementMonitor.text = "";
@@ -500,9 +507,8 @@ public class Controller : MonoBehaviour
 		float localReductor = spawnReductor;
 		while (Random.value < localReductor)
 		{
-			var f = Instantiate(enemies[Random.Range(0, spawnTypeReductor)], 
-				Random.Range(0, 2) == 0 ? spawnNegative : spawnPositive, Quaternion.identity);
-			f.GetComponent<Enemy>().InitThis(this, Player);
+			Instantiate(enemies[Random.Range(0, spawnTypeReductor)], 
+				(Random.value > 0.5f) ? spawnNegative : spawnPositive, Quaternion.identity);
 			localReductor--;
 		}
 	}

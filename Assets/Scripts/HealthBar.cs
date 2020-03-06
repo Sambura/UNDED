@@ -5,85 +5,92 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-	[SerializeField] private RectTransform primaryHealthBar;
-	[SerializeField] private RectTransform redHealthBar;
-	[SerializeField] private RectTransform healthBarBG;
-	[SerializeField] private RawImage healthBarColor;
+	[SerializeField] private Image primaryHealthBar;
+	[SerializeField] private Image redHealthBar;
 	[SerializeField] private float shrinkDelay;
 	[SerializeField] private float shrinkTime;
-	[SerializeField] private Color oneColor;
-	[SerializeField] private Color halfColor;
-	[SerializeField] private Color zeroColor;
+	[SerializeField] private Gradient[] gradients;
 
-	//private Controller controller;
 	private float lastHp;
 	private float lastUpdHp;
 	private float currentHp;
 	private float shrinkMark;
+	private float state;
+	private float lastColor;
+
+	private Color EvaluateGradient(float t)
+	{
+		lastColor = t;
+		return Color.Lerp(gradients[(int)state].Evaluate(t), gradients[Mathf.CeilToInt(state)].Evaluate(t), state % 1);
+	}
 
 	public void Init(float currentHP)
 	{
+		state = 0;
 		currentHp = currentHP;
 		lastHp = currentHP;
 		lastUpdHp = currentHP;
-		primaryHealthBar.sizeDelta = new Vector2(healthBarBG.sizeDelta.x * currentHP, healthBarBG.sizeDelta.y);
-		redHealthBar.sizeDelta = new Vector2(0, redHealthBar.sizeDelta.y);
-		//healthBarColor.color = Color.Lerp(zeroColor, oneColor, currentHP);
-		healthBarColor.color = InterpGYR(zeroColor, halfColor, oneColor, currentHP);
+		primaryHealthBar.fillAmount = 1;
+		primaryHealthBar.color = EvaluateGradient(currentHP);
+		redHealthBar.fillAmount = 1;
 	}
 
 	public void UpdateHealth(float currentHP)
 	{
 		if (currentHP == lastHp) return;
 
-		redHealthBar.sizeDelta = new Vector2(healthBarBG.sizeDelta.x * (1 - currentHP - 0.002f), redHealthBar.sizeDelta.y);
-		primaryHealthBar.sizeDelta = new Vector2(primaryHealthBar.sizeDelta.x, primaryHealthBar.sizeDelta.y);
+		primaryHealthBar.fillAmount = currentHP;
+		if (currentHP > redHealthBar.fillAmount)
+		{
+			primaryHealthBar.color = EvaluateGradient(currentHP);
+			redHealthBar.fillAmount = currentHP - 0.002f;
+			lastHp = currentHP;
+		}
+
 		currentHp = currentHP;		
 		if (lastUpdHp > currentHP)
 		{
 			if (shrinkMark < Time.time)
 			{
 				shrinkMark = Time.time + shrinkDelay;
-				StartCoroutine(Shrinker(true));
-			} else
+				StartCoroutine(Shrinker());
+			} else 
 				shrinkMark = Time.time + shrinkDelay;
-		} else
-		{
-			if (primaryHealthBar.sizeDelta.x / healthBarBG.sizeDelta.x < currentHP)
-			{
-				primaryHealthBar.sizeDelta = new Vector2(healthBarBG.sizeDelta.x * currentHP, healthBarBG.sizeDelta.y);
-				//healthBarColor.color = Color.Lerp(zeroColor, oneColor, currentHP);
-				healthBarColor.color = InterpGYR(zeroColor, halfColor, oneColor, currentHP);
-				lastHp = currentHP;
-			}
 		}
 		lastUpdHp = currentHP;
 	}
 
-	private IEnumerator Shrinker(bool wait)
+	private IEnumerator Shrinker()
 	{
-		if (wait)
 		yield return new WaitWhile(() => shrinkMark > Time.time);
 		float targetHp = currentHp;
 		float from = lastHp;
 		float startTime = Time.time;
-		if (lastHp == currentHp) yield break;
-		for (var t = lastHp; Time.time - startTime < shrinkTime; 
-			t = Mathf.SmoothStep(lastHp, currentHp, (Time.time - startTime) / shrinkTime))
+		if (from == targetHp) yield break;
+		for (var t = from; Time.time - startTime < shrinkTime; 
+			t = Mathf.SmoothStep(from, targetHp, (Time.time - startTime) / shrinkTime))
 		{
-			primaryHealthBar.sizeDelta = new Vector2(healthBarBG.sizeDelta.x * t, healthBarBG.sizeDelta.y);
-			//healthBarColor.color = Color.Lerp(zeroColor, oneColor, t);
-			healthBarColor.color = InterpGYR(zeroColor, halfColor, oneColor, t);
+			redHealthBar.fillAmount = t;
+			primaryHealthBar.color = EvaluateGradient(t);
 			yield return null;
 		}
-		primaryHealthBar.sizeDelta = new Vector2(healthBarBG.sizeDelta.x * currentHp, healthBarBG.sizeDelta.y);
-		lastHp = currentHp;
+		redHealthBar.fillAmount = targetHp - 0.002f;
+		lastHp = targetHp;
 	}
 
-	public static Color InterpGYR(Color a, Color i, Color b, float hp)
+	public void ChangeState(int toState, float time)
 	{
-		if (hp > 0.5f)
-			return Color.Lerp(i, b, 2 * (hp - 0.5f));
-		return Color.Lerp(a, i, 2 * hp);
+		StartCoroutine(Changing((int)state, toState, time));
+	}
+
+	private IEnumerator Changing(int fromState, int toState, float time)
+	{
+		float startTime = Time.time;
+		for (state = fromState; Time.time - startTime < time; state = Mathf.Lerp(fromState, toState, (Time.time - startTime) / time))
+		{
+			primaryHealthBar.color = EvaluateGradient(lastColor);
+			yield return null;
+		}
+		state = toState;
 	}
 }

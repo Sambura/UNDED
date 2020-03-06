@@ -10,7 +10,7 @@ public abstract class Weapon : MonoBehaviour
 	public float Load { get; set; }
 	public bool ManualReload { get; set; }
 
-	public abstract Vector2 InitBullets(Vector2 drawPosition, Transform parent);
+	public abstract Vector2 InitUIElements(Vector2 drawPosition, Transform parent);
 
 	public abstract void PerformAttack(int index);
 

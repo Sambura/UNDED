@@ -82,14 +82,14 @@ GameObject:
   m_Component:
   - component: {fileID: 5236174407580819996}
   - component: {fileID: 1430119685132460885}
-  - component: {fileID: 7623665118436401833}
+  - component: {fileID: 119857875198040645}
   - component: {fileID: 6125294497506703119}
   - component: {fileID: 209098914076081262}
   - component: {fileID: 6265588871872884268}
   - component: {fileID: 1762011945488447210}
   m_Layer: 9
   m_Name: Rifle_Hermit
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,7 +159,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7623665118436401833
+--- !u!114 &119857875198040645
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,38 +168,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 8274000691661349217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94a57eab23a79df4c926ef832acd96a3, type: 3}
+  m_Script: {fileID: 11500000, guid: b55d7ce79b8093846bc9ac4f114fdc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 150
+  healthPoints: 300
   collideWidth: 7
   movementSpeed: 40
   deltaY: 12
   dmgSystem: {fileID: 7763362860647767537, guid: 57df31e9db5b76f4facfef791d23f372,
     type: 3}
-  dodgePossibility: 0.4
-  dodgeSpeed: 120
-  dodgeTime: 0.3
   shotRate: 30
   attackDelay: 0.5
-  attackLength: 4
-  subDelay: 0.1
-  damage: 10
+  damage: 20
   attackDistance: 70
   approachDistance: 55
-  instantAttack: 0
+  deltaDistance: 0
+  playSoundOnMiss: 1
+  scoreValue: 2
   attackSound: {fileID: 8300000, guid: bc04e34e51c7e5044b431b09eac824e4, type: 3}
   deathSound: {fileID: 8300000, guid: 6dadca71f3fcfb2468f31ffd3071ea85, type: 3}
-  ressurectionProbability: 0
-  ressurectionDecrease: 0
-  maxRessurectionCount: 0
-  scaleIncrease: 0
-  speedIncrease: 0
-  healthIncrease: 0
-  damageIncrease: 0
-  distanceIncrease: 0
-  scoreValue: 2
+  damageType: 1
   damageSpecifications: []
+  dodgePossibility: 0.4
+  dodgeTime: 0.3
 --- !u!95 &6125294497506703119
 Animator:
   serializedVersion: 3

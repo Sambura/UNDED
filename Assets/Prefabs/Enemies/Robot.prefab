@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: -5071051895972937593}
   m_Layer: 9
   m_Name: Robot
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -384,28 +384,17 @@ MonoBehaviour:
   deltaY: 12
   dmgSystem: {fileID: 7763362860647767537, guid: 491f7b8f0b9b217449639b8989780ff4,
     type: 3}
-  dodgePossibility: 0
-  dodgeSpeed: 0
-  dodgeTime: 0
   shotRate: 40
   attackDelay: 1
-  attackLength: 1
-  subDelay: 0
-  damage: 75
+  damage: 7.5
   attackDistance: 100
   approachDistance: 60
-  instantAttack: 0
+  deltaDistance: 0
+  playSoundOnMiss: 1
+  scoreValue: 2.4
   attackSound: {fileID: 8300000, guid: 0f33c0ba8bbb3014fa128da74974e099, type: 3}
   deathSound: {fileID: 8300000, guid: 6c7893e7a0d6a60468a8026c9af4b5bd, type: 3}
-  ressurectionProbability: 0
-  ressurectionDecrease: 0
-  maxRessurectionCount: 0
-  scaleIncrease: 0
-  speedIncrease: 0
-  healthIncrease: 0
-  damageIncrease: 0
-  distanceIncrease: 0
-  scoreValue: 2.4
+  damageType: 2
   damageSpecifications:
   - damageType: 4
     multiplier: 12.34
