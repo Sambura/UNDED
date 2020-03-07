@@ -6,13 +6,14 @@ public class Thrower : MonoBehaviour
 {
 	public GameObject grenade;
 	public float grenadeRate;
-	public GameObject line;
+	//public GameObject line;
 	public Transform throwPoint;
 
+
 	private float nextGrenade;
-	private float throwingForce = 60;
+	public float throwingForce = 60;
 	private bool isThrowing;
-	private float throwingAngle = Mathf.PI / 4;
+	public float throwingAngle = Mathf.PI / 4;
 	private GameObject Line;
 	private LineRenderer lineRenderer;
 	private bool uprise;

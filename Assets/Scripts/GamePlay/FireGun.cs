@@ -71,11 +71,6 @@ public class FireGun : Weapon
 		IsAttacking = false;
 	}
 
-	public override void CancelReload()
-	{
-		
-	}
-
 	public override Vector2 InitUIElements(Vector2 drawPosition, Transform parent)
 	{
 		if (heatIcon != null) return new Vector2(0, drawPosition.y - 5);
@@ -100,10 +95,5 @@ public class FireGun : Weapon
 			shot = Instantiate(fire, shotPoint.position, shotPoint.rotation, transform).GetComponent<FireShot>();
 			shot.MultiplyDamage(damageMultiplier);
 		}
-	}
-
-	public override void PerformReload()
-	{
-
 	}
 }
