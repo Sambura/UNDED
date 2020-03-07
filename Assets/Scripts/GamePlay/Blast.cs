@@ -17,7 +17,7 @@ public class Blast : MonoBehaviour
 	private AudioSource audioSource;
 	protected Controller controller;
 
-	private void Start()
+	protected virtual void Start()
 	{
 		if (randomRotation)
 			transform.Rotate(Vector3.back, Random.Range(0f, 360f));
@@ -48,7 +48,7 @@ public class Blast : MonoBehaviour
 		controller.IncreaseScore(Mathf.Max(0, victims.Length - 1) * scoreValue);
 	}
 
-	private IEnumerator Life()
+	protected virtual IEnumerator Life()
 	{
 		/*
 		float timeScale = 0.5f;

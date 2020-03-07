@@ -83,7 +83,7 @@
     <Compile Include="Assets\Scripts\GamePlay\Player.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Shield.cs" />
     <Compile Include="Assets\Scripts\GamePlay\SideShield.cs" />
-    <Compile Include="Assets\Scripts\GamePlay\TeleportAcc.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\Teleport.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Thrower.cs" />
     <Compile Include="Assets\Scripts\GamePlay\ThrowerEnemy.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Utility.cs" />
@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\Physics_test\Blast_PhysicsTest.cs" />
     <Compile Include="Assets\Scripts\Physics_test\PhyscisController.cs" />
+    <Compile Include="Assets\Scripts\PresetsManager.cs" />
     <Compile Include="Assets\Scripts\PublicDestroyer.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\UI\CheckButton.cs" />

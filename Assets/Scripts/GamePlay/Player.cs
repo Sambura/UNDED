@@ -19,13 +19,19 @@ public class Player : Entity
 	private AudioSource audioSource;
 	private Weapon weapon;
 	private Controller controller;
-	public TeleportAcc equipment;
+	public Teleport equipment;
 	public Thrower thrower;
 	public HealthBar healthBar;
 	[SerializeField] private DamageSpec[] damageSpecifications;
 	public Dictionary<DamageType, float> dmgSpec;
 	public Shield shield;
-	
+
+	[Header("Experimental")]
+	public string weaponName;
+	public string teleportName;
+	public string shieldName;
+	public string throwerName;
+
 
 	public float hp { get; private set; }
 	private float lastHp;
@@ -79,6 +85,16 @@ public class Player : Entity
 		controller = FindObjectOfType<Controller>();
 		hp = healthPoints;
 		healthBar.Init(hp / healthPoints);
+		/*
+		var f = new System.IO.FileInfo("player.json");
+		var ff = f.CreateText();
+		ff.Write(JsonUtility.ToJson(this, true));
+		ff.Close();*/
+
+		if (weaponName != "")
+		{
+
+		}
 	}
 
 	public void GetWeapon()
@@ -257,7 +273,7 @@ public class Player : Entity
 		{
 			weapon.PerformReload();
 		}
-		if (!weapon.IsAttacking &&
+		if ( /*!weapon.IsAttacking && */
 #if UNITY_STANDALONE
 		Input.GetKey(KeyCode.Space)
 #elif UNITY_ANDROID

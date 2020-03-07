@@ -2,18 +2,17 @@
 
 public class SideShield : MonoBehaviour
 {
-    public Sprite[] hitSprites;
-    public SpriteRenderer spriteRenderer;
-    public UnityEngine.Experimental.Rendering.Universal.Light2D lightRenderer;
+    public int spriteCount;
+    public Animator animator;
 
     private Transform parent;
 
     private void Awake()
     {
-        spriteRenderer.sprite = hitSprites[Random.Range(0, hitSprites.Length)];
-        //lightRenderer.spr = spriteRenderer.sprite;
         parent = transform.parent;
         transform.parent = null;
+        animator.SetInteger("spriteIndex", Random.Range(0, spriteCount));
+        animator.SetBool("isLoaded", true);
     }
 
     private void Update()

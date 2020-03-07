@@ -68,21 +68,6 @@ public class Weapon_knife : Weapon
 		nextAttack = Time.time + attackDelay;
 	}
 
-	public override void CancelReload()
-	{
-		return;
-	}
-
-	public override Vector2 InitUIElements(Vector2 drawPosition, Transform parent)
-	{
-		return drawPosition;
-	}
-
-	public override void PerformReload()
-	{
-		return;
-	}
-
 	private void OnDrawGizmosSelected()
 	{
 		if (shotPoint == null) return;

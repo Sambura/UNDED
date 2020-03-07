@@ -99,7 +99,7 @@ public class Controller : MonoBehaviour
 
 	private Weapon_gun w;
 	private Weapon_knife k;
-	private TeleportAcc tp;
+	private Teleport tp;
 	private Thrower th;
 	private AudioSource speaker;
 
@@ -108,6 +108,8 @@ public class Controller : MonoBehaviour
 	private int difficulty;
 	private int[] highScore;
 	private bool enableHighScore;
+
+	private LevelController levelController;
 
 	public void InstantiateDamageLabel(Vector2 position, float value)
 	{
@@ -277,7 +279,59 @@ public class Controller : MonoBehaviour
 		StartCoroutine(MusicPlayer());
 		highScoreMonitor.text = "Highscore: — ";
 		var diffCount = 5;
+
+		/*
+		LevelData newLevel = new LevelData();
+		newLevel.levelName = "Second level";
+		newLevel.upgradePoints = 2;
+		newLevel.waves = new WaveData[]
+		{
+			new WaveData()
+			{
+				previousWaveCounter = 1,
+				previousWaveTimer = 5f,
+				spawnTime = 45f,
+				enemies = new EnemyData[]
+				{
+					new EnemyData()
+					{
+						enemyIndex = 0,
+						minSpawnedCount = 4,
+						maxSpawnedCount = 6
+					},
+					new EnemyData()
+					{
+						enemyIndex = 1,
+						minSpawnedCount = 3,
+						maxSpawnedCount = 4
+					},
+					new EnemyData()
+					{
+						enemyIndex = 2,
+						minSpawnedCount = 1,
+						maxSpawnedCount = 1
+					}
+				}
+			}
+		};
+		var json = JsonUtility.ToJson(newLevel);
+		var f = new System.IO.FileInfo(@"Assets\Levels\level02.txt");
+		var tw = f.CreateText();
+		tw.Write(json.Replace(",", ",\n"));
+		tw.Close();
+		*/
+
+
 		highScore = new int[diffCount];
+		//if (levelData.levelName == "null")
+		{
+			var f = new System.IO.FileInfo(@"Assets\Levels\default.json");
+			var tw = f.OpenText();
+			var json = tw.ReadToEnd();
+			levelController = new LevelController();
+
+			levelController.levelData = JsonUtility.FromJson<LevelData>(json);
+		}
 		if (difficulty != -1)
 		{
 			var path = Application.persistentDataPath + "/data.usf";
@@ -504,6 +558,7 @@ public class Controller : MonoBehaviour
 	private void FixedUpdate()
 	{
 		if (Player.IsDead) return;
+		/*
 		float localReductor = spawnReductor;
 		while (Random.value < localReductor)
 		{
@@ -511,6 +566,17 @@ public class Controller : MonoBehaviour
 				(Random.value > 0.5f) ? spawnNegative : spawnPositive, Quaternion.identity);
 			localReductor--;
 		}
+		*/
+
+		levelController.NextWave();
+		var toSpawn = levelController.GetSpawnList();
+
+		foreach (var i in toSpawn)
+		{
+			Instantiate(enemies[i],
+				(Random.value > 0.5f) ? spawnNegative : spawnPositive, Quaternion.identity);
+		}
+		
 	}
 
 	public void KillsPlusPlus()
@@ -571,4 +637,126 @@ public class Controller : MonoBehaviour
 		deathScreen.SetActive(true);
 		exit = false;
 	}
+}
+
+public class LevelController
+{
+	public LevelData levelData;
+	public float waveStartTime;
+	public int enemyCount;
+
+	private int currentWave = -1;
+	private List<Enemy> waveEnemies;
+	private SortedDictionary<float, int> spawnTimes;
+	private float nextCheck;
+
+
+	public void NextWave()
+	{
+		bool hasEnded;
+		if (currentWave == -1) hasEnded = true; else
+		{
+			hasEnded = Time.time - waveStartTime > levelData.waves[currentWave].spawnTime;
+		}
+		if (levelData.waves.Length > currentWave + 1)
+		{
+			if ((levelData.waves[currentWave + 1].previousWaveCounter >= enemyCount ||
+		levelData.waves[currentWave + 1].previousWaveTimer + waveStartTime - Time.time < 0) && hasEnded)
+			{
+				currentWave++;
+				Debug.Log((currentWave + 1) + " Wave");
+				waveStartTime = Time.time;
+				waveEnemies = new List<Enemy>();
+				GetSpawnTimes();
+				Debug.Log(spawnTimes.Count + " Enemies allocated");
+			}
+		}
+		else Debug.Log("End of wave list");
+	}
+
+	private void GetSpawnTimes()
+	{
+		spawnTimes = new SortedDictionary<float, int>();
+		float time = Time.time;
+		foreach (var i in levelData.waves[currentWave].enemies)
+		{
+			int count = Random.Range(i.minSpawnedCount, i.maxSpawnedCount + 1);
+			for (var j = 0; j < count; j++)
+			{
+				while (spawnTimes.ContainsKey(time))
+				{
+					time = Random.Range(waveStartTime, waveStartTime + levelData.waves[currentWave].spawnTime);
+				}
+				spawnTimes.Add(time, i.enemyIndex);
+			}
+		}
+	}
+
+	public List<int> GetSpawnList()
+	{
+		if (nextCheck <= Time.time)
+		{
+			CheckEnemies();
+			nextCheck += 1;
+		}
+		var spawnList = new List<int>();
+
+		var keys = new List<float>(spawnTimes.Keys);
+		foreach (var i in keys)
+		{
+			if (i <= Time.time)
+			{
+				spawnList.Add(spawnTimes[i]);
+				spawnTimes.Remove(i);
+			}
+		}
+
+		enemyCount += spawnList.Count;
+		return spawnList;
+	}
+
+	private void CheckEnemies()
+	{
+		for (int i = 0; i < waveEnemies.Count; i++)
+		{
+			if (waveEnemies[i] == null)
+			{
+				waveEnemies.RemoveAt(i);
+				i--;
+				continue;
+			} else if (waveEnemies[i].IsDead)
+			{
+				waveEnemies.RemoveAt(i);
+				i--;
+				continue;
+			}
+		}
+		enemyCount = waveEnemies.Count;
+	}
+}
+
+[System.Serializable]
+public class LevelData {
+	public string levelName;
+
+	public WaveData[] waves;
+
+	public int upgradePoints;
+}
+
+[System.Serializable]
+public class EnemyData {
+	public int enemyIndex;
+	public int minSpawnedCount;
+	public int maxSpawnedCount;
+
+}
+
+[System.Serializable]
+public class WaveData
+{
+	public float spawnTime;
+	public EnemyData[] enemies;
+	public int previousWaveCounter;
+	public float previousWaveTimer;
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
 	public GameObject tpOverlay;
 	public bool CanAttack { get; set; }
@@ -10,11 +10,23 @@ public abstract class Weapon : MonoBehaviour
 	public float Load { get; set; }
 	public bool ManualReload { get; set; }
 
-	public abstract Vector2 InitUIElements(Vector2 drawPosition, Transform parent);
+	public virtual Vector2 InitUIElements(Vector2 drawPosition, Transform parent)
+	{
+		return drawPosition;
+	}
 
-	public abstract void PerformAttack(int index);
+	public virtual void PerformAttack(int index)
+	{
 
-	public abstract void PerformReload();
+	}
 
-	public abstract void CancelReload();
+	public virtual void PerformReload()
+	{
+
+	}
+
+	public virtual void CancelReload()
+	{
+
+	}
 }

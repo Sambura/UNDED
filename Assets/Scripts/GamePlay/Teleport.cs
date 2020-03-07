@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleportAcc : MonoBehaviour
+public class Teleport : MonoBehaviour
 {
 	public float tpDistance;
 	public float tpChargeTime;
