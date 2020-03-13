@@ -172,31 +172,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tpOverlay: {fileID: 6998381846631828135, guid: 1f0932005dbcfa84688ea63504e2789e,
     type: 3}
-  shotPoint: {fileID: 5041135903998178039}
   shotRate:
   - 350
   - 90
   gunFireLength: 0100000001000000
-  gunFireDelay:
+  gunFireShotRate:
   - 0
   - 0
   intake:
   - 1
   - 3
-  bullet:
-  - {fileID: 310931052279195336, guid: 350012137aa808a47b3c7c8dc6f3a50a, type: 3}
-  - {fileID: 11473245899230566, guid: b62e6f9c5573a1e4e821904dbe8a56b5, type: 3}
-  shot:
-  - {fileID: 8300000, guid: 9f9d27f35277b304ca84cf1c21e8d8d8, type: 3}
-  - {fileID: 8300000, guid: 7cf55d4dee6edd6449b3f45b7825c97e, type: 3}
-  magazine: 21
+  bulletName: []
+  magazineCapacity: 0
   reloadTime: 0.15
   partialReload: 1
   partialLoad: 1
+  dmgMultiplier: 1
+  shotPoint: {fileID: 5041135903998178039}
   fakeBullet: {fileID: 8361485583358853751, guid: 8b23f7d23e5f2034da57f129b0b4703d,
     type: 3}
   reload: {fileID: 8300000, guid: 6e8e37ba40704114fb4a29262f5226d0, type: 3}
-  dmgMultiplier: 1
 --- !u!82 &2784716357482618141
 AudioSource:
   m_ObjectHideFlags: 0
@@ -210,7 +205,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.7
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

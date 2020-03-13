@@ -1,0 +1,9 @@
+{
+	"name" : "Firegun low",
+    "previewImage": "fireGun",
+	"description": "Definetly dangerous thing. This firegun can emit fire with temperature above <color=#cc0000>1000</color> degrees Celsius.",
+	"overheatTime": 10.0,
+	"coolingTime": 20.0,
+	"overheatDelay": 1.0,
+	"fireShotName": "Fire~Default"
+}

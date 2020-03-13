@@ -8,6 +8,7 @@ public class FireGun : Weapon
 	public float overheatTime;
 	public float coolingTime;
 	public float overheatDelay;
+	public string fireShotName;
 	public GameObject heatSymbol;
 	public Transform shotPoint;
 	public AudioSource audioSource;
@@ -28,6 +29,7 @@ public class FireGun : Weapon
 	private void Start()
 	{
 		attackHeatSlider.KeepFirst = true;
+		fire = PresetsManager.Instance.InstantiatePrefab("fireShot", fireShotName);
 	}
 
 	private void FixedUpdate()
@@ -93,6 +95,7 @@ public class FireGun : Weapon
 		if (shot == null)
 		{
 			shot = Instantiate(fire, shotPoint.position, shotPoint.rotation, transform).GetComponent<FireShot>();
+			shot.gameObject.SetActive(true);
 			shot.MultiplyDamage(damageMultiplier);
 		}
 	}

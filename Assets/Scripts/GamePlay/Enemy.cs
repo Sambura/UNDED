@@ -48,7 +48,7 @@ public class Enemy : Entity
 		controller = Controller.Instance;
 		horizontalVelocity = new Vector2(movementSpeed, 0);
 		transform.Translate(new Vector3(0, deltaY));
-		hp = healthPoints;
+		hp = maxHealth;
 		controller.Enemies++;
 		dmgSpec = new Dictionary<DamageType, float>();
 		isWalking = true;
@@ -61,6 +61,7 @@ public class Enemy : Entity
 		{
 			dmgSpec[i.damageType] = i.multiplier;
 		}
+		if (hp <= 0) Die();
 	}
 
 	protected virtual void Update()
@@ -68,7 +69,7 @@ public class Enemy : Entity
 		if (damageTaken > 0.51f)
 		{
 			controller.InstantiateDamageLabel(transform.position, Mathf.RoundToInt(damageTaken));
-			controller.IncreaseScore((Mathf.Min(damageTaken, healthPoints)) / 25);
+			controller.IncreaseScore(Mathf.Min(damageTaken, maxHealth) / 25);
 			if (Settings.particles && damageSystemPlay)
 				Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, damageSide == -1 ? 0 : 180));
 			damageTaken = 0;
@@ -143,8 +144,9 @@ public class Enemy : Entity
 	{
 		if (hp <= 0) return true;
 		damageSystemPlay |= damageType != DamageType.Poison && damageType != DamageType.Electricity;
-		damageTaken += damage * dmgSpec[damageType];
-		hp -= damageTaken;
+		float damageTakenLocal = damage * dmgSpec[damageType];
+		damageTaken += damageTakenLocal;
+		hp -= damageTakenLocal;
 		damageSide = (int)Mathf.Sign(x - transform.position.x);
 		if (hp <= 0) Die();
 		return true;

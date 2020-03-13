@@ -1,0 +1,12 @@
+{
+	"name" : "Default",
+    "damage": 80.0,
+	"damageDelta": 5.0,
+	"damageDelay": 0.25,
+	"lifeTime": 15.0,
+	"damageTime": 10.0,
+	"explosionForce": 1.0,
+	"damageType": 5,
+	"randomRotation": false,
+	"scoreValue": 0.01
+}

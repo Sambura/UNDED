@@ -1,0 +1,14 @@
+player // Игрок
+rifle // Винтовка
+powerPistol // Пистолет
+blaster // Бластер
+knife // Нож
+fireGun // Огнемёт
+fragGrenade // красная граната
+electroGrenade // синяя граната
+multiGrenade // жёлтая граната
+multiFragGrenade // кусочек жёлтой гранаты
+gasGrenade // зелёная граната
+throwerSymbol // руки бросающие гранату
+teleportSymbol // Символ телепортации
+whiteShieldFull // Щит

@@ -173,12 +173,14 @@ MonoBehaviour:
   damage: 100
   damageLose: 0.1
   radius: 39
+  fragmentName: 
   fragment: {fileID: 0}
   fragsCount: 0
   explosionForce: 3
   damageType: 4
   scoreValue: 0.8
   randomRotation: 1
+  damageIncrease: 1.01
 --- !u!82 &357718051408346799
 AudioSource:
   m_ObjectHideFlags: 0

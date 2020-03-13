@@ -1,0 +1,14 @@
+{
+	"name" : "Permanent shield +3",
+	"previewImage": "whiteShieldFull",
+	"previewImageColor": { "r": 0.32, "g": 0.71, "b": 1.0, "a": 1.0 },
+    "maxEnergy": 100.0,
+	"damagePerSecond": 200.0,
+	"energyRestore": 100.0,
+	"rebootThreshold": -1.0,
+	"rebootDuration": 0,
+	"rebootBoost": 1,
+	"shieldScale": 0.7,
+    "shieldColor": { "r": 0.32, "g": 0.71, "b": 1.0, "a": 1.0 },
+	"damageToBlock": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}

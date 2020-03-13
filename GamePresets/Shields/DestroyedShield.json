@@ -1,0 +1,17 @@
+{
+	"name" : "Destroyed shield",
+	"previewImage": "whiteShieldFull",
+	"previewImageColor": { "r": 0.82, "g": 0.21, "b": 0.15, "a": 1.0 },
+	"description": "Abnormal shield found near <color=#cc0000>Zone 51</color>",
+    "maxEnergy": 1000000.0,
+	"damagePerSecond": 1000000.0,
+	"energyRestore": 1.0,
+	"rebootThreshold": -1.0,
+	"rebootDuration": 0,
+	"rebootBoost": 1,
+	"shieldScale": 0.8,
+	"damageToLight": 0.08,
+    "shieldColor": { "r": 0.32, "g": 0.71, "b": 1.0, "a": 1.0 },
+	"rebootColor": { "r": 0.0, "g": 0.0, "b": 0.0, "a": 1.0 },
+	"damageToBlock": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}

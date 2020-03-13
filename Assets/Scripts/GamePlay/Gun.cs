@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon_gun : Weapon
+public class Gun : Weapon
 {
-	public Transform shotPoint;
 	public float[] shotRate;
 	public int[] gunFireLength;
-	public float[] gunFireDelay;
+	public float[] gunFireShotRate;
 	public float[] intake;
-	public GameObject[] bullet;
-	public AudioClip[] shot;
-	public float magazine;
+	public string[] bulletName;
+	public float magazineCapacity;
 	public float reloadTime;
 	public bool partialReload;
 	public float partialLoad;
-	public GameObject fakeBullet;
-	public AudioClip reload;
-	public float dmgMultiplier = 1;
+	public float damageMultiplier = 1;
+
+	[SerializeField] private Transform shotPoint;
+	[SerializeField] private GameObject fakeBullet;
+	[SerializeField] private AudioClip reload;
 
 	private AudioSource audioSource;
 	private Animator animator;
-	private Controller controller;
 	private float[] fireDelay;
+	private GameObject[] bullet;
 
 	private int bulletIndex;
 	private float nextShot;
@@ -32,9 +32,9 @@ public class Weapon_gun : Weapon
 	private float reloadStartTime;
 	private SpriteRenderer[] bullets;
 
-	private void Awake()
+	private void Start()
 	{
-		Load = magazine;
+		Load = magazineCapacity;
 		CanAttack = true;
 		CanReload = false;
 		ManualReload = !partialReload;
@@ -42,8 +42,13 @@ public class Weapon_gun : Weapon
 		foreach (var i in intake) minIntake = Mathf.Min(minIntake, i);
 		audioSource = GetComponent<AudioSource>();
 		animator = GetComponent<Animator>();
-		controller = FindObjectOfType<Controller>();
 		UpdateDelays();
+		bullet = new GameObject[bulletName.Length];
+		for (var i = 0; i < bullet.Length; i++)
+		{
+			bullet[i] = PresetsManager.Instance.InstantiatePrefab("bullet", bulletName[i]);
+		}
+		if (bullets != null) UpdateBullets();
 	}
 
 	public void UpdateDelays()
@@ -60,7 +65,7 @@ public class Weapon_gun : Weapon
 			for (int i = 0; i < bullets.Length; i++)
 				Destroy(bullets[i].gameObject);
 		}
-		int total = (int)magazine;
+		int total = (int)magazineCapacity;
 		bullets = new SpriteRenderer[total];
 		var corner = Camera.main.ScreenToWorldPoint(Vector3.zero);
 		float width = Mathf.Abs((corner.x - Camera.main.transform.position.x) * 2);
@@ -112,11 +117,11 @@ public class Weapon_gun : Weapon
 				if (partialReload)
 				{
 					audioSource.PlayOneShot(reload);
-					Load = Mathf.Min(magazine, Load + partialLoad);
+					Load = Mathf.Min(magazineCapacity, Load + partialLoad);
 				}
 				else
 				{
-					Load = magazine;
+					Load = magazineCapacity;
 				}
 				UpdateBullets();
 				IsReloading = false;
@@ -136,7 +141,7 @@ public class Weapon_gun : Weapon
 	{
 		if (IsAttacking) return;
 		if (!CanAttack) return; // If can't perform shot - exit
-		if (index >= bullet.Length) return; // If there is no such bullets - exit
+		if (index >= bullet.Length) index = 0; // If there is no such bullets = 0
 		if (intake[index] > Load) return; // If bullet intake is higher than left in magazine - exit
 		if (IsReloading && !partialReload) return;
 		bulletIndex = index; // Updating index
@@ -151,17 +156,20 @@ public class Weapon_gun : Weapon
 	private void Attack()
 	{
 		animator.speed = 1 / fireDelay[bulletIndex];
-		if (gunFireDelay[bulletIndex] != 0)
-			animator.speed = 1 / gunFireDelay[bulletIndex];
+		if (gunFireShotRate[bulletIndex] != 0)
+			animator.speed = gunFireShotRate[bulletIndex] / 60;
 		animator.SetTrigger("Shot");
-		audioSource.pitch = 1;
-		audioSource.PlayOneShot(shot[bulletIndex]);
 		var b = Instantiate(bullet[bulletIndex], shotPoint.position, Quaternion.identity).GetComponent<Bullet>();
+		b.gameObject.SetActive(true);
 		b.SetDirection((int)transform.right.x);
-		b.MultiplyDamage(dmgMultiplier);
+		b.MultiplyDamage(damageMultiplier);
+		audioSource.pitch = 1 + Random.Range(-b.pitchDelta, b.pitchDelta);
+		audioSource.PlayOneShot(b.shotSound);
 		Load -= intake[bulletIndex];
 		fireLeft--;
-		nextShot = Time.time + gunFireDelay[bulletIndex];
+		if (gunFireShotRate[bulletIndex] != 0)
+			nextShot = Time.time + 60 / gunFireShotRate[bulletIndex];
+		else nextShot = Time.time;
 		UpdateBullets();
 	}
 
@@ -169,7 +177,7 @@ public class Weapon_gun : Weapon
 	{
 		if (IsReloading) return;
 		if (IsAttacking) return;
-		if (Load == magazine) return;
+		if (Load == magazineCapacity) return;
 		animator.speed = 1 / reloadTime;
 		animator.SetTrigger("Reload");
 		if (!partialReload)

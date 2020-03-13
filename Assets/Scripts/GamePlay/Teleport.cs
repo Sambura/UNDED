@@ -1,17 +1,18 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Teleport : MonoBehaviour
 {
-	public float tpDistance;
-	public float tpChargeTime;
-	public int tpAccum;
-	public float TpSpeed;
-	public GameObject teleportSymbol;
-	public AudioClip teleportSound;
+	public float maxDistance = 75;
+	public float chargeTime = 4;
+	public int capacity = 3;
+	public float teleportationDuration = 0.04f;
 
-	public bool isTping { get; private set; }
+	[SerializeField] private GameObject teleportSymbol;
+	[SerializeField] private AudioClip teleportSound;
+
+
+	public bool IsTeleporting { get; private set; }
 
 	private SpriteRenderer spriteRenderer;
 	private Animator animator;
@@ -31,7 +32,7 @@ public class Teleport : MonoBehaviour
 		controller = FindObjectOfType<Controller>();
 		parent = GetComponentInParent<Player>();
 		weapon = parent.GetComponentInChildren<Weapon>();
-		tpCharged = tpAccum;
+		tpCharged = capacity;
 		StartCoroutine(Charger());
 	}
 
@@ -42,12 +43,12 @@ public class Teleport : MonoBehaviour
 			for (int i = 0; i < TPIcon.Length; i++)
 				Destroy(TPIcon[i].gameObject);
 		}
-		TPIcon = new Animator[tpAccum];
+		TPIcon = new Animator[capacity];
 		var corner = Camera.main.ScreenToWorldPoint(Vector3.zero);
 		float width = Mathf.Abs((corner.x - Camera.main.transform.position.x) * 2);
 		float sY = drawPosition.y - 1;
 		float sX = 0;
-		int left = tpAccum;
+		int left = capacity;
 		int index = 0;
 		while (left > 0)
 		{
@@ -70,8 +71,8 @@ public class Teleport : MonoBehaviour
 	public void InvokeTP() // Fisrt stage
 	{
 		if (tpCharged == 0) return;
-		if (isTping) return;
-		if (tpCharged != tpAccum)
+		if (IsTeleporting) return;
+		if (tpCharged != capacity)
 		{
 			var temp = TPIcon[tpCharged];
 			var pos = temp.transform.position;
@@ -83,12 +84,12 @@ public class Teleport : MonoBehaviour
 		}
 		tpCharged--;
 		audioSource.PlayOneShot(teleportSound);
-		animator.SetFloat("TPspeed", 1 / TpSpeed);
+		animator.SetFloat("TPspeed", 0.5f / teleportationDuration);
 		animator.SetTrigger("TP");
-		isTping = true;
+		IsTeleporting = true;
 		var go = Instantiate(weapon.tpOverlay, weapon.transform);
 		spriteRenderer = go.GetComponent<SpriteRenderer>();
-		go.GetComponent<Animator>().speed = 1 / TpSpeed;
+		go.GetComponent<Animator>().speed = 0.5f / teleportationDuration;
 		spriteRenderer.color = new Color(0, 0, 0, 0);
 	}
 
@@ -119,7 +120,7 @@ public class Teleport : MonoBehaviour
 
 	public void InvokeOutTP() // Third stage, called by end event in animation
 	{
-		float d = tpDistance;
+		float d = maxDistance;
 		if (Mathf.Abs(controller.Player.transform.position.x * controller.Player.transform.right.x + d) >= 175)
 		{
 			d = 175 - Mathf.Abs(controller.Player.transform.position.x);
@@ -136,19 +137,19 @@ public class Teleport : MonoBehaviour
 
 	public void FinishTP()
 	{
-		isTping = false;
+		IsTeleporting = false;
 	}
 
 	private IEnumerator Charger()
 	{
 		while (!parent.IsDead)
 		{
-			yield return new WaitUntil(() => tpCharged < tpAccum);
-			TPIcon[tpCharged].speed = 1 / tpChargeTime;
+			yield return new WaitUntil(() => tpCharged < capacity);
+			TPIcon[tpCharged].speed = 1 / chargeTime;
 			TPIcon[tpCharged].Play("Tranzit");
-			yield return new WaitForSeconds(tpChargeTime);
+			yield return new WaitForSeconds(chargeTime);
 			tpCharged++;
 		}
-		TPIcon[Mathf.Clamp(tpCharged, 0, tpAccum - 1)].speed = 0;
+		TPIcon[Mathf.Clamp(tpCharged, 0, capacity - 1)].speed = 0;
 	}
 }

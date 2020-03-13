@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-	public float healthPoints;
+	public float maxHealth;
 	public float collideWidth;
 	public bool IsDead { get; protected set; }
 

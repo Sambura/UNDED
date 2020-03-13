@@ -105,10 +105,13 @@ MonoBehaviour:
   damageLose: 0.1
   minDamage: 100
   damageType: 2
+  shotSound: {fileID: 8300000, guid: 7cf55d4dee6edd6449b3f45b7825c97e, type: 3}
+  pitchDelta: 0.07
   trail: {fileID: 6225641628925834664}
   rb: {fileID: 817438342919855673}
   boxCollider: {fileID: -2804014648164780318}
   spriteRenderer: {fileID: 8135020570255727920}
+  playerTresholdTime: 0.3
 --- !u!61 &-2804014648164780318
 BoxCollider2D:
   m_ObjectHideFlags: 0

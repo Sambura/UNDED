@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6714168635459476100}
   - component: {fileID: 6714168635459476123}
   m_Layer: 0
-  m_Name: player_grenade_throw_0
+  m_Name: Thrower
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,10 +116,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d3b79467c5e624faeb6e5b3868c76c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grenade: {fileID: 0}
-  grenadeRate: 0
-  line: {fileID: 0}
+  grenadeRate: 20
+  throwingForce: 60
+  throwingAngle: 0.7853982
   throwPoint: {fileID: 7086747604959184768}
+  grenade: {fileID: 2098447020752643828, guid: 1e086c4c3befe634e9002a27216e99b9, type: 3}
 --- !u!1 &8662226033675738141
 GameObject:
   m_ObjectHideFlags: 0

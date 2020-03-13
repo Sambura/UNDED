@@ -1,0 +1,7 @@
+{
+	"name" : "Fragment grenade",
+    "previewImage": "fragGrenade",
+	"description": "Simple grenade with small blast radius and great damage.\n<color=#ff3333>Explosive</color>",
+    "lifeTime": 1.5,
+	"blastName": "Fragment~Default"
+}

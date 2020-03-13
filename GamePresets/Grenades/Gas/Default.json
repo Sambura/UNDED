@@ -1,0 +1,7 @@
+{
+	"name" : "Gas grenade",
+    "previewImage": "gasGrenade",
+	"description": "",
+    "lifeTime": 1,
+	"blastName": "Gas~Default"
+}

@@ -1,0 +1,14 @@
+{
+	"name" : "Default blaster", 
+    "previewImage": "blaster",
+    "description": "Actual blaster. Charges itself when not shooting. Also has the <color=#ee5533>Death mode</color>.\n<color=#33ccff>Ranged weapon</color>",
+	"bulletName": [ "BlasterSmall~Default", "BlasterBig~Default" ],
+	"shotRate": [ 350.0, 100.0 ],
+	"gunFireLength": [ 1, 1 ],
+	"gunFireShotRate": [ 0.0, 0.0 ],
+	"intake": [	1.0, 3.0 ],
+	"magazineCapacity": 21,
+	"reloadTime": 0.2,
+	"partialReload": true,
+	"partialLoad": 1.0
+}

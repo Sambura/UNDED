@@ -1,0 +1,9 @@
+{
+	"name" : "Fluent teleport",
+    "previewImage": "teleportSymbol",
+	"description": "The fastest teleport in the wild west.\n<color=#00cc00>Capacity: 5 charges</color>",
+    "maxDistance": 90.0,
+	"chargeTime": 1.0,
+	"capacity": 5,
+	"teleportationDuration": 0.03
+}

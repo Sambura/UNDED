@@ -202,14 +202,15 @@ MonoBehaviour:
   overheatTime: 10
   coolingTime: 20
   overheatDelay: 1
+  fireShotName: 
   heatSymbol: {fileID: 2575010399531975935, guid: bb2b9f45b3e188e4db993d311a554eac,
     type: 3}
   shotPoint: {fileID: 5804350735704119190}
   audioSource: {fileID: 8692395231413084364}
   loopTime: 0.2
   fireSound: {fileID: 8300000, guid: 3b156957cc00d3b4fb02dfeb81441aa9, type: 3}
-  attackHeatSlider: {fileID: 0}
-  idleHeatSlider: {fileID: 0}
+  attackHeatSlider: {fileID: 686873709129582257}
+  idleHeatSlider: {fileID: 1710689748528817625}
   damageMultiplier: 1
 --- !u!114 &686873709129582257
 MonoBehaviour:

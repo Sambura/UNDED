@@ -1,0 +1,180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &318349999170457128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 318349999170457130}
+  - component: {fileID: 318349999170457131}
+  m_Layer: 0
+  m_Name: PresetsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &318349999170457130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318349999170457128}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &318349999170457131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318349999170457128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3026d04638ee11041a1681e31064fbf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  errorPrefab: {fileID: 5394754653954045877, guid: e4f1868cd56d1a44fb28c5afd8da04b4,
+    type: 3}
+  shieldPrefab: {fileID: 4806329657146507196, guid: 080648be2b582e440ba552804b3a8101,
+    type: 3}
+  teleportPrefab: {fileID: 6774726643225768023, guid: defb5a264998a8c4ca53c987a53d2e2c,
+    type: 3}
+  throwerPrefab: {fileID: 6714168635459476121, guid: dc3849186bf54d74a971eb1f741b9622,
+    type: 3}
+  playerPrefab: {fileID: 4664284181521353835, guid: c1372ca768f3e494980eb75c054a6ee5,
+    type: 3}
+  weaponsPrefabs:
+  - key: PowerPistol
+    _object: {fileID: 1759049676930219024, guid: 8b733eb6b12ef51478892ed41645ed04,
+      type: 3}
+  - key: Rifle
+    _object: {fileID: 7833410777129437834, guid: 641cb058e5105ed42b7ab0ae1706ba2f,
+      type: 3}
+  - key: Blaster
+    _object: {fileID: 4638667324604973553, guid: 70ee4d32c18afe54d80bbbfbe8af93f2,
+      type: 3}
+  - key: EnergyKnife
+    _object: {fileID: 4944666780263596, guid: 84618a686470e424ca51c44b5d45b416, type: 3}
+  - key: FireGun
+    _object: {fileID: 2187343107461168160, guid: a165c6e53938e8e4e9c0ef1989a364d1,
+      type: 3}
+  grenadesPrefabs:
+  - key: Fragment
+    _object: {fileID: 2098447020752643828, guid: 1e086c4c3befe634e9002a27216e99b9,
+      type: 3}
+  - key: Electric
+    _object: {fileID: 817890816956914514, guid: 67a0bdc50769c1d43859827f3b36842b,
+      type: 3}
+  - key: Multiple_main
+    _object: {fileID: 547928465213479226, guid: 52a92d0cdd598af4a865cbede8249e5d,
+      type: 3}
+  - key: Gas
+    _object: {fileID: 3483616733866702230, guid: 64e4fc1595c1b654aa8e0834999b4c46,
+      type: 3}
+  - key: Multiple_child
+    _object: {fileID: 2980477417782126364, guid: 82c08f09c14c59749b3ebe86a038c003,
+      type: 3}
+  blastsPrefabs:
+  - key: Fragment
+    _object: {fileID: 3868383947428079765, guid: eaf7b86190cdebc44af142fdbc1c5632,
+      type: 3}
+  - key: Electric
+    _object: {fileID: 8646306175766720609, guid: b596c400024dde048a2711f54c663e68,
+      type: 3}
+  - key: Multiple_main
+    _object: {fileID: 5951668118660412325, guid: de39efbf42937c648a341b77a646abc1,
+      type: 3}
+  - key: Multiple_child
+    _object: {fileID: 3930696421199306284, guid: a144d92c0619d434b9b9659e8c086118,
+      type: 3}
+  - key: Gas
+    _object: {fileID: 4411621718819972844, guid: cf4d8fab791d770498c350d8bc28ed6b,
+      type: 3}
+  bulletsPrefabs:
+  - key: PowerPistol
+    _object: {fileID: 5706772168585878916, guid: 58e7a647461347241ad2a0719ccb6e92,
+      type: 3}
+  - key: Rifle
+    _object: {fileID: 6191192818294941137, guid: 744012d89b1a5ce4cbbab3c7c6faf6e3,
+      type: 3}
+  - key: BlasterSmall
+    _object: {fileID: 310931052279195336, guid: 350012137aa808a47b3c7c8dc6f3a50a,
+      type: 3}
+  - key: BlasterBig
+    _object: {fileID: 11473245899230566, guid: b62e6f9c5573a1e4e821904dbe8a56b5, type: 3}
+  enemiesPrefabs:
+  - key: Warrior
+    _object: {fileID: 7645632048655553709, guid: 20d9d5eacdee05c47a2baa9a9b18e325,
+      type: 3}
+  - key: RifleHermit
+    _object: {fileID: 8274000691661349217, guid: 783e79a1748bcd84791fe230da56c4e3,
+      type: 3}
+  - key: SpearHermit
+    _object: {fileID: 8630107215321074208, guid: 2f3b120e00545af4ea2845bc41034d7d,
+      type: 3}
+  - key: Robot
+    _object: {fileID: 6516898861471085771, guid: dc7965786cfd8a540870c24f1c52b886,
+      type: 3}
+  - key: Drone
+    _object: {fileID: 6219067395296598868, guid: 51ebb1334e8f5a842b770d16d7b1f128,
+      type: 3}
+  - key: Zombie
+    _object: {fileID: 7020377696812033229, guid: 0b469e6f614d21142967a441a19259c8,
+      type: 3}
+  - key: Cringe
+    _object: {fileID: 3100972131231986206, guid: 9d1da52b58e979c47ae9be9cab896530,
+      type: 3}
+  fireShotsPrefabs:
+  - key: Fire
+    _object: {fileID: 8880296752551882438, guid: e737cdef03ead4c46b8a4e78df6220e2,
+      type: 3}
+  - key: BlueFire
+    _object: {fileID: 5400261425266214579, guid: 4032afa1a778f954c870faf1b883ec12,
+      type: 3}
+  previewImages:
+  - key: whiteShieldFull
+    sprite: {fileID: 21300000, guid: 5f6d92ec4eed2f744925cbd1743f443f, type: 3}
+  - key: teleportSymbol
+    sprite: {fileID: -4515323635444059772, guid: 15be5b8b9298d4246b8b0b8b4894941c,
+      type: 3}
+  - key: powerPistol
+    sprite: {fileID: 21300000, guid: fed174d9e83c3e7438b14a42ca442e04, type: 3}
+  - key: throwerSymbol
+    sprite: {fileID: -8411394109401845630, guid: d50951423fc5e4f48ac2fefcea6196e2,
+      type: 3}
+  - key: powerPistolBullet
+    sprite: {fileID: 21300000, guid: df2fced8651c0e543a37e9eceb3c0bb7, type: 3}
+  - key: fragGrenade
+    sprite: {fileID: -1527999777138193665, guid: 8163c7cd2c07e0a43b61bade7240a6fe,
+      type: 3}
+  - key: rifle
+    sprite: {fileID: 21300000, guid: 723aa51e8179f99488d5dc878aacd2e8, type: 3}
+  - key: knife
+    sprite: {fileID: 21300000, guid: b377a53a179fbc14cbf73e256abccd73, type: 3}
+  - key: fireGun
+    sprite: {fileID: 21300000, guid: 395081a603d3b27418ab2c34dff1c77c, type: 3}
+  - key: blaster
+    sprite: {fileID: 21300000, guid: 623612c1ad345444abc1071b08650663, type: 3}
+  - key: electroGrenade
+    sprite: {fileID: -4166723689478141992, guid: 8163c7cd2c07e0a43b61bade7240a6fe,
+      type: 3}
+  - key: multiGrenade
+    sprite: {fileID: -1952370511707383376, guid: 8163c7cd2c07e0a43b61bade7240a6fe,
+      type: 3}
+  - key: multiFragGrenade
+    sprite: {fileID: -7503311806382871000, guid: 5014e3eb92102a04aaa9ba743d071cca,
+      type: 3}
+  - key: gasGrenade
+    sprite: {fileID: 308633996491047028, guid: 8163c7cd2c07e0a43b61bade7240a6fe, type: 3}
+  - key: player
+    sprite: {fileID: 21300000, guid: 0c55e80e031dd5e4786821013038823e, type: 3}

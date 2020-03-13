@@ -10,6 +10,14 @@ public class MenuController : MonoBehaviour
 	public ScrollViewScript grenadeSelector;
 	public ScrollViewScript statSelector;
 	public ScrollViewScript difficultySelector;
+	[Header("Debug scrolls")]
+	public ScrollViewScript weapon;
+	public ScrollViewScript grenade;
+	public ScrollViewScript player;
+	public ScrollViewScript thrower;
+	public ScrollViewScript teleport;
+	public ScrollViewScript shield;
+
 	public GameObject[] screens;
 	public GameObject[] Grenades;
 	public RawImage fader;
@@ -27,6 +35,7 @@ public class MenuController : MonoBehaviour
 	private bool fadeOut;
 	private bool fading;
 
+	public Controller.PlayerData playerData;
 	public string Weapon { get; set; }
 	public GameObject Grenade { get; set; }
 	public int Difficulty { get; set; }
@@ -88,11 +97,11 @@ public class MenuController : MonoBehaviour
 		})));
 	}
 
-	public void StartTheGame()
+	public void StartTheGame(int source)
 	{
 		StartCoroutine(Fader(new System.Action(() =>
 		{
-			StartCoroutine(LevelLoader());
+			StartCoroutine(LevelLoader(source));
 		})));
 	}
 
@@ -132,14 +141,34 @@ public class MenuController : MonoBehaviour
 		}
 	}
 
-	private IEnumerator LevelLoader()
+	private IEnumerator LevelLoader(int source)
 	{
 		loadingScreen.SetActive(true);
 		yield return null;
-		Weapon = weapons[weaponSelector.SelectedIndex];
-		Grenade = Grenades[grenadeSelector.SelectedIndex];
-		Stats = statSelector.SelectedIndex;
-		Difficulty = difficultySelector.SelectedIndex;
+		if (source == 0)
+		{
+			playerData.weaponName = weaponSelector.SelectedItem.legacyName;
+			playerData.throwerName = "Default thrower";
+			playerData.teleportName = "Default teleport";
+			playerData.grenadeName = grenadeSelector.SelectedItem.legacyName;
+			playerData.playerName = statSelector.SelectedItem.legacyName;
+			playerData.shieldName = "Default shield";
+
+			Difficulty = difficultySelector.SelectedIndex;
+		}
+		else if (source == 1)
+		{
+			playerData.grenadeName = grenade.SelectedItem.legacyName;
+			playerData.playerName = player.SelectedItem.legacyName;
+			if (shield.SelectedIndex != 0)
+				playerData.shieldName = shield.SelectedItem.legacyName;
+			if (teleport.SelectedIndex != 0)
+				playerData.teleportName = teleport.SelectedItem.legacyName;
+			if (thrower.SelectedIndex != 0)
+				playerData.throwerName = thrower.SelectedItem.legacyName;
+			playerData.weaponName = weapon.SelectedItem.legacyName;
+			Difficulty = 0;
+		}
 		yield return null;
 		var process = SceneManager.LoadSceneAsync(1, LoadSceneMode.Single);
 		process.allowSceneActivation = false;

@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a57eab23a79df4c926ef832acd96a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 600
+  maxHealth: 500
   collideWidth: 8
   movementSpeed: 25
   deltaY: 12
@@ -389,7 +389,7 @@ MonoBehaviour:
   damage: 7.5
   attackDistance: 100
   approachDistance: 60
-  deltaDistance: 0
+  deltaDistance: 20
   playSoundOnMiss: 1
   scoreValue: 2.4
   attackSound: {fileID: 8300000, guid: 0f33c0ba8bbb3014fa128da74974e099, type: 3}

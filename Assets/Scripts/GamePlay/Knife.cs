@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon_knife : Weapon
+public class Knife : Weapon
 {
 	public Transform shotPoint;
 	public float damage;
@@ -13,7 +13,6 @@ public class Weapon_knife : Weapon
 	public AudioClip attackSound;
 	public DamageType damageType;
 
-	private Controller controller;
 	private Animator animator;
 	private AudioSource audioSource;
 	private Player parent;
@@ -25,7 +24,6 @@ public class Weapon_knife : Weapon
 	{
 		UpdateDelays();
 		animator = GetComponent<Animator>();
-		controller = FindObjectOfType<Controller>();
 		audioSource = GetComponent<AudioSource>();
 		parent = GetComponentInParent<Player>();
 		CanAttack = true;

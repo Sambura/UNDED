@@ -1,0 +1,16 @@
+{
+	"name" : "Default shield",
+	"previewImage": "whiteShieldFull",
+	"previewImageColor": { "r": 0.32, "g": 0.51, "b": 1.0, "a": 1.0 },
+	"description": "Completely default shield.\n<color=#2640ff>Energy capacity: 250</color>\n<color=#26ff40>Energy restore: 5 seconds</color>\n\nP.S. Cannot block <color=#339923>poison</color> and <color=#ffee15>melee</color> damage.",
+    "maxEnergy": 250.0,
+	"damagePerSecond": 250.0,
+	"energyRestore": 50.0,
+	"rebootThreshold": 0,
+	"rebootDuration": 7,
+	"rebootBoost": 1,
+	"shieldScale": 0.8,
+    "shieldColor": { "r": 0.32, "g": 0.71, "b": 1.0, "a": 1.0 },
+	"rebootColor": { "r": 0.81, "g": 0.1, "b": 0.1, "a": 1.0 },
+	"damageToBlock": [ 0, 1, 2, 3, 4, 7 ]
+}

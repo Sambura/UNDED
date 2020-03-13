@@ -47,7 +47,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 1, g: 0.504717, b: 0.75832176, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.7
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbba771f2704e8a4db8ba534a1effa7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 300
+  maxHealth: 350
   collideWidth: 7
   movementSpeed: 55
   deltaY: 12
