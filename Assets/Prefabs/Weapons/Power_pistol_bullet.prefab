@@ -103,10 +103,13 @@ MonoBehaviour:
   damageLose: 2
   minDamage: 50
   damageType: 1
+  shotSound: {fileID: 8300000, guid: c888dcdd513b0c4408100c8795e61e5d, type: 3}
+  pitchDelta: 0.07
   trail: {fileID: 6232584109787662913}
   rb: {fileID: 5395162786263840874}
   boxCollider: {fileID: 2191773901569487258}
   spriteRenderer: {fileID: 4611443909142089170}
+  playerTresholdTime: 0.3
 --- !u!50 &5395162786263840874
 Rigidbody2D:
   serializedVersion: 4

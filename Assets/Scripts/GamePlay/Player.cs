@@ -1,38 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : Entity
 {
 	public float movementSpeed;
 	public float regeneration;
-	public float dmgLockScale;
-	public float dmgLockTime;
+	public float damageLockScale;
+	public float damageLockTime;
 	public float unlockSpeed;
-	public float stillRegenScaleInc;
+	public float stillRegenerationBoost;
 	public AudioClip damageTaken;
 	public GameObject dmgSystem;
-	public Transform UISpawnPoint;
+	[SerializeField] private Transform UISpawnPoint;
+	public Transform weaponHolder;
 
 	private Animator animator;
 	private AudioSource audioSource;
-	private Weapon weapon;
 	private Controller controller;
-	public Teleport equipment;
-	public Thrower thrower;
-	public HealthBar healthBar;
+	[System.NonSerialized] public Weapon weapon;
+	[System.NonSerialized] public Teleport teleport;
+	[System.NonSerialized] public Thrower thrower;
+	[System.NonSerialized] public Shield shield;
+
 	[SerializeField] private DamageSpec[] damageSpecifications;
 	public Dictionary<DamageType, float> dmgSpec;
-	public Shield shield;
 
-	[Header("Experimental")]
-	public string weaponName;
-	public string teleportName;
-	public string shieldName;
-	public string throwerName;
-
-
+	private HealthBar healthBar;
 	public float hp { get; private set; }
 	private float lastHp;
 	private bool left;
@@ -40,16 +33,13 @@ public class Player : Entity
 	private bool damageSystemPlay;
 	private float regenerationScale;
 	private float regenUnlockTime;
-	private float regenLockScale;
 
-#if UNITY_ANDROID
 	public bool Space { get; set; }
 	public bool F { get; set; }
 	public bool R { get; set; }
 	public bool Fire1 { get; set; }
 	public bool Fire2 { get; set; }
 	public float movingControls { get; set; }
-#endif
 
 	#region Singleton
 	public static Player Instance;
@@ -83,25 +73,19 @@ public class Player : Entity
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
-		hp = healthPoints;
-		healthBar.Init(hp / healthPoints);
+		hp = maxHealth;
+		healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
+		UISpawnPoint = GameObject.FindGameObjectWithTag("UIgrip").transform;
+		healthBar.Init(hp / maxHealth);
 		/*
 		var f = new System.IO.FileInfo("player.json");
 		var ff = f.CreateText();
 		ff.Write(JsonUtility.ToJson(this, true));
 		ff.Close();*/
 
-		if (weaponName != "")
-		{
-
-		}
-	}
-
-	public void GetWeapon()
-	{
-		weapon = GetComponentInChildren<Weapon>();
 		InitBullets();
 		InitOther();
+		InitSpecs();
 	}
 
 	public void GetHealth(float health)
@@ -112,14 +96,14 @@ public class Player : Entity
 	public void InitBullets()
 	{
 		iconY = -2.5f;
-		weapon.gameObject.SetActive(true);
 		iconY = weapon.InitUIElements(new Vector2(0, iconY), UISpawnPoint).y;
 	}
 
 	public void InitOther()
 	{
-		var temp = equipment.InitAccessory(new Vector2(0, iconY), UISpawnPoint);
-		thrower.InitThrower(temp, UISpawnPoint);
+		Vector2 drawPosition = new Vector2(0, iconY);
+		if (teleport != null) drawPosition = teleport.InitAccessory(drawPosition, UISpawnPoint);
+		if (thrower != null) thrower.InitThrower(drawPosition, UISpawnPoint);
 	}
 
 	public override bool GetHit(float damage, float x, DamageType damageType)
@@ -137,15 +121,15 @@ public class Player : Entity
 		if (!audioSource.isPlaying)
 			audioSource.PlayOneShot(damageTaken);
 		left = transform.position.x < x;
-		regenerationScale = dmgLockScale;
-		regenUnlockTime = Time.time + dmgLockTime;
+		regenerationScale = damageLockScale;
+		regenUnlockTime = Time.time + damageLockTime;
 		return true;
 	}
 
 	private void UpdateHealth()
 	{
-		hp = Mathf.Clamp(hp, 0, healthPoints);
-		healthBar.UpdateHealth(hp / healthPoints);
+		hp = Mathf.Clamp(hp, 0, maxHealth);
+		healthBar.UpdateHealth(hp / maxHealth);
 		if (hp == 0)
 		{
 			animator.SetBool("isDead", true);
@@ -158,12 +142,21 @@ public class Player : Entity
 
 	public void GetAccessoryAction(int idx)
 	{
-		equipment.GetAccessoryAction(idx);
+		teleport.GetAccessoryAction(idx);
 	}
 
 	void Update()
 	{
 		if (IsDead || controller.IsPaused) return;
+
+#if UNITY_STANDALONE || UNITY_EDITOR
+		Fire1 = Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Return);
+		Fire2 = Input.GetKey(KeyCode.Quote) || Input.GetKey(KeyCode.N);
+		F = Input.GetKey(KeyCode.F);
+		R = Input.GetKey(KeyCode.R);
+		Space = Input.GetKey(KeyCode.Space);
+		movingControls = Input.GetAxisRaw("Horizontal");
+#endif
 
 		if (lastHp > hp && Settings.particles && damageSystemPlay)
 		{
@@ -181,32 +174,27 @@ public class Player : Entity
 			regenerationScale = Mathf.Clamp01(regenerationScale + unlockSpeed * Time.deltaTime);
 		}
 
-		if (equipment.isTping) return;
+		bool isThrowing = thrower != null;
+		if (isThrowing) isThrowing = thrower.IsThrowing;
+
+		if (teleport != null) if (teleport.IsTeleporting) return;
 		int delta = 0;
-#if UNITY_STANDALONE
-		if (Input.GetKey(KeyCode.D))
-#elif UNITY_ANDROID
 		if (movingControls > 0)
-#endif
 		{
 			delta = 1;
 			if (transform.right.x < 0)
-				if (!thrower.IsThrowing)
+				if (!isThrowing)
 					transform.Rotate(Vector3.up, 180);
 				else delta = -1;
 			animator.SetFloat("walkSpeed", movementSpeed / 75);
 			animator.SetBool("isWalking", true);
 		}
 		else
-#if UNITY_STANDALONE
-		if (Input.GetKey(KeyCode.A))
-#elif UNITY_ANDROID
 		if (movingControls < 0)
-#endif
 		{
 			delta = 1;
 			if (transform.right.x > 0)
-				if (!thrower.IsThrowing)
+				if (!isThrowing)
 					transform.Rotate(Vector3.up, 180);
 				else delta = -1;
 			animator.SetFloat("walkSpeed", movementSpeed / 75);
@@ -215,15 +203,10 @@ public class Player : Entity
 		else
 		{
 			animator.SetBool("isWalking", false);
-			hp += regeneration / 60 * Time.deltaTime * regenerationScale * stillRegenScaleInc;
+			hp += regeneration / 60 * Time.deltaTime * regenerationScale * stillRegenerationBoost;
 		}
-		if (
-#if UNITY_STANDALONE
-		Input.GetKeyUp(KeyCode.F)
-#elif UNITY_ANDROID
-		F
-#endif
-			&& (!weapon.IsReloading || !weapon.ManualReload))
+
+		if (F && (!weapon.IsReloading || !weapon.ManualReload) && thrower != null)
 		{
 			thrower.PerformThrow();
 		}
@@ -240,48 +223,27 @@ public class Player : Entity
 	{
 		if (IsDead || controller.IsPaused) return;
 
-		if (equipment.isTping) return;
-		
-		if (!thrower.IsThrowing) {
+		if (teleport != null) if (teleport.IsTeleporting) return;
 
-#if UNITY_STANDALONE
-		if (Input.GetKey(KeyCode.M) || Input.GetKey(KeyCode.Return))
-#elif UNITY_ANDROID
-		if (Fire1)
-#endif
+		bool isThrowing = thrower != null;
+		if (isThrowing) isThrowing = thrower.IsThrowing;
+		if (!isThrowing)
+		{
+			if (Fire1)
 			{
 				weapon.PerformAttack(0);
 			}
 			else
-#if UNITY_STANDALONE
-		if (Input.GetKey(KeyCode.Quote) || Input.GetKey(KeyCode.N))
-#elif UNITY_ANDROID
-		if (Fire2)
-#endif
+			if (Fire2)
 			{
 				weapon.PerformAttack(1);
 			}
+			if (weapon.CanReload || (R && weapon.ManualReload)) weapon.PerformReload();
 		}
-		///
-		if ((
-#if UNITY_STANDALONE
-		Input.GetKey(KeyCode.R)
-#elif UNITY_ANDROID
-		R
-#endif
-			&& weapon.ManualReload) || (weapon.CanReload && !thrower.IsThrowing))
+
+		if (Space && teleport != null)
 		{
-			weapon.PerformReload();
-		}
-		if ( /*!weapon.IsAttacking && */
-#if UNITY_STANDALONE
-		Input.GetKey(KeyCode.Space)
-#elif UNITY_ANDROID
-		Space
-#endif
-			)
-		{
-			equipment.InvokeTP();
+			teleport.InvokeTP();
 		}
 	}
 }

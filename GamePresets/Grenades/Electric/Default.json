@@ -1,0 +1,7 @@
+{
+	"name" : "Electric grenade",
+    "previewImage": "electroGrenade",
+	"description": "Before creating AI, humanity decided to protect themselves from smart robots. This grenade is the result of this idea. In theory, it can provide big city with electricity for about three days.\n<color=#0cc1e8>Electric</color>",
+    "lifeTime": 2.0,
+	"blastName": "Electric~Default"
+}

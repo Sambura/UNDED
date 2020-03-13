@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a57eab23a79df4c926ef832acd96a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 100
+  maxHealth: 100
   collideWidth: 5
   movementSpeed: 80
   deltaY: 8

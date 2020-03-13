@@ -1,0 +1,9 @@
+{
+	"name" : "Default teleport",
+    "previewImage": "teleportSymbol",
+	"description": "Default teleport for suckers.\n<color=#00cc00>Capacity: 3 charges</color>",
+    "maxDistance": 75.0,
+	"chargeTime": 2.0,
+	"capacity": 3,
+	"teleportationDuration": 0.05
+}

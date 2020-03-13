@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\DebugMenuController.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Blast.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Bullet.cs" />
     <Compile Include="Assets\Scripts\GamePlay\CameraHandle.cs" />
@@ -76,7 +77,9 @@
     <Compile Include="Assets\Scripts\GamePlay\FireGun.cs" />
     <Compile Include="Assets\Scripts\GamePlay\FireShot.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Grenade.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\Gun.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Joystick.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\Knife.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Label.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Lamp.cs" />
     <Compile Include="Assets\Scripts\GamePlay\ParticleSystemDestroyer.cs" />
@@ -88,8 +91,6 @@
     <Compile Include="Assets\Scripts\GamePlay\ThrowerEnemy.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Utility.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Weapon.cs" />
-    <Compile Include="Assets\Scripts\GamePlay\Weapon_gun.cs" />
-    <Compile Include="Assets\Scripts\GamePlay\Weapon_knife.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\Physics_test\Blast_PhysicsTest.cs" />
@@ -98,6 +99,8 @@
     <Compile Include="Assets\Scripts\PublicDestroyer.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
     <Compile Include="Assets\Scripts\UI\CheckButton.cs" />
+    <Compile Include="Assets\Scripts\UI\ErrorProvider.cs" />
+    <Compile Include="Assets\Scripts\UI\ScaleEventRaiser.cs" />
     <Compile Include="Assets\Scripts\UI\ScrollViewItem.cs" />
     <Compile Include="Assets\Scripts\UI\ScrollViewScript.cs" />
     <Compile Include="Assets\Scripts\UI\SpriteSlider.cs" />

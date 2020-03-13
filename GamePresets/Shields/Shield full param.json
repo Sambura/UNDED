@@ -1,0 +1,47 @@
+{
+	"name" : "[DoNotLoadInGame]",
+    "previewImage": "",
+    "maxEnergy": 1000.0,
+    "damagePerSecond": 1000.0,
+    "energyRestore": 100.0,
+    "rebootThreshold": 0.0,
+    "rebootDuration": 10.0,
+    "rebootBoost": 1.5,
+    "shieldScale": 0.8,
+    "shieldColor": {
+        "r": 0.3176470696926117,
+        "g": 0.7098039388656616,
+        "b": 1.0,
+        "a": 1.0
+    },
+    "damageToBlock": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+    ],
+    "shieldNormalWidth": 50.0,
+    "sideShield": {
+        "instanceID": 24050
+    },
+    "hitSound": [
+        {
+            "instanceID": 180784
+        }
+    ],
+    "rebootStart": {
+        "instanceID": 126784
+    },
+    "rebootEnd": {
+        "instanceID": 126782
+    },
+    "rebootLoop": {
+        "instanceID": 201592
+    },
+    "soundDelta": 0.07,
+    "rebootSoundStopDelay": 0.75
+}

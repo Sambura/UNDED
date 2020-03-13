@@ -1,0 +1,9 @@
+{
+	"name" : "Default",
+    "movementSpeed": 135.0,
+	"damage": 270.0, 
+	"angle": 0.0,
+	"damageLose": 0.1,
+	"minDamage": 100,
+	"damageType": 2
+}

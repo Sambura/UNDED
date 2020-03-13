@@ -1,0 +1,11 @@
+{
+	"name" : "Firegun high",
+    "previewImage": "fireGun",
+	"previewImageColor": { "r": 0.32, "g": 0.71, "b": 1.0, "a": 1.0 },
+	"description": "Oh. Well...\nIt can throw <color=#33ccff>blue fire</color>.... Why are you still alive?!",
+	"overheatTime": 10.0,
+	"coolingTime": 20.0,
+	"overheatDelay": 1.0,
+	"fireShotName": "BlueFire~Default",
+	"damageMultiplier": 1.0
+}

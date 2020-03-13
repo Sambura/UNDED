@@ -1,0 +1,11 @@
+{
+	"name": "Sniper",
+	"previewImage": "rifle",
+	"maxHealth": 1000.0,
+	"movementSpeed": 60.0,
+	"regeneration": 750.0,
+	"damageLockScale": 0.0,
+	"damageLockTime": 4.0,
+	"unlockSpeed": 1.0,
+	"stillRegenerationBoost": 0.1
+}

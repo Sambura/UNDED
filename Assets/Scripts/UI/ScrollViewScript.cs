@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class ScrollViewScript : MonoBehaviour
 {
@@ -19,13 +17,15 @@ public class ScrollViewScript : MonoBehaviour
 	private ScrollRect scrollRect;
 	private bool isScrolling;
 	private float gripTime;
-	private float gripPosition;
+	private Vector2 gripPosition;
 	private bool isGripped;
 	private RectTransform[] positions;
 	private RectTransform position;
 	private bool gripCompeted;
-	private float leftBound, rightBound;
+	private float leftBound, rightBound, topBound, bottomBound;
+	private int lastUpdate;
 
+	public ScrollViewItem SelectedItem { get; private set; }
 	public int SelectedIndex { get; private set; }
 	public int ItemsCount { get; private set; }
 
@@ -48,7 +48,7 @@ public class ScrollViewScript : MonoBehaviour
 		UpdateData(panel);
 		gripTime = Time.time;
 		isGripped = true;
-		gripPosition = position.anchoredPosition.x;
+		gripPosition = position.anchoredPosition;
 		scrollRect.inertia = false;
 	}
 
@@ -64,28 +64,63 @@ public class ScrollViewScript : MonoBehaviour
 		GoToPanel(SelectedIndex - 1);
 	}
 
-	void Awake()
+	void Start()
 	{
-		items = GetComponentsInChildren<Button>();
-		ItemsCount = items.Length;
-		itemsData = new ScrollViewItem[ItemsCount];
+		UpdateContent();
+	}
+
+	public void UpdateContent()
+	{
+		var children = new List<ScrollViewItem>();
+		foreach (var i in GetComponentsInChildren<ScrollViewItem>())
+		{
+			if (i.transform.parent == transform) children.Add(i);
+		}
+		itemsData = children.ToArray();
+		ItemsCount = itemsData.Length;
+		items = new Button[ItemsCount];
 		scrollRect = GetComponentInParent<ScrollRect>();
 		positions = new RectTransform[ItemsCount];
 		for (int i = 0; i < ItemsCount; i++)
 		{
-			positions[i] = items[i].GetComponent<RectTransform>();
-			itemsData[i] = items[i].gameObject.GetComponent<ScrollViewItem>();
+			positions[i] = itemsData[i].GetComponent<RectTransform>();
+			items[i] = itemsData[i].gameObject.GetComponent<Button>();
+			/*if (items[i] != null)
+			{
+				UnityEngine.Events.UnityAction action = new UnityEngine.Events.UnityAction(() => { GoToPanel(i); });
+				items[i].onClick.AddListener(action);
+			}*/
 		}
 		position = GetComponent<RectTransform>();
-		leftBound = -positions[ItemsCount - 1].anchoredPosition.x - positions[ItemsCount - 1].sizeDelta.x / 2;
-		rightBound = positions[0].sizeDelta.x / 2;
-		UpdateData(0);
+		if (ItemsCount != 0)
+		{
+			leftBound = -positions[ItemsCount - 1].anchoredPosition.x - positions[ItemsCount - 1].sizeDelta.x / 2;
+			rightBound = positions[0].sizeDelta.x / 2;
+			topBound = -positions[ItemsCount - 1].anchoredPosition.y + positions[ItemsCount - 1].sizeDelta.y / 2;
+			bottomBound = -positions[0].sizeDelta.y / 2 - positions[0].anchoredPosition.y; 
+			lastUpdate = -1;
+			UpdateData(0);
+		}
 	}
 
-	private void UpdateData(int index)
+	public void UpdateData(int index = -1)
 	{
-		selectedName.text = itemsData[index].itemName;
-		selectedDescription.text = itemsData[index].itemDescription;
+		if (index == -1)
+		{
+			if (lastUpdate == -1) return;
+			index = lastUpdate;
+		} else
+		{
+			if (index == lastUpdate) return;
+			//if (selectedName != null)
+				//if (selectedName.text == itemsData[index].itemName) return;
+		}
+		if (selectedName != null)
+			selectedName.text = itemsData[index].itemName;
+		if (selectedDescription != null)
+			selectedDescription.text = itemsData[index].itemDescription;
+		SelectedItem = itemsData[index];
+		lastUpdate = index;	
 	}
 
 	void Update()
@@ -94,10 +129,10 @@ public class ScrollViewScript : MonoBehaviour
 		float minDistance = float.MaxValue;
 		for (int i = 0; i < ItemsCount; i++)
 		{
-			float distance = Mathf.Abs(position.anchoredPosition.x + positions[i].anchoredPosition.x);
+			float distance = (positions[i].anchoredPosition + position.anchoredPosition).magnitude;
 			float size = Mathf.Clamp01(1 - distance * unselectedScaling);
-			size = Mathf.SmoothStep(items[i].transform.localScale.x, size, scalingSpeed);
-			items[i].transform.localScale = new Vector2(size, size);
+			size = Mathf.SmoothStep(itemsData[i].transform.localScale.x, size, scalingSpeed);
+			itemsData[i].transform.localScale = new Vector2(size, size);
 			if (distance < minDistance)
 			{
 				nearestIndex = i;
@@ -105,16 +140,20 @@ public class ScrollViewScript : MonoBehaviour
 			}
 		}
 		UpdateData(nearestIndex);
-		if (!isScrolling && position.anchoredPosition.x != Mathf.Clamp(position.anchoredPosition.x, leftBound, rightBound))
+
+		
+		if (!isScrolling && (position.anchoredPosition.x != Mathf.Clamp(position.anchoredPosition.x, leftBound, rightBound) ||
+			position.anchoredPosition.y != Mathf.Clamp(position.anchoredPosition.y, bottomBound, topBound)))
 		{
 			scrollRect.inertia = false;
 		}
+		
 
-		if (Mathf.Abs(scrollRect.velocity.x) <= gripSpeed && !isGripped && !isScrolling && !gripCompeted)
+		if (Mathf.Abs(scrollRect.velocity.magnitude) <= gripSpeed && !isGripped && !isScrolling && !gripCompeted)
 		{
 			gripTime = Time.time;
 			isGripped = true;
-			gripPosition = position.anchoredPosition.x;
+			gripPosition = position.anchoredPosition;
 			scrollRect.inertia = false;
 			SelectedIndex = nearestIndex;
 			UpdateData(SelectedIndex);
@@ -123,8 +162,9 @@ public class ScrollViewScript : MonoBehaviour
 		if (isGripped)
 		{
 			float time = (Time.time - gripTime) / gripDuration;
-			float xPos = Mathf.SmoothStep(gripPosition, -positions[SelectedIndex].anchoredPosition.x, time);
-			position.anchoredPosition = new Vector2(xPos, position.anchoredPosition.y);
+			float xPos = Mathf.SmoothStep(gripPosition.x, -positions[SelectedIndex].anchoredPosition.x, time);
+			float yPos = Mathf.SmoothStep(gripPosition.y, -positions[SelectedIndex].anchoredPosition.y, time);
+			position.anchoredPosition = new Vector2(xPos, yPos);
 			if (time >= 1)
 			{
 				isGripped = false;

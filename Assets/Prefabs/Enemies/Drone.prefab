@@ -47,7 +47,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 1
   m_Color: {r: 0.48584908, g: 0.8028645, b: 1, a: 1}
-  m_Intensity: 1.43
+  m_Intensity: 0.8
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
   m_LightCookieSprite: {fileID: 0}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a57eab23a79df4c926ef832acd96a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 180
+  maxHealth: 180
   collideWidth: 8
   movementSpeed: 60
   deltaY: 12
@@ -330,7 +330,7 @@ MonoBehaviour:
   damage: 15
   attackDistance: 40
   approachDistance: 25
-  deltaDistance: 0
+  deltaDistance: 7
   playSoundOnMiss: 1
   scoreValue: 1.6
   attackSound: {fileID: 8300000, guid: c888dcdd513b0c4408100c8795e61e5d, type: 3}

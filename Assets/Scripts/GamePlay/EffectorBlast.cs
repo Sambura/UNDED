@@ -9,7 +9,6 @@ public class EffectorBlast : Blast
 	public float damageDelta;
 	public float damageDelay;
 
-	private AudioSource audioSource;
 	private ParticleSystem particle;
 	private ParticleSystem.Particle[] particles;
 

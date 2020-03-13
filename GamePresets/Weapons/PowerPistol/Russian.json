@@ -1,0 +1,15 @@
+{
+	"name" : "Power pistol <color=#ee2222>enraged</color>", 
+    "previewImage": "powerPistol",
+	"previewImageColor": { "r": 1, "g": 0.6, "b": 0.6, "a": 1.0 },
+	"description": "This gun is from Russia. All mortals now should take a few steps backwards.",
+	"bulletName": [ "PowerPistol~PowerPistolBullet" ],
+	"shotRate": [ 600.0 ],
+	"gunFireLength": [ 1 ],
+	"gunFireShotRate": [ 0.0 ],
+	"intake": [	1.0 ],
+	"magazineCapacity": 45,
+	"reloadTime": 2.0,
+	"damageMultiplier": 2.0,
+	"partialReload": false
+}

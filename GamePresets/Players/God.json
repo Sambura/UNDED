@@ -1,0 +1,41 @@
+{
+	"name": "God",
+	"previewImage": "player",
+	"previewImageColor": { "r": 0.32, "g": 0.71, "b": 1.0, "a": 1.0 },
+	"maxHealth": 1000,
+	"movementSpeed": 100.0,
+	"damageSpecifications": [
+		{
+			"damageType": 0,
+			"multiplier": 0.0
+		},
+		{
+			"damageType": 1,
+			"multiplier": 0.0
+		},
+		{
+			"damageType": 2,
+			"multiplier": 0.0
+		},
+		{
+			"damageType": 3,
+			"multiplier": 0.0
+		},
+		{
+			"damageType": 4,
+			"multiplier": 0.0
+		},
+		{
+			"damageType": 5,
+			"multiplier": 0.0
+		},
+		{
+			"damageType": 6,
+			"multiplier": 0.0
+		},
+		{
+			"damageType": 7,
+			"multiplier": 0.0
+		}
+	]
+}

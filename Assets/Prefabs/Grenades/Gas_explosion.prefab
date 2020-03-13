@@ -4771,14 +4771,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac448c823b7916e40a309ce6220758f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePerSecond: 40
+  damage: 100
+  damageLose: 0
+  radius: 0
+  fragmentName: 
+  fragment: {fileID: 0}
+  fragsCount: 0
+  explosionForce: 1
+  damageType: 5
+  scoreValue: 0.01
+  randomRotation: 0
   damageTime: 10
   lifeTime: 15
   damageDelta: 5
   damageDelay: 0.25
-  explosionForce: 1
-  damageType: 5
-  scoreValue: 0.01
 --- !u!199 &4411621718819972847
 ParticleSystemRenderer:
   serializedVersion: 6

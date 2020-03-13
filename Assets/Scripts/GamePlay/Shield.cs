@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Shield : MonoBehaviour
 {
@@ -8,55 +9,81 @@ public class Shield : MonoBehaviour
     public float damagePerSecond = 25f;
     public float energyRestore = 2f;
     public float rebootThreshold = 0;
-    public float rebootTime = 4f;
-    public float rebootBooster = 1f;
-    public DamageType[] toBlock;
-    public GameObject sideShield;
-    public HealthBar shieldBar;
-    public AudioClip[] hitSound;
-    public AudioClip rebootStart;
-    public AudioClip rebootEnd;
-    public AudioClip rebootLoop;
-    public float soundDelta = 0.03f;
-    [HideInInspector] public SortedSet<DamageType> toBlockSet;
+    public float rebootDuration = 4f;
+    public float rebootBoost = 1f;
+    public float shieldScale = 0.8f;
+    public Color shieldColor = Color.blue;
+    public Color rebootColor = Color.red;
+    public DamageType[] damageToBlock;
+    public float damageToLight = 0.1f;
 
+    [SerializeField] private float shieldNormalWidth = 50;
+    [SerializeField] private GameObject sideShield;
+    [SerializeField] private AudioClip[] hitSound;
+    [SerializeField] private AudioClip rebootStart;
+    [SerializeField] private AudioClip rebootEnd;
+    [SerializeField] private AudioClip rebootLoop;
+    [SerializeField] private float soundDelta = 0.07f;
+    [SerializeField] private float rebootSoundStopDelay = 0.75f;
+
+    public SortedSet<DamageType> toBlockSet;
+
+    private HealthBar shieldBar;
+    private Animator animator; 
+    private AudioSource audioSource;
+    private Light2D shieldLight;
     private float currentEnergy;
     private float rebootEnding;
-    private Animator animator;
-    private float damageNow;
-    private AudioSource audioSource;
+    private float energyLeft;
+    private float shieldWidth;
 
-    void Start()
+    private void Start()
     {
+        shieldLight = GetComponent<Light2D>();
+        animator = GetComponent<Animator>();
+        shieldBar = GameObject.FindGameObjectWithTag("ShieldBar").GetComponent<HealthBar>();
+        audioSource = GetComponent<AudioSource>();
         currentEnergy = maxEnergy;
         rebootEnding = Time.time;
-        animator = GetComponent<Animator>();
         shieldBar.Init(1);
-        toBlockSet = new SortedSet<DamageType>(toBlock);
-        audioSource = GetComponent<AudioSource>();
+        toBlockSet = new SortedSet<DamageType>(damageToBlock);
         audioSource.PlayOneShot(rebootEnd);
         audioSource.pitch = 1 + Random.Range(-soundDelta, soundDelta);
+        transform.localScale = new Vector3(shieldScale, shieldScale, 1);
+        shieldWidth = shieldNormalWidth * shieldScale;
+        shieldLight.color = shieldColor;
+        sideShield.GetComponent<Light2D>().color = shieldColor;
     }
 
     public float GetHit(float damage, float x)
     {
-        if (rebootEnding <= Time.time && Mathf.Min(damageNow, currentEnergy) > 0)
+        if (rebootEnding <= Time.time && Mathf.Min(energyLeft, currentEnergy) > 0)
         {
-            float delta = Mathf.Min(damage, damageNow, currentEnergy);
-            currentEnergy -= delta;
-            damageNow -= delta;
-            damage -= delta;
             var sideShieldInstance = Instantiate(sideShield, transform);
             sideShieldInstance.transform.position = transform.position;
-            audioSource.PlayOneShot(hitSound[Random.Range(0, hitSound.Length)]);
-            audioSource.pitch = 1 + Random.Range(-soundDelta, soundDelta);
+            sideShieldInstance.GetComponent<SideShield>().initiaLight = damage * damageToLight;
+            if (Mathf.Abs(transform.position.x - x) < shieldWidth / 3)
+            {
+                sideShieldInstance = Instantiate(sideShield, transform);
+                sideShieldInstance.GetComponent<SideShield>().initiaLight = damage * damageToLight;
+                sideShieldInstance.transform.position = transform.position;
+                sideShieldInstance.transform.Rotate(0, 180, 0);
+            }
+            else
             if (transform.position.x > x ^ transform.rotation.eulerAngles.y != 0)
             {
                 sideShieldInstance.transform.Rotate(0, 180, 0);
             }
+            float delta = Mathf.Min(damage, energyLeft, currentEnergy);
+            currentEnergy -= delta;
+            energyLeft -= delta;
+            damage -= delta;
+            audioSource.PlayOneShot(hitSound[Random.Range(0, hitSound.Length)]);
+            audioSource.pitch = 1 + Random.Range(-soundDelta, soundDelta);
             if (currentEnergy <= rebootThreshold)
             {
-                rebootEnding = Time.time + rebootTime;
+                rebootEnding = Time.time + rebootDuration - rebootSoundStopDelay;
+                shieldLight.color = rebootColor;
                 animator.SetBool("Rebooting", true);
                 shieldBar.ChangeState(1, 1);
                 audioSource.PlayOneShot(rebootStart);
@@ -68,10 +95,10 @@ public class Shield : MonoBehaviour
         return damage;
     }
 
-    void Update()
+    private void Update()
     {
-        currentEnergy = Mathf.Clamp(currentEnergy + energyRestore * Time.deltaTime * (rebootEnding != -1 ? rebootBooster : 1), 0, maxEnergy);
-        damageNow = Mathf.Clamp(damageNow + Time.deltaTime * damagePerSecond, 0, damagePerSecond);
+        currentEnergy = Mathf.Clamp(currentEnergy + energyRestore * Time.deltaTime * (rebootEnding != -1 ? rebootBoost : 1), 0, maxEnergy);
+        energyLeft = Mathf.Clamp(energyLeft + Time.deltaTime * damagePerSecond, 0, damagePerSecond);
         shieldBar.UpdateHealth(currentEnergy / maxEnergy);
         if (rebootEnding != -1)
         {
@@ -79,7 +106,7 @@ public class Shield : MonoBehaviour
             {
                 animator.SetBool("Rebooting", false);
                 shieldBar.ChangeState(0, 1);
-                rebootEnding = -1;
+                rebootEnding = Time.time + rebootSoundStopDelay * 2;
                 audioSource.PlayOneShot(rebootEnd);
                 audioSource.pitch = 1 + Random.Range(-soundDelta, soundDelta);
                 StartCoroutine(LowerVolume());
@@ -89,9 +116,14 @@ public class Shield : MonoBehaviour
 
     private IEnumerator LowerVolume()
     {
-        //yield return new WaitForSeconds(rebootEnd.length * 0.6f / audioSource.pitch);
-        yield return new WaitForSeconds(0.75f / audioSource.pitch);
-        //audioSource.Stop();
+        float duration = rebootSoundStopDelay / audioSource.pitch;
+        float startTime = Time.time;
+        for (Color color = rebootColor; Time.time - startTime < duration; color = Color.Lerp(rebootColor, shieldColor, (Time.time - startTime) / duration))
+        {
+            shieldLight.color = color;
+            yield return null;
+        }
+        rebootEnding = -1;
         audioSource.clip = null;
         audioSource.loop = false;
     }

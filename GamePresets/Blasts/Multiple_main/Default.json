@@ -1,0 +1,12 @@
+{
+	"name" : "Default",
+    "damage": 20.0,
+	"damageLose": 0.1,
+	"radius": 4.0,
+	"fragmentName": "Multiple_child~Multiple grenade fragment",
+	"fragsCount": 15,
+	"explosionForce": 8.0,
+	"damageType": 7,
+	"randomRotation": true,
+	"scoreValue": 1.0
+}

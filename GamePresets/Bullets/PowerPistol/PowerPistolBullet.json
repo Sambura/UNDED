@@ -1,0 +1,9 @@
+{
+	"name" : "PowerPistolBullet",
+    "movementSpeed": 350.0,
+	"damage": 150.0, 
+	"angle": 0.3,
+	"damageLose": 2,
+	"minDamage": 50,
+	"damageType": 1
+}

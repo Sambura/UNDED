@@ -1,0 +1,17 @@
+{
+	"name": "Grenadier",
+	"previewImage": "fragGrenade",
+	"maxHealth": 2000.0,
+	"movementSpeed": 55.0,
+	"regeneration": 600.0,
+	"damageLockScale": 0.0,
+	"damageLockTime": 5.0,
+	"unlockSpeed": 0.7,
+	"stillRegenerationBoost": 0.03,
+	"damageSpecifications": [
+		{
+			"damageType": 7,
+			"multiplier": 0.0
+		}
+	]
+}

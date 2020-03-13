@@ -1,0 +1,9 @@
+{
+	"name" : "Default",
+    "damagePerSecond": 1000.0,
+	"damageLose": 3.0,
+	"damageDelta": 25.0,
+	"initialDamage": 100.0,
+	"warmUpTime": 10,
+	"damageType": 3
+}

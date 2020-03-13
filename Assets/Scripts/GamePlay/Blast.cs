@@ -7,6 +7,7 @@ public class Blast : MonoBehaviour
 	public float damage;
 	public float damageLose;
 	public float radius;
+	public string fragmentName;
 	public GameObject fragment;
 	public int fragsCount;
 	public float explosionForce;
@@ -14,7 +15,7 @@ public class Blast : MonoBehaviour
 	public float scoreValue;
 	[SerializeField] private bool randomRotation;
 
-	private AudioSource audioSource;
+	protected AudioSource audioSource;
 	protected Controller controller;
 
 	protected virtual void Start()
@@ -29,6 +30,7 @@ public class Blast : MonoBehaviour
 		{
 			var frag = Instantiate(fragment, transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
 			float angle = Random.Range(0, Mathf.PI);
+			frag.gameObject.SetActive(true);
 			frag.AddForce(new Vector2(explosionForce * Mathf.Cos(angle), explosionForce * Mathf.Sin(angle) / 2), ForceMode2D.Impulse);
 			frag.AddTorque(Random.Range(-10f, 10f), ForceMode2D.Impulse);
 			frag.GetComponentInParent<Grenade>().lifeTime += Random.Range(-0.15f, 0.5f);
@@ -64,7 +66,7 @@ public class Blast : MonoBehaviour
 		Destroy(gameObject);
 	}
 
-	private void OnDrawGizmosSelected()
+	protected virtual void OnDrawGizmosSelected()
 	{
 		Gizmos.DrawWireSphere(transform.position, radius);
 	}

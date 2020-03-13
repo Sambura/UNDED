@@ -11,17 +11,17 @@ public class Bullet : MonoBehaviour
 	public float damageLose;
 	public float minDamage;
 	public DamageType damageType;
-	public TrailRenderer trail;
-	public Rigidbody2D rb;
-	public BoxCollider2D boxCollider;
-	public SpriteRenderer spriteRenderer;
+	public AudioClip shotSound;
+	public float pitchDelta = 0.07f;
+	[SerializeField] private TrailRenderer trail;
+	[SerializeField] private Rigidbody2D rb;
+	[SerializeField] private BoxCollider2D boxCollider;
+	[SerializeField] private SpriteRenderer spriteRenderer;
+	[SerializeField] private float playerTresholdTime = 0.3f;
 
 	private Collider2D lastCollider;
 	private float startTime;
-	private float playerTresholdTime = 0.3f;
-
-	public bool Active { get; private set;}
-
+	private bool isActive;
 	private Vector3 startPoint;
 
 	public void SetDirection(int d)
@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
 		if (d == -1) deltaAngle += 180;
 		transform.Rotate(new Vector3(0, 0, deltaAngle));
 		startPoint = transform.position;
-		Active = true;
+		isActive = true;
 		rb.velocity = transform.right * movementSpeed;
 		startTime = Time.time;
 	}
@@ -50,9 +50,10 @@ public class Bullet : MonoBehaviour
 
 	private void OnCollision(Collider2D collision)
 	{
-		if (!Active) return;
+		if (!isActive) return;
 		if (collision == lastCollider) return;
 		var entity = collision.GetComponent<Entity>();
+		Debug.Log("Killed by " + collision.name);
 		if (entity != null)
 		{
 			if (entity is Player && Time.time - startTime < playerTresholdTime) return;
@@ -60,7 +61,7 @@ public class Bullet : MonoBehaviour
 			if (!entity.GetHit(GetDamage(), transform.position.x, damageType)) return;
 		} else lastCollider = collision;
 		trail.emitting = false;
-		Active = false;
+		isActive = false;
 		boxCollider.enabled = false;
 		spriteRenderer.enabled = false;
 		if (trail != null)

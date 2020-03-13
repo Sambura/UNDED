@@ -1,0 +1,7 @@
+{
+	"name" : "Multiple grenade",
+    "previewImage": "multiGrenade",
+	"description": "This tiny piece of metal will ruin everything you love exactly in 3.3 seconds. Contains a lot of <color=#ffee22>fragments</color>, which also explode.\n<color=#ff3333>Explosive²</color>",
+    "lifeTime": 2.5,
+	"blastName": "Multiple_main~Default"
+}

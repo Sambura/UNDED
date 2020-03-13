@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class ElectricBlast : Blast
 {
+	public float damageIncrease = 1.01f;
+
 	protected override void InflictDamage()
 	{
 		var victims = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 100, 512);
 
-		damage *= 1 + 0.1f * victims.Length;
-		damageLose *= 1 + 0.1f * victims.Length;
+		damage *= 1 + damageIncrease * victims.Length;
+		damageLose *= 1 + damageIncrease * victims.Length;
 
 		foreach (var entity in victims)
 		{

@@ -1,29 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Thrower : MonoBehaviour
 {
+	public float grenadeRate = 30;
+	public float throwingForce = 60;
+	public float throwingAngle = Mathf.PI / 4;
+	[SerializeField] private Transform throwPoint;
 	public GameObject grenade;
-	public float grenadeRate;
-	//public GameObject line;
-	public Transform throwPoint;
-
 
 	private float nextGrenade;
-	public float throwingForce = 60;
-	private bool isThrowing;
-	public float throwingAngle = Mathf.PI / 4;
-	private GameObject Line;
-	private LineRenderer lineRenderer;
-	private bool uprise;
 	private Animator animator;
 	private Weapon weapon;
 	private SpriteRenderer spriteRenderer;
 
 	private Animator grenadeIcon;
-	private float grenadeMass;
-	private float grenadeGravityScale;
 	private float grenadeDelay;
 
 	public bool IsThrowing { get; private set; }
@@ -31,9 +21,9 @@ public class Thrower : MonoBehaviour
 	private void Start()
 	{
 		animator = GetComponent<Animator>();
-		grenadeDelay = 60 / grenadeRate;
 		weapon = GetComponentInParent<Player>().GetComponentInChildren<Weapon>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
+		UpdateDelay();
 	}
 
 	public void UpdateDelay()
@@ -71,6 +61,7 @@ public class Thrower : MonoBehaviour
 		var g = Instantiate(grenade, throwPoint.position, Quaternion.identity);
 		var rb = g.GetComponent<Rigidbody2D>();
 		g.tag = gameObject.tag;
+		g.SetActive(true);
 		rb.AddForce(new Vector2(
 			throwingForce * Mathf.Cos(throwingAngle) * transform.right.x,
 			throwingForce * Mathf.Sin(throwingAngle)),

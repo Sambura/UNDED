@@ -1,0 +1,10 @@
+{
+	"name" : "Default",
+    "damage": 50.0,
+	"damageLose": 0.8,
+	"radius": 9.0,
+	"explosionForce": 1.0,
+	"damageType": 7,
+	"randomRotation": true,
+	"scoreValue": 0.2
+}

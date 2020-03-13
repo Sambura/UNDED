@@ -1,0 +1,46 @@
+{
+	"name": "Tank",
+	"previewImage": "player",
+	"previewImageColor":{ "r": 0.81, "g": 0.1, "b": 0.1, "a": 1.0 },
+	"maxHealth": 8000.0,
+	"movementSpeed": 50.0,
+	"regeneration": 350.0,
+	"damageLockScale": 0.75,
+	"damageLockTime": 1.0,
+	"unlockSpeed": 0.3,
+	"stillRegenerationBoost": 0.03,
+	"damageSpecifications": [
+		{
+			"damageType": 0,
+			"multiplier": 0.8
+		},
+		{
+			"damageType": 1,
+			"multiplier": 0.8
+		},
+		{
+			"damageType": 2,
+			"multiplier": 0.8
+		},
+		{
+			"damageType": 3,
+			"multiplier": 0.8
+		},
+		{
+			"damageType": 4,
+			"multiplier": 0.8
+		},
+		{
+			"damageType": 5,
+			"multiplier": 0.8
+		},
+		{
+			"damageType": 6,
+			"multiplier": 0.8
+		},
+		{
+			"damageType": 7,
+			"multiplier": 0.8
+		}
+	]
+}

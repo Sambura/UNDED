@@ -1,0 +1,10 @@
+{
+	"name" : "Default energy knife",
+    "previewImage": "knife",
+	"description": "This is knife. Knife that works on batteries. Take it or leave it.\n\nP.S. There's actually a <color=#22aa22>nuclear capacitor</color> inside, not <color=#ff2222>neanderthal batteries</color>.",
+	"damage": 125.0,
+	"attackRate": 120.0,
+	"attackDistance": 6.0,
+	"damageLose": 2.0,
+	"damageType": 6
+}

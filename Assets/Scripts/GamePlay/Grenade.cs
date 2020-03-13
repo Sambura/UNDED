@@ -5,19 +5,21 @@ using UnityEngine;
 public class Grenade : MonoBehaviour
 {
 	public float lifeTime;
+	public string blastName;
 	public GameObject blast;
 	public GameObject symbol;
 
 	private void Start()
 	{
 		StartCoroutine(CountDown());
-		var f = GetComponent<Blast>();
 	}
 
 	private IEnumerator CountDown()
 	{
 		yield return new WaitForSeconds(lifeTime);
 		Destroy(gameObject);
-		Instantiate(blast, transform.position, Quaternion.identity).tag = gameObject.tag;
+		var blastI = Instantiate(blast, transform.position, Quaternion.identity);
+		blastI.tag = gameObject.tag;
+		blastI.SetActive(true);
 	}
 }

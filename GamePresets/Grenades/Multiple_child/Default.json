@@ -1,0 +1,7 @@
+{
+	"name" : "Multiple grenade fragment",
+    "previewImage": "multiFragGrenade",
+	"description": "",
+    "lifeTime": 0.8,
+	"blastName": "Multiple_child~Default"
+}

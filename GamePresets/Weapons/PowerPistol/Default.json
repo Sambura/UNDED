@@ -1,0 +1,13 @@
+{
+	"name" : "Default power pistol", 
+    "previewImage": "powerPistol",
+    "description": "The gun that you are looking for. 18 rounds in magazine and power of Desert Eagle in one.\n<color=#33ccff>Ranged weapon</color>",
+	"bulletName": [ "PowerPistol~PowerPistolBullet" ],
+	"shotRate": [ 180.0 ],
+	"gunFireLength": [ 1 ],
+	"gunFireShotRate": [ 0.0 ],
+	"intake": [	1.0 ],
+	"magazineCapacity": 18,
+	"reloadTime": 2.5,
+	"partialReload": false
+}

@@ -1,0 +1,6 @@
+{
+	"name" : "Default thrower",
+    "previewImage": "throwerSymbol",
+	"description": "Simple 20 grenades in minute thrower.",
+    "grenadeRate": 20
+}
