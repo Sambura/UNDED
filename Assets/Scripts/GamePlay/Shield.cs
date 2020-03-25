@@ -61,11 +61,11 @@ public class Shield : MonoBehaviour
         {
             var sideShieldInstance = Instantiate(sideShield, transform);
             sideShieldInstance.transform.position = transform.position;
-            sideShieldInstance.GetComponent<SideShield>().initiaLight = damage * damageToLight;
+            sideShieldInstance.GetComponent<SideShield>().initiaLight *= damage * damageToLight;
             if (Mathf.Abs(transform.position.x - x) < shieldWidth / 3)
             {
                 sideShieldInstance = Instantiate(sideShield, transform);
-                sideShieldInstance.GetComponent<SideShield>().initiaLight = damage * damageToLight;
+                sideShieldInstance.GetComponent<SideShield>().initiaLight *= damage * damageToLight;
                 sideShieldInstance.transform.position = transform.position;
                 sideShieldInstance.transform.Rotate(0, 180, 0);
             }

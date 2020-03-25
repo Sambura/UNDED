@@ -13,7 +13,6 @@ public class Gun : Weapon
 	public float reloadTime;
 	public bool partialReload;
 	public float partialLoad;
-	public float damageMultiplier = 1;
 
 	[SerializeField] private Transform shotPoint;
 	[SerializeField] private GameObject fakeBullet;
@@ -22,7 +21,7 @@ public class Gun : Weapon
 	private AudioSource audioSource;
 	private Animator animator;
 	private float[] fireDelay;
-	private GameObject[] bullet;
+	[SerializeField] private GameObject[] bullet;
 
 	private int bulletIndex;
 	private float nextShot;
@@ -34,6 +33,7 @@ public class Gun : Weapon
 
 	private void Start()
 	{
+		player = Player.Instance;
 		Load = magazineCapacity;
 		CanAttack = true;
 		CanReload = false;
@@ -43,12 +43,22 @@ public class Gun : Weapon
 		audioSource = GetComponent<AudioSource>();
 		animator = GetComponent<Animator>();
 		UpdateDelays();
+		/*
 		bullet = new GameObject[bulletName.Length];
 		for (var i = 0; i < bullet.Length; i++)
 		{
 			bullet[i] = PresetsManager.Instance.InstantiatePrefab("bullet", bulletName[i]);
-		}
+		}*/
 		if (bullets != null) UpdateBullets();
+	}
+
+	protected override void ToggleVisibility()
+	{
+		if (bullets == null) return;
+		foreach (var i in bullets)
+		{
+			i.enabled = UIVisible;
+		}
 	}
 
 	public void UpdateDelays()
@@ -81,6 +91,7 @@ public class Gun : Weapon
 			{
 				bullets[index] = Instantiate(fakeBullet, parent).GetComponent<SpriteRenderer>();
 				bullets[index].transform.Translate(new Vector3(sX + i * 3, sY));
+				bullets[index].enabled = UIVisible;
 				index++;
 			}
 			sY -= 4;
@@ -93,7 +104,7 @@ public class Gun : Weapon
 	private void UpdateBullets()
 	{
 		for (int j = 0; j < bullets.Length; j++)
-			bullets[j].color = new Color(1, 1, 1, j < (int)Load ? 1 : 0.4f);
+			bullets[j].color = new Color(1, 1, 1, j < (int)Load ? 1 : 0.2f);
 	}
 
 	private void FixedUpdate()
@@ -144,6 +155,7 @@ public class Gun : Weapon
 		if (index >= bullet.Length) index = 0; // If there is no such bullets = 0
 		if (intake[index] > Load) return; // If bullet intake is higher than left in magazine - exit
 		if (IsReloading && !partialReload) return;
+		if (bullets == null) return;
 		bulletIndex = index; // Updating index
 		CanAttack = false; // Weapon can't fire during shoting
 		CanReload = false; // Weapon can't be reloaded during shoting
@@ -162,7 +174,7 @@ public class Gun : Weapon
 		var b = Instantiate(bullet[bulletIndex], shotPoint.position, Quaternion.identity).GetComponent<Bullet>();
 		b.gameObject.SetActive(true);
 		b.SetDirection((int)transform.right.x);
-		b.MultiplyDamage(damageMultiplier);
+		b.MultiplyDamage(damageMultiplier * (player.CriticalHit ? player.criticalHitMultiplier : 1));
 		audioSource.pitch = 1 + Random.Range(-b.pitchDelta, b.pitchDelta);
 		audioSource.PlayOneShot(b.shotSound);
 		Load -= intake[bulletIndex];

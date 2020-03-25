@@ -9,6 +9,7 @@ public class FireShot : MonoBehaviour
 	public float damageDelta;
 	public float initialDamage;
 	public float warmUpTime;
+	[System.NonSerialized] public float multiplier;
 	public DamageType damageType;
 	private ParticleSystem system;
 	private Animator animator;
@@ -22,17 +23,11 @@ public class FireShot : MonoBehaviour
 		startTime = Time.time;
 	}
 
-	public void MultiplyDamage(float multiplier)
-	{
-		damagePerSecond *= multiplier;
-		damageLose *= multiplier;
-	}
-
 	private void OnTriggerStay2D(Collider2D collision)
 	{
 		var entity = collision.GetComponent<Entity>();
-		float damage = damagePerSecond + Random.Range(-damageDelta, damageDelta);
-		float lose = Mathf.Abs(collision.transform.position.x - transform.position.x) * damageLose;
+		float damage = damagePerSecond * multiplier + Random.Range(-damageDelta, damageDelta);
+		float lose = Mathf.Abs(collision.transform.position.x - transform.position.x) * damageLose * multiplier;
 		if (entity != null)
 		{
 			entity.GetHit(Mathf.Max(Mathf.Lerp(initialDamage, damage, (Time.time - startTime) / warmUpTime) - lose, 0) * Time.fixedDeltaTime, transform.position.x, damageType);

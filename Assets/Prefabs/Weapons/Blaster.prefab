@@ -172,6 +172,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tpOverlay: {fileID: 6998381846631828135, guid: 1f0932005dbcfa84688ea63504e2789e,
     type: 3}
+  player: {fileID: 0}
+  damageMultiplier: 1
   shotRate:
   - 350
   - 90
@@ -182,16 +184,17 @@ MonoBehaviour:
   intake:
   - 1
   - 3
-  bulletName: []
-  magazineCapacity: 0
+  bulletName:
+  - BlasterBig~Default
+  magazineCapacity: 21
   reloadTime: 0.15
   partialReload: 1
   partialLoad: 1
-  dmgMultiplier: 1
   shotPoint: {fileID: 5041135903998178039}
   fakeBullet: {fileID: 8361485583358853751, guid: 8b23f7d23e5f2034da57f129b0b4703d,
     type: 3}
   reload: {fileID: 8300000, guid: 6e8e37ba40704114fb4a29262f5226d0, type: 3}
+  bullet: []
 --- !u!82 &2784716357482618141
 AudioSource:
   m_ObjectHideFlags: 0

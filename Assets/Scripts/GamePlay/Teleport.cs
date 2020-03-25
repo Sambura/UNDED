@@ -7,6 +7,8 @@ public class Teleport : MonoBehaviour
 	public float chargeTime = 4;
 	public int capacity = 3;
 	public float teleportationDuration = 0.04f;
+	public float leftOptional = float.NegativeInfinity;
+	public float rightOptional = float.PositiveInfinity;
 
 	[SerializeField] private GameObject teleportSymbol;
 	[SerializeField] private AudioClip teleportSound;
@@ -18,7 +20,6 @@ public class Teleport : MonoBehaviour
 	private Animator animator;
 	private AudioSource audioSource;
 	private Controller controller;
-	private Weapon weapon;
 	private Player parent;
 
 	private Animator[] TPIcon;
@@ -31,7 +32,6 @@ public class Teleport : MonoBehaviour
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
 		parent = GetComponentInParent<Player>();
-		weapon = parent.GetComponentInChildren<Weapon>();
 		tpCharged = capacity;
 		StartCoroutine(Charger());
 	}
@@ -87,7 +87,7 @@ public class Teleport : MonoBehaviour
 		animator.SetFloat("TPspeed", 0.5f / teleportationDuration);
 		animator.SetTrigger("TP");
 		IsTeleporting = true;
-		var go = Instantiate(weapon.tpOverlay, weapon.transform);
+		var go = Instantiate(parent.weapon.tpOverlay, parent.weapon.transform);
 		spriteRenderer = go.GetComponent<SpriteRenderer>();
 		go.GetComponent<Animator>().speed = 0.5f / teleportationDuration;
 		spriteRenderer.color = new Color(0, 0, 0, 0);
@@ -114,16 +114,29 @@ public class Teleport : MonoBehaviour
 
 	public void InvokeWeaponTP() // Second stage, called by event in animation
 	{
-		weapon.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+		parent.weapon.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
 		spriteRenderer.color = new Color(1, 1, 1);
 	}
 
 	public void InvokeOutTP() // Third stage, called by end event in animation
 	{
 		float d = maxDistance;
-		if (Mathf.Abs(controller.Player.transform.position.x * controller.Player.transform.right.x + d) >= 175)
+		if (leftOptional == float.NegativeInfinity)
 		{
-			d = 175 - Mathf.Abs(controller.Player.transform.position.x);
+			if (Mathf.Abs(parent.transform.position.x * parent.transform.right.x + d) >= controller.LevelWidth)
+			{
+				d = controller.LevelWidth - Mathf.Abs(parent.transform.position.x);
+			}
+		} else
+		{
+			if (parent.transform.position.x + parent.transform.right.x * d < leftOptional)
+			{
+				d = Mathf.Abs(leftOptional - parent.transform.position.x);
+			}
+			if (parent.transform.position.x + parent.transform.right.x * d > rightOptional)
+			{
+				d = Mathf.Abs(rightOptional - parent.transform.position.x);
+			}
 		}
 		parent.transform.Translate(new Vector2(d, 0));
 		spriteRenderer.gameObject.GetComponent<Animator>().Play("TPout");
@@ -132,7 +145,7 @@ public class Teleport : MonoBehaviour
 	public void FinishWeaponTP()
 	{
 		Destroy(spriteRenderer.gameObject);
-		weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+		parent.weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
 	}
 
 	public void FinishTP()

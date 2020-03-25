@@ -11,10 +11,9 @@ public class Settings : MonoBehaviour
 	public static bool damageText = true;
 	public static float sfxVolume;
 	public static float musicVolume;
+	public static string language;
 	public static int qualityLevel;
 	public static bool fullScreen;
-	public static float brightness = 0.3f;
-	public static bool arrows;
 	private static List<Resolution> resolutions;
 	private static string filePath;
 
@@ -23,11 +22,10 @@ public class Settings : MonoBehaviour
 	public Toggle DamageText;
 	public Slider SfxVolume;
 	public Slider MusicVolume;
-	public Slider Brightness;
-	public Dropdown QualitySetter;
-	public Dropdown ResolutionSetter;
+	public TMPro.TMP_Dropdown LanguageSelector;
+	public TMPro.TMP_Dropdown QualitySetter;
+	public TMPro.TMP_Dropdown ResolutionSetter;
 	public Toggle FullScreen;
-	public Toggle Arrows;
 	public bool keyScan;
 
 	[SerializeField] private AudioMixer SfxMixer;
@@ -44,40 +42,26 @@ public class Settings : MonoBehaviour
 			sfxMixer = SfxMixer;
 		if (musicMixer == null)
 			musicMixer = MusicMixer;
-		//qualityLevel = QualitySettings.GetQualityLevel();
 		ResolutionSetter.ClearOptions();
 		var res = Screen.resolutions;
 		var list = new List<string>();
 		foreach (var i in res) {
 			list.Add(i.width + " × " + i.height);
 		}
-		list.Add("Experimental: " + 640 + " × " + 480);
-		list.Add("Experimental: " + 640 + " × " + 320);
-		list.Add("Experimental: " + 1280 + " × " + 720);
-		list.Add("Experimental: " + 1280 + " × " + 640);
+		if (!list.Contains($"{Screen.width} × {Screen.height}"))
+		{
+			list.Add($"{Screen.width} × {Screen.height}");
+		}
 		resolutions = new List<Resolution>(Screen.resolutions);
-		resolutions.Add(new Resolution()
-		{
-			width = 640,
-			height = 480
-		});
-		resolutions.Add(new Resolution()
-		{
-			width = 640,
-			height = 320
-		});
-		resolutions.Add(new Resolution()
-		{
-			width = 1280,
-			height = 720
-		});
-		resolutions.Add(new Resolution()
-		{
-			width = 1280,
-			height = 640
-		});
+		if (!resolutions.Contains(Screen.currentResolution)) resolutions.Add(Screen.currentResolution);
 		ResolutionSetter.AddOptions(list);
-		//fullScreen = Screen.fullScreen;
+
+		if (LocalizationManager.Instance == null)
+		{
+			FindObjectOfType<LocalizationManager>().Awake();
+		}
+		LanguageSelector.ClearOptions();
+		LanguageSelector.AddOptions(LocalizationManager.Instance.languages);
 	}
 
 	private void OnEnable()
@@ -88,15 +72,17 @@ public class Settings : MonoBehaviour
 		DamageText.isOn = damageText;
 		SfxVolume.value = sfxVolume;
 		MusicVolume.value = musicVolume;
-		QualitySetter.value = qualityLevel;
-		Arrows.isOn = arrows;
+		QualitySetter.SetValueWithoutNotify(qualityLevel);
 		for (var i = 0; i < Screen.resolutions.Length; i++)
 		{
 			if (Screen.resolutions[i].width == Screen.currentResolution.width
-				&& Screen.resolutions[i].height == Screen.currentResolution.height) ResolutionSetter.value = i;
+				&& Screen.resolutions[i].height == Screen.currentResolution.height) ResolutionSetter.SetValueWithoutNotify(i);
 		}
-		FullScreen.isOn = Screen.fullScreen;
-		Brightness.value = brightness;
+		FullScreen.SetIsOnWithoutNotify(Screen.fullScreen);
+		for (var i = 0; i < LocalizationManager.Instance.languages.Count; i++)
+		{
+			if (language == LocalizationManager.Instance.languages[i]) LanguageSelector.SetValueWithoutNotify(i);
+		}
 	}
 
 	private void Update()
@@ -113,25 +99,30 @@ public class Settings : MonoBehaviour
 
 		var stream = new System.IO.FileStream(filePath, System.IO.FileMode.Open);
 		var reader = new System.IO.BinaryReader(stream);
+		try
+		{
+			screenShake = reader.ReadBoolean();
+			particles = reader.ReadBoolean();
+			damageText = reader.ReadBoolean();
 
-		screenShake = reader.ReadBoolean();
-		particles = reader.ReadBoolean();
-		damageText = reader.ReadBoolean();
+			sfxVolume = reader.ReadSingle();
+			musicVolume = reader.ReadSingle();
 
-		sfxVolume = reader.ReadSingle();
-		musicVolume = reader.ReadSingle();
+			qualityLevel = reader.ReadInt32();
+			QualitySettings.SetQualityLevel(qualityLevel);
+			int w = reader.ReadInt32();
+			int h = reader.ReadInt32();
+			fullScreen = reader.ReadBoolean();
+			language = reader.ReadString();
+		}
+		finally
+		{
+			stream.Close();
+		}
 
-		qualityLevel = reader.ReadInt32();
-		QualitySettings.SetQualityLevel(qualityLevel);
-		int w = reader.ReadInt32();
-		int h = reader.ReadInt32();
-		fullScreen = reader.ReadBoolean();
-
+#if !UNITY_EDITOR && !UNITY_ANDROID
 		Screen.SetResolution(w, h, fullScreen);
-
-		brightness = reader.ReadSingle();
-		arrows = reader.ReadBoolean();
-		stream.Close();
+#endif
 
 		ApplySettings();
 	}
@@ -140,12 +131,7 @@ public class Settings : MonoBehaviour
 	{
 		sfxMixer.SetFloat("Volume", sfxVolume);
 		musicMixer.SetFloat("Volume", musicVolume);
-		var controller = FindObjectOfType<Controller>();
-		if (controller != null)
-		{
-			controller.globalLight.intensity = brightness;
-			controller.UpdateControls();
-		}
+		LocalizationManager.Instance.CurrentLanguage = language;
 	}
 
 	public void SetScreenShake(bool status)
@@ -202,17 +188,10 @@ public class Settings : MonoBehaviour
 		SaveSettings();
 	}
 
-	public void SetBrightness(float value)
+	public void SetLanguage(int index)
 	{
-		brightness = value;
-		ApplySettings();
-		SaveSettings();
-	}
-
-	public void SetControls(bool fs)
-	{
-		arrows = fs;
-		ApplySettings();
+		language = LocalizationManager.Instance.languages[index];
+		LocalizationManager.Instance.CurrentLanguage = language;
 		SaveSettings();
 	}
 
@@ -232,9 +211,8 @@ public class Settings : MonoBehaviour
 		writer.Write(Screen.width); writer.Write(Screen.height); // Resolution
 
 		writer.Write(fullScreen); // Fullscreen
+		writer.Write(language); // Language
 
-		writer.Write(brightness); // Brightness
-		writer.Write(arrows); // Arrows
 		stream.Close();
 	}
 
@@ -265,10 +243,8 @@ public class Settings : MonoBehaviour
 		writer.Write(Screen.width); writer.Write(Screen.height); // Resolution
 
 		writer.Write(false); // Fullscreen
+		writer.Write("English"); // Language
 
-		writer.Write(0.3f); // Brightness
-
-		writer.Write(false); // Arrows
 		stream.Close();
 	}
 }

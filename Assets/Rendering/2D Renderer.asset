@@ -21,15 +21,15 @@ MonoBehaviour:
     renderTextureScale: 1
     blendMode: 1
     customBlendFactors:
-      multiplicative: 2
-      additive: 0.5
-  - enabled: 0
-    name: Blend Style 1
+      multiplicative: 0.98
+      additive: -0.09
+  - enabled: 1
+    name: Lights
     maskTextureChannel: 0
     renderTextureScale: 1
-    blendMode: 1
+    blendMode: 99
     customBlendFactors:
-      multiplicative: 0
+      multiplicative: 0.25
       additive: 0
   - enabled: 0
     name: Blend Style 2

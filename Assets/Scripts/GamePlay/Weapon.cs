@@ -9,6 +9,24 @@ public class Weapon : MonoBehaviour
 	public bool IsReloading { get; set; }
 	public float Load { get; set; }
 	public bool ManualReload { get; set; }
+	public Player player;
+	public float damageMultiplier = 1;
+	public bool UIVisible
+	{
+		get { return uiVisible; }
+		set 
+		{
+			if (value == uiVisible) return;
+			uiVisible = value;
+			ToggleVisibility();
+		}
+	}
+	private bool uiVisible = true;
+
+	protected virtual void ToggleVisibility()
+	{
+
+	}
 
 	public virtual Vector2 InitUIElements(Vector2 drawPosition, Transform parent)
 	{

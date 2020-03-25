@@ -10,6 +10,7 @@ public class HealthBar : MonoBehaviour
 	[SerializeField] private float shrinkDelay;
 	[SerializeField] private float shrinkTime;
 	[SerializeField] private Gradient[] gradients;
+	[SerializeField] private bool autoDisable;
 
 	private float lastHp;
 	private float lastUpdHp;
@@ -17,11 +18,17 @@ public class HealthBar : MonoBehaviour
 	private float shrinkMark;
 	private float state;
 	private float lastColor;
+	private bool inited = false;
 
 	private Color EvaluateGradient(float t)
 	{
 		lastColor = t;
 		return Color.Lerp(gradients[(int)state].Evaluate(t), gradients[Mathf.CeilToInt(state)].Evaluate(t), state % 1);
+	}
+
+	private void Start()
+	{
+		if (!inited && autoDisable) gameObject.SetActive(false);
 	}
 
 	public void Init(float currentHP)
@@ -33,6 +40,7 @@ public class HealthBar : MonoBehaviour
 		primaryHealthBar.fillAmount = 1;
 		primaryHealthBar.color = EvaluateGradient(currentHP);
 		redHealthBar.fillAmount = 1;
+		inited = true;
 	}
 
 	public void UpdateHealth(float currentHP)

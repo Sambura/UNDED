@@ -157,11 +157,9 @@ public class Enemy : Entity
 		StartCoroutine(Dying());
 	}
 
-	private IEnumerator Dying()
+	protected virtual IEnumerator Dying()
 	{
-		controller.KillsPlusPlus();
-		controller.IncreaseScore(scoreValue);
-		controller.Enemies--;
+		controller.EnemyKilled(scoreValue);
 		IsDead = true;
 		animator.SetBool("isDead", true);
 		audioSource.pitch = Random.Range(0.97f, 1.1f);

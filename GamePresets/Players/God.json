@@ -37,5 +37,7 @@
 			"damageType": 7,
 			"multiplier": 0.0
 		}
-	]
+	],
+	"criticalHitChance": 1.0,
+	"criticalHitMultiplier": 6.66
 }

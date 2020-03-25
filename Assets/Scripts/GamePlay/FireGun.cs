@@ -24,17 +24,21 @@ public class FireGun : Weapon
 	private FireShot shot;
 	private float nextSound;
 
-	public float damageMultiplier;
-
 	private void Start()
 	{
+		player = Player.Instance;
 		attackHeatSlider.KeepFirst = true;
 		fire = PresetsManager.Instance.InstantiatePrefab("fireShot", fireShotName);
 	}
 
 	private void FixedUpdate()
 	{
-		if (IsAttacking) heat += Time.fixedDeltaTime / overheatTime; else
+		if (IsAttacking)
+		{
+			heat += Time.fixedDeltaTime / overheatTime;
+			shot.multiplier = damageMultiplier * (player.CriticalHit ? player.criticalHitMultiplier : 1);
+		}
+		else
 			if (Time.time >= coolingStartTime) heat -= Time.fixedDeltaTime / coolingTime;
 		heat = Mathf.Clamp01(heat);
 		heatIcon.Value = heat;
@@ -96,7 +100,6 @@ public class FireGun : Weapon
 		{
 			shot = Instantiate(fire, shotPoint.position, shotPoint.rotation, transform).GetComponent<FireShot>();
 			shot.gameObject.SetActive(true);
-			shot.MultiplyDamage(damageMultiplier);
 		}
 	}
 }

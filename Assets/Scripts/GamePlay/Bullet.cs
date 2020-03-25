@@ -53,7 +53,6 @@ public class Bullet : MonoBehaviour
 		if (!isActive) return;
 		if (collision == lastCollider) return;
 		var entity = collision.GetComponent<Entity>();
-		Debug.Log("Killed by " + collision.name);
 		if (entity != null)
 		{
 			if (entity is Player && Time.time - startTime < playerTresholdTime) return;

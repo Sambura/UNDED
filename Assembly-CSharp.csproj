@@ -63,38 +63,58 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
     <Compile Include="Assets\Scripts\DebugMenuController.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Blast.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Bullet.cs" />
     <Compile Include="Assets\Scripts\GamePlay\CameraHandle.cs" />
-    <Compile Include="Assets\Scripts\GamePlay\Controller.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Decorations.cs" />
     <Compile Include="Assets\Scripts\GamePlay\DodgebleEnemy.cs" />
     <Compile Include="Assets\Scripts\GamePlay\EffectorBlast.cs" />
     <Compile Include="Assets\Scripts\GamePlay\ElectricBlast.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Enemy.cs" />
-    <Compile Include="Assets\Scripts\GamePlay\Enemy1.cs" />
     <Compile Include="Assets\Scripts\GamePlay\FireGun.cs" />
     <Compile Include="Assets\Scripts\GamePlay\FireShot.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Grenade.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Gun.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\InfinityController.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Joystick.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Knife.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Label.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Lamp.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\Melee.cs" />
     <Compile Include="Assets\Scripts\GamePlay\ParticleSystemDestroyer.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Player.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Shield.cs" />
     <Compile Include="Assets\Scripts\GamePlay\SideShield.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\CameraSetup.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\Character.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\Controller00.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\DialogueManager.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\FightTutorial.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\GrenadeInteractable.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\GrenadeSelector.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\InfoBoard.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\Interactable.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\NameSelector.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\SelectorButton.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\StatsSelector.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\StoryPlayer.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\Target.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\WalkTutorial.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\WeaponInteractable.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryMode\WeaponSelector.cs" />
+    <Compile Include="Assets\Scripts\GamePlay\StoryModeController.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Teleport.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Thrower.cs" />
     <Compile Include="Assets\Scripts\GamePlay\ThrowerEnemy.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Utility.cs" />
     <Compile Include="Assets\Scripts\GamePlay\Weapon.cs" />
     <Compile Include="Assets\Scripts\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\LocalizationData.cs" />
+    <Compile Include="Assets\Scripts\LocalizationDropdownData.cs" />
+    <Compile Include="Assets\Scripts\LocalizationManager.cs" />
     <Compile Include="Assets\Scripts\MenuController.cs" />
-    <Compile Include="Assets\Scripts\Physics_test\Blast_PhysicsTest.cs" />
-    <Compile Include="Assets\Scripts\Physics_test\PhyscisController.cs" />
     <Compile Include="Assets\Scripts\PresetsManager.cs" />
     <Compile Include="Assets\Scripts\PublicDestroyer.cs" />
     <Compile Include="Assets\Scripts\Settings.cs" />
@@ -109,6 +129,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Levels\Новый текстовый документ.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
@@ -159,23 +180,11 @@
     <Reference Include="Unity.Timeline">
       <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Editor">
-      <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Postprocessing.Runtime">
-      <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>D:/Users/super/Documents/Unity/UNDED/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>

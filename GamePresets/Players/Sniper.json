@@ -7,5 +7,7 @@
 	"damageLockScale": 0.0,
 	"damageLockTime": 4.0,
 	"unlockSpeed": 1.0,
-	"stillRegenerationBoost": 0.1
+	"stillRegenerationBoost": 0.1,
+	"criticalHitChance": 0.2,
+	"criticalHitMultiplier": 2.0
 }

@@ -198,11 +198,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tpOverlay: {fileID: 3053075494654033356, guid: c805901c73d5d344b9837515748b37fb,
     type: 3}
+  player: {fileID: 0}
+  damageMultiplier: 1
   fire: {fileID: 8880296752551882438, guid: e737cdef03ead4c46b8a4e78df6220e2, type: 3}
   overheatTime: 10
   coolingTime: 20
   overheatDelay: 1
-  fireShotName: 
+  fireShotName: Fire~Default
   heatSymbol: {fileID: 2575010399531975935, guid: bb2b9f45b3e188e4db993d311a554eac,
     type: 3}
   shotPoint: {fileID: 5804350735704119190}
@@ -211,7 +213,6 @@ MonoBehaviour:
   fireSound: {fileID: 8300000, guid: 3b156957cc00d3b4fb02dfeb81441aa9, type: 3}
   attackHeatSlider: {fileID: 686873709129582257}
   idleHeatSlider: {fileID: 1710689748528817625}
-  damageMultiplier: 1
 --- !u!114 &686873709129582257
 MonoBehaviour:
   m_ObjectHideFlags: 0
