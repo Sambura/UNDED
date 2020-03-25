@@ -24,7 +24,9 @@ public class Blast : MonoBehaviour
 			transform.Rotate(Vector3.back, Random.Range(0f, 360f));
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
-		Camera.main.gameObject.GetComponentInParent<CameraHandle>().Shake(explosionForce);
+		var handle = Camera.main.gameObject.GetComponentInParent<CameraHandle>();
+		if (handle != null)
+			handle.Shake(explosionForce);
 		InflictDamage();
 		for (int i = 0; i < fragsCount; i++)
 		{

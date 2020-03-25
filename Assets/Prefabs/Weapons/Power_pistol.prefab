@@ -100,26 +100,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tpOverlay: {fileID: 2753753890175828774, guid: 5b7ed83dd8378e74997c7cdb86707330,
     type: 3}
-  shotPoint: {fileID: 7387185704148703675}
+  player: {fileID: 0}
+  damageMultiplier: 1
   shotRate:
   - 250
   gunFireLength: 01000000
-  gunFireDelay:
-  - 0
+  gunFireShotRate: []
   intake:
   - 1
-  bullet:
-  - {fileID: 5706772168585878916, guid: 58e7a647461347241ad2a0719ccb6e92, type: 3}
-  shot:
-  - {fileID: 8300000, guid: c888dcdd513b0c4408100c8795e61e5d, type: 3}
-  magazine: 18
+  bulletName:
+  - PowerPistol~PowerPistolBullet
+  magazineCapacity: 20
   reloadTime: 2.25
   partialReload: 0
   partialLoad: 0
+  shotPoint: {fileID: 7387185704148703675}
   fakeBullet: {fileID: 8038733273026564906, guid: b1ef84d7ac6076b4fb02e2fc535fa035,
     type: 3}
   reload: {fileID: 8300000, guid: 6e6ce48acf5997b4081a84332d5cb609, type: 3}
-  dmgMultiplier: 1
+  bullet: []
 --- !u!82 &9120899492223312124
 AudioSource:
   m_ObjectHideFlags: 0

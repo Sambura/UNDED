@@ -8,8 +8,8 @@ public class Knife : Weapon
 	public float damage;
 	public float attackRate;
 	public float attackDistance;
-	public float maxAttackDistance;
 	public float damageLose;
+	public float minDamage;
 	public AudioClip attackSound;
 	public DamageType damageType;
 
@@ -22,6 +22,7 @@ public class Knife : Weapon
 
 	private void Start()
 	{
+		player = Player.Instance;
 		UpdateDelays();
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
@@ -45,7 +46,7 @@ public class Knife : Weapon
 			var entityComp = entity.collider.GetComponent<Entity>();
 			if (entityComp == parent) continue;
 			flag = true;
-			float dmg = Mathf.Max(0.1f, damage - Vector2.Distance(shotPoint.position, entity.transform.position) * damageLose);
+			float dmg = Mathf.Max(minDamage, (damage - Vector2.Distance(shotPoint.position, entity.transform.position) * damageLose) * damageMultiplier * (player.CriticalHit ? player.criticalHitMultiplier : 1));
 			entityComp.GetHit(dmg, transform.position.x, damageType);
 		}
 		if (flag) audioSource.PlayOneShot(attackSound);

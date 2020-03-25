@@ -17,6 +17,7 @@ public class Thrower : MonoBehaviour
 	private float grenadeDelay;
 
 	public bool IsThrowing { get; private set; }
+	public bool CancelThrow { get; set; }
 
 	private void Start()
 	{
@@ -35,6 +36,7 @@ public class Thrower : MonoBehaviour
 	{
 		if (grenadeIcon != null)
 				Destroy(grenadeIcon.gameObject);
+		if (grenade == null) return drawPosition;
 		var corner = Camera.main.ScreenToWorldPoint(Vector3.zero);
 		float width = Mathf.Abs((corner.x - Camera.main.transform.position.x) * 2);
 		if (drawPosition.x + 6 > width / 2)
@@ -50,6 +52,7 @@ public class Thrower : MonoBehaviour
 	{
 		if (Time.time < nextGrenade) return;
 		if (IsThrowing) return;
+		if (grenade == null) return;
 		spriteRenderer.color = new Color(1, 1, 1, 1);
 		weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
 		animator.SetTrigger("Throw");
@@ -58,6 +61,11 @@ public class Thrower : MonoBehaviour
 
 	public void Throw()
 	{
+		if (CancelThrow)
+		{
+			CancelThrow = false;
+			return;
+		}
 		var g = Instantiate(grenade, throwPoint.position, Quaternion.identity);
 		var rb = g.GetComponent<Rigidbody2D>();
 		g.tag = gameObject.tag;

@@ -9,30 +9,38 @@ public class Player : Entity
 	public float damageLockTime;
 	public float unlockSpeed;
 	public float stillRegenerationBoost;
+	public float criticalHitChance;
+	public float criticalHitMultiplier;
 	public AudioClip damageTaken;
 	public GameObject dmgSystem;
-	[SerializeField] private Transform UISpawnPoint;
+	[SerializeField] protected Transform UISpawnPoint;
 	public Transform weaponHolder;
 
-	private Animator animator;
-	private AudioSource audioSource;
-	private Controller controller;
-	[System.NonSerialized] public Weapon weapon;
-	[System.NonSerialized] public Teleport teleport;
-	[System.NonSerialized] public Thrower thrower;
-	[System.NonSerialized] public Shield shield;
+	public float MovementSpeed { 
+		get { return movementSpeed; }
+		set { movementSpeed = value; }
+	}
 
-	[SerializeField] private DamageSpec[] damageSpecifications;
+	protected Animator animator;
+	protected AudioSource audioSource;
+	protected Controller controller;
+	public Weapon weapon;
+	public Teleport teleport;
+	public Thrower thrower;
+	public Shield shield;
+
+	[SerializeField] protected DamageSpec[] damageSpecifications;
 	public Dictionary<DamageType, float> dmgSpec;
 
-	private HealthBar healthBar;
-	public float hp { get; private set; }
-	private float lastHp;
-	private bool left;
-	private float iconY;
-	private bool damageSystemPlay;
-	private float regenerationScale;
-	private float regenUnlockTime;
+	protected HealthBar healthBar;
+	public float Hp { get; protected set; }
+	public bool CriticalHit { get; protected set; }
+	protected float lastHp;
+	protected bool left;
+	protected float iconY;
+	protected bool damageSystemPlay;
+	protected float regenerationScale;
+	protected float regenUnlockTime;
 
 	public bool Space { get; set; }
 	public bool F { get; set; }
@@ -73,16 +81,10 @@ public class Player : Entity
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
 		controller = FindObjectOfType<Controller>();
-		hp = maxHealth;
+		Hp = maxHealth;
 		healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
 		UISpawnPoint = GameObject.FindGameObjectWithTag("UIgrip").transform;
-		healthBar.Init(hp / maxHealth);
-		/*
-		var f = new System.IO.FileInfo("player.json");
-		var ff = f.CreateText();
-		ff.Write(JsonUtility.ToJson(this, true));
-		ff.Close();*/
-
+		healthBar.Init(Hp / maxHealth);
 		InitBullets();
 		InitOther();
 		InitSpecs();
@@ -90,7 +92,7 @@ public class Player : Entity
 
 	public void GetHealth(float health)
 	{
-		hp += health;
+		Hp += health;
 	}
 
 	public void InitBullets()
@@ -117,7 +119,7 @@ public class Player : Entity
 		float dmg = damage * dmgSpec[damageType];
 		if (dmg == 0) return true;
 		damageSystemPlay = damageType != DamageType.Poison && damageType != DamageType.Electricity;
-		hp -= dmg;
+		Hp -= dmg;
 		if (!audioSource.isPlaying)
 			audioSource.PlayOneShot(damageTaken);
 		left = transform.position.x < x;
@@ -128,15 +130,15 @@ public class Player : Entity
 
 	private void UpdateHealth()
 	{
-		hp = Mathf.Clamp(hp, 0, maxHealth);
-		healthBar.UpdateHealth(hp / maxHealth);
-		if (hp == 0)
+		Hp = Mathf.Clamp(Hp, 0, maxHealth);
+		healthBar.UpdateHealth(Hp / maxHealth);
+		if (Hp == 0)
 		{
 			animator.SetBool("isDead", true);
 			IsDead = true;
 			StartCoroutine(controller.Death());
 			weapon.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
-			//CancelThrowing();
+			if (thrower != null) thrower.CancelThrow = true;
 		}
 	}
 
@@ -158,16 +160,16 @@ public class Player : Entity
 		movingControls = Input.GetAxisRaw("Horizontal");
 #endif
 
-		if (lastHp > hp && Settings.particles && damageSystemPlay)
+		if (lastHp > Hp && Settings.particles && damageSystemPlay)
 		{
 			Instantiate(dmgSystem, transform.position, Quaternion.Euler(0, 0, left ? 0 : 180));
-			controller.InstantiateDamageLabel(transform.position + new Vector3(0, 10), Mathf.RoundToInt(lastHp - hp));
+			controller.InstantiateDamageLabel(transform.position + new Vector3(0, 10), Mathf.RoundToInt(lastHp - Hp));
 		}
 
-		hp += regeneration / 60 * Time.deltaTime * regenerationScale;
+		Hp += regeneration / 60 * Time.deltaTime * regenerationScale;
 		UpdateHealth();
 		if (IsDead) return;
-		lastHp = hp;
+		lastHp = Hp;
 
 		if (Time.time > regenUnlockTime)
 		{
@@ -203,7 +205,7 @@ public class Player : Entity
 		else
 		{
 			animator.SetBool("isWalking", false);
-			hp += regeneration / 60 * Time.deltaTime * regenerationScale * stillRegenerationBoost;
+			Hp += regeneration / 60 * Time.deltaTime * regenerationScale * stillRegenerationBoost;
 		}
 
 		if (F && (!weapon.IsReloading || !weapon.ManualReload) && thrower != null)
@@ -222,7 +224,7 @@ public class Player : Entity
 	private void FixedUpdate()
 	{
 		if (IsDead || controller.IsPaused) return;
-
+		CriticalHit = Random.value <= criticalHitChance && (criticalHitChance > 0);
 		if (teleport != null) if (teleport.IsTeleporting) return;
 
 		bool isThrowing = thrower != null;

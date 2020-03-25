@@ -5,7 +5,7 @@
 	"radius": 39.0,
 	"explosionForce": 3.0,
 	"damageType": 4,
-	"damageIncrease": 1.01,
+	"damageIncrease": 0.01,
 	"randomRotation": true,
 	"scoreValue": 0.8
 }

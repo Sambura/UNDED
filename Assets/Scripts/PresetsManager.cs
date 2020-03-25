@@ -60,7 +60,7 @@ public class PresetsManager : MonoBehaviour
     #region Singleton
     public static PresetsManager Instance;
     
-    private void Awake()
+    public void Awake()
     {
         if (Instance == null)
         {
@@ -71,6 +71,7 @@ public class PresetsManager : MonoBehaviour
             Destroy(this);
             return;
         }
+        Debug.Log("Presets loaded");
         ReadAssets();
     }
 	#endregion

@@ -7,22 +7,13 @@ public class CameraHandle : MonoBehaviour
 	public float mass;
 	public float kinematicDecreaseEffect;
 	public float maxShake;
-
-	private Player player;
-	private Controller controller;
-	private new Camera camera;
+	public new Camera camera;
+	public Transform followedObject;
 
 	private float kinematic;
 	private float lastDelta;
 	private bool isShaking;
 	private float magnitude;
-
-	private void Start()
-	{
-		player = FindObjectOfType<Player>();
-		controller = FindObjectOfType<Controller>();
-		camera = Camera.main;
-	}
 
 	public void Shake(float force)
 	{
@@ -34,7 +25,7 @@ public class CameraHandle : MonoBehaviour
 
 	void FixedUpdate()
     {
-		kinematic += (player.transform.position.x - transform.position.x) / mass;
+		kinematic += (followedObject.transform.position.x - transform.position.x) / mass;
 		float currentDelta = (kinematic + lastDelta) / 2;
 		transform.Translate(new Vector3(currentDelta, 0));
 		lastDelta = currentDelta;

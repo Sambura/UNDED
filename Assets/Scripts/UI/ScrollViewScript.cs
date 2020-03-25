@@ -9,8 +9,8 @@ public class ScrollViewScript : MonoBehaviour
 	[Range(0, 10)] [SerializeField] private float gripDuration;
 	[Range(0, 1)] [SerializeField] private float unselectedScaling;
 	[Range(0, 1)] [SerializeField] private float scalingSpeed;
-	[SerializeField] private Text selectedName;
-	[SerializeField] private Text selectedDescription;
+	[SerializeField] private TMPro.TextMeshProUGUI selectedName;
+	[SerializeField] private TMPro.TextMeshProUGUI selectedDescription;
 
 	private Button[] items;
 	private ScrollViewItem[] itemsData;
