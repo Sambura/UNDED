@@ -103,7 +103,17 @@ public class ScrollViewScript : MonoBehaviour
 		}
 	}
 
-	public void UpdateData(int index = -1)
+	private void OnEnable()
+	{
+		if (lastUpdate == -1) return;
+		if (itemsData == null) return;
+		if (selectedName != null)
+			selectedName.text = itemsData[lastUpdate].itemName;
+		if (selectedDescription != null)
+			selectedDescription.text = itemsData[lastUpdate].itemDescription;
+	}
+
+	public void UpdateData(int index)
 	{
 		if (index == -1)
 		{
@@ -112,8 +122,6 @@ public class ScrollViewScript : MonoBehaviour
 		} else
 		{
 			if (index == lastUpdate) return;
-			//if (selectedName != null)
-				//if (selectedName.text == itemsData[index].itemName) return;
 		}
 		if (selectedName != null)
 			selectedName.text = itemsData[index].itemName;
@@ -140,7 +148,6 @@ public class ScrollViewScript : MonoBehaviour
 			}
 		}
 		UpdateData(nearestIndex);
-
 		
 		if (!isScrolling && (position.anchoredPosition.x != Mathf.Clamp(position.anchoredPosition.x, leftBound, rightBound) ||
 			position.anchoredPosition.y != Mathf.Clamp(position.anchoredPosition.y, bottomBound, topBound)))

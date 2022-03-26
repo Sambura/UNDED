@@ -112,6 +112,11 @@ public class Settings : MonoBehaviour
 			QualitySettings.SetQualityLevel(qualityLevel);
 			int w = reader.ReadInt32();
 			int h = reader.ReadInt32();
+
+#if !UNITY_EDITOR && !UNITY_ANDROID
+		Screen.SetResolution(w, h, fullScreen);
+#endif
+
 			fullScreen = reader.ReadBoolean();
 			language = reader.ReadString();
 		}
@@ -119,10 +124,6 @@ public class Settings : MonoBehaviour
 		{
 			stream.Close();
 		}
-
-#if !UNITY_EDITOR && !UNITY_ANDROID
-		Screen.SetResolution(w, h, fullScreen);
-#endif
 
 		ApplySettings();
 	}

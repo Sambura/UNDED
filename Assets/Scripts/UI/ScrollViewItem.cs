@@ -1,39 +1,27 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ScrollViewItem : MonoBehaviour
+public class ScrollViewItem : Localizable
 {
 	public string itemName;
-	[TextArea(3, 10)] public string itemDescription;
+	public string itemDescription;
 	public string legacyName;
-	public string nameTag;
-	public string descTag;
+	public string nameKey;
+	public string descKey;
 	public string category;
 
 	public Image itemPreview;
 	public Button itemButton;
 
-	private void OnEnable()
+	public override void UpdateData()
 	{
-		StartCoroutine(Wait());
-	}
-
-	private IEnumerator Wait()
-	{
-		yield return new WaitWhile(() => LocalizationManager.Instance == null);
-		UpdateData();
-		LocalizationManager.Instance.OnLanguageChanged += UpdateData;
-	}
-
-	private void UpdateData()
-	{
-		itemName = LocalizationManager.Instance.locData[category][nameTag];
-		itemDescription = LocalizationManager.Instance.locData[category][descTag];
-	}
-
-	private void OnDestroy()
-	{
-		LocalizationManager.Instance.OnLanguageChanged -= UpdateData;
+		if (LocalizationManager.Instance.locData.ContainsKey(category))
+		{
+			if (!LocalizationManager.Instance.locData[category].TryGetValue(nameKey, out itemName))
+				Debug.Log("Missing localization key: " + category + '\\' + nameKey);
+			if (!LocalizationManager.Instance.locData[category].TryGetValue(descKey, out itemDescription))
+				Debug.Log("Missing localization key: " + category + '\\' + descKey);
+		}
+		else Debug.Log("Wrong localization category: " + category);
 	}
 }

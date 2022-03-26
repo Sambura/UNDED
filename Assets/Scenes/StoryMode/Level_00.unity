@@ -1164,8 +1164,8 @@ MonoBehaviour:
   - {x: 10.398773, y: -2.8828332, z: 0}
   - {x: -9.926971, y: -2.9983435, z: 0}
   m_ShapePathHash: -520418743
-  m_Mesh: {fileID: 1404901134}
-  m_InstanceId: 19736
+  m_Mesh: {fileID: 1581140718}
+  m_InstanceId: 45700
 --- !u!4 &55395339 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1402700124560088713, guid: 050ec685c59fcb54da4c1b2a7c7563e6,
@@ -1476,149 +1476,157 @@ MonoBehaviour:
   - units:
     - unit: {fileID: 0}
       name: <color=#FF2400>Durka's Doctor 1</color>
+      tag: Doctor1
     - unit: {fileID: 0}
       name: <color=#3193FF>Durka's Doctor 2</color>
+      tag: Doctor2
     sentences:
     - unitIndex: 0
-      sentence: Hello, shizoid!
+      tag: Doctor1_d1_s1
     - unitIndex: 1
-      sentence: Haha, hey mate! Why you are here?
+      tag: Doctor2_d1_s1
     - unitIndex: 0
-      sentence: Oh, apparently we have to leave one of these shizoids in world...
+      tag: Doctor1_d1_s2
     - unitIndex: 1
-      sentence: Why?
+      tag: Doctor2_d1_s2
     - unitIndex: 0
-      sentence: Nevermind. We now have to chose which one will be unfreezed.
+      tag: Doctor1_d1_s3
   - units:
     - unit: {fileID: 0}
       name: <color=#FF2400>Durka's Doctor 1</color>
+      tag: 
     - unit: {fileID: 0}
       name: <color=#B26499>You</color>
+      tag: 
     sentences:
     - unitIndex: 0
-      sentence: Hello, shizoid! Haha!
+      tag: 
     - unitIndex: 0
-      sentence: How are you? Are there any problems with your health?
+      tag: 
     - unitIndex: 1
-      sentence: Oh.. I think not, thank you.
+      tag: 
     - unitIndex: 0
-      sentence: Fine. Now try to walk around here - to ensure that you are alright.
+      tag: 
     - unitIndex: 1
-      sentence: Oh. Yes, of cource.
+      tag: 
   - units:
     - unit: {fileID: 0}
       name: <color=#FF2400>Durka's Doctor 1</color>
+      tag: 
     - unit: {fileID: 0}
       name: <color=#B26499>You</color>
+      tag: 
     sentences:
     - unitIndex: 0
-      sentence: Hmm... Why not?
+      tag: 
     - unitIndex: 1
-      sentence: What?
+      tag: 
     - unitIndex: 0
-      sentence: Oh.. Nothing. Could you please bring me an andemelator from the lab?
+      tag: 
     - unitIndex: 1
-      sentence: Yeah, I definetly can.
+      tag: 
   - units:
     - unit: {fileID: 0}
       name: <color=#FF2400>Durka's Doctor 1</color>
+      tag: 
     - unit: {fileID: 0}
       name: <color=#B26499>You</color>
+      tag: 
     sentences:
     - unitIndex: 1
-      sentence: Were you asking for this?
+      tag: 
     - unitIndex: 0
-      sentence: Oh, yes, thanks.
+      tag: 
   - units:
     - unit: {fileID: 0}
       name: <color=#FF2400>Durka's Doctor 1</color>
+      tag: 
     - unit: {fileID: 0}
       name: <color=#B26499>{playerName}</color>
+      tag: 
     sentences:
     - unitIndex: 1
-      sentence: Yeah, I'm {playerName}.
+      tag: 
     - unitIndex: 0
-      sentence: Fine, you didn't forget. So your health is totally ok...
+      tag: 
     - unitIndex: 0
-      sentence: Uhm.. Yes, you still don't know why are you now unfreezed?
+      tag: 
     - unitIndex: 1
-      sentence: Yeah, that's right.
+      tag: 
     - unitIndex: 0
-      sentence: So...
+      tag: 
     - unitIndex: 0
-      sentence: There are some problems on Earth... So.. You were chosen to save
-        us from this.
+      tag: 
     - unitIndex: 1
-      sentence: From what?
+      tag: 
     - unitIndex: 0
-      sentence: Honestly, I don't know what exactly happened.. It is kinda secret.
-        As I know, you will recieve instructions after transportation on Earth.
+      tag: 
     - unitIndex: 1
-      sentence: I see...
+      tag: 
     - unitIndex: 0
-      sentence: Well, now when you know this, let's have a look at those beautiful
-        weapons.
+      tag: 
     - unitIndex: 1
-      sentence: Hah, I'm in.
+      tag: 
   - units:
     - unit: {fileID: 0}
       name: <color=#FF2400>Durka's Doctor 1</color>
+      tag: 
     - unit: {fileID: 0}
       name: <color=#B26499>You</color>
+      tag: 
     sentences:
     - unitIndex: 1
-      sentence: Oh.. What is that?
+      tag: 
     - unitIndex: 0
-      sentence: Aha, feel the power inside of you?
+      tag: 
     - unitIndex: 1
-      sentence: Yeah, hah, thank you!
+      tag: 
     - unitIndex: 0
-      sentence: So, I am certain that this will heal anything... But I will better
-        ask you - do you remember your name?
+      tag: 
   - units:
     - unit: {fileID: 0}
       name: <color=#FF2400>Durka's Doctor 1</color>
+      tag: 
     - unit: {fileID: 0}
       name: <color=#B26499>You</color>
+      tag: 
     sentences:
     - unitIndex: 0
-      sentence: See this? Now you should take that plasm rifle right there. (it is
-        my invention!)
+      tag: 
     - unitIndex: 1
-      sentence: Ehm..
+      tag: 
     - unitIndex: 0
-      sentence: Haha, just kidding, feel free to choose any of these!
+      tag: 
     - unitIndex: 0
-      sentence: Press that red button when you will be ready for training! Good luck,
-        soldier!
+      tag: 
   - units:
     - unit: {fileID: 0}
       name: <color=#FF2400>Durka's Doctor 1</color>
+      tag: 
     - unit: {fileID: 0}
       name: <color=#B26499>You</color>
+      tag: 
     sentences:
     - unitIndex: 1
-      sentence: I'm ready.
+      tag: 
     - unitIndex: 0
-      sentence: I see. There's nothing left for us but to trasfer you on Earth. Follow
-        me.
+      tag: 
   - units:
     - unit: {fileID: 0}
       name: <color=#FF2400>Durka's Doctor 1</color>
+      tag: 
     - unit: {fileID: 0}
       name: <color=#B26499>You</color>
+      tag: 
     sentences:
     - unitIndex: 0
-      sentence: This is our teleport. It will transfer you on Earth, where you should
-        complete your task.
+      tag: 
     - unitIndex: 0
-      sentence: I suppose there is no need to wait for something. Step into the machine
-        when you'll be ready.
+      tag: 
     - unitIndex: 1
-      sentence: I'm ready. Thank you for your assistance. I will complete my task
-        and save us.
+      tag: 
     - unitIndex: 0
-      sentence: Good luck!
+      tag: 
   nameText: {fileID: 253715868}
   sentenceText: {fileID: 2144604671}
   dialogueObject: {fileID: 1926785611}
@@ -3077,7 +3085,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 23.7
+  m_fontSize: 47.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3761,7 +3769,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 23.7
+  m_fontSize: 47.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -5497,6 +5505,7 @@ GameObject:
   - component: {fileID: 493578118}
   - component: {fileID: 493578119}
   - component: {fileID: 493578117}
+  - component: {fileID: 493578120}
   m_Layer: 0
   m_Name: Controller
   m_TagString: GameController
@@ -6730,6 +6739,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &493578120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493578116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee9fad32867dc44db1bd1b0e1b644b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLanguage: English
+  languages: []
 --- !u!1 &511786982
 GameObject:
   m_ObjectHideFlags: 0
@@ -7179,7 +7202,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24.5
+  m_fontSize: 49.05
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -13447,7 +13470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_fontAsset: {fileID: 11400000, guid: 0827685f16cff574b864fd982a472e7a, type: 2}
+  m_fontAsset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 240534628}
@@ -14506,169 +14529,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 259185687}
   m_PrefabAsset: {fileID: 0}
---- !u!43 &1404901134
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 18
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 8
-    localAABB:
-      m_Center: {x: 0.23590088, y: -3.4821687, z: 0}
-      m_Extent: {x: 10.162872, y: 0.59933555, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 000001000200010000000300020004000000000005000300010006000200030007000100
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 8
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 224
-    _typelessdata: 60612641578038c000000000cb6b7ebf1a1ce33d0000008000000080f0ae1dc1af9b82c000000000a3707f3f6463873d0000008000000080f057244177c280c00000000069183cbbbcff7f3f0000008000000080e0d41ec1dce43fc0000000004937ba3bf1fe7fbf0000008000000080f057244177c280c000000000cb6b7ebf1a1ce33d000000800000008060612641578038c0000000004937ba3bf1fe7fbf0000008000000080f0ae1dc1af9b82c00000000069183cbbbcff7f3f0000008000000080e0d41ec1dce43fc000000000a3707f3f6463873d0000008000000080
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0.23590088, y: -3.4821687, z: 0}
-    m_Extent: {x: 10.162872, y: 0.59933555, z: 0}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    offset: 0
-    size: 0
-    path: 
 --- !u!1 &1408855036
 GameObject:
   m_ObjectHideFlags: 0
@@ -21696,6 +21556,169 @@ Transform:
   m_Father: {fileID: 3429224677190809776}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &1581140718
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 18
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 8
+    localAABB:
+      m_Center: {x: 0.23590088, y: -3.4821687, z: 0}
+      m_Extent: {x: 10.162872, y: 0.59933555, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 000001000200010000000300020004000000000005000300010006000200030007000100
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 8
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 224
+    _typelessdata: 60612641578038c000000000cb6b7ebf1a1ce33d0000008000000080f0ae1dc1af9b82c000000000a3707f3f6463873d0000008000000080f057244177c280c00000000069183cbbbcff7f3f0000008000000080e0d41ec1dce43fc0000000004937ba3bf1fe7fbf0000008000000080f057244177c280c000000000cb6b7ebf1a1ce33d000000800000008060612641578038c0000000004937ba3bf1fe7fbf0000008000000080f0ae1dc1af9b82c00000000069183cbbbcff7f3f0000008000000080e0d41ec1dce43fc000000000a3707f3f6463873d0000008000000080
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0.23590088, y: -3.4821687, z: 0}
+    m_Extent: {x: 10.162872, y: 0.59933555, z: 0}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1 &1594916377
 GameObject:
   m_ObjectHideFlags: 0
@@ -23761,7 +23784,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 27.55
+  m_fontSize: 55.1
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24281,7 +24304,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 27.1
+  m_fontSize: 54.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -32910,8 +32933,9 @@ MonoBehaviour:
   DamageText: {fileID: 2487773105872531325}
   SfxVolume: {fileID: 2487773106875474009}
   MusicVolume: {fileID: 6518534078773051263}
-  QualitySetter: {fileID: 1643903914}
-  ResolutionSetter: {fileID: 2008600530}
+  LanguageSelector: {fileID: 0}
+  QualitySetter: {fileID: 0}
+  ResolutionSetter: {fileID: 0}
   FullScreen: {fileID: 2487773107821315464}
   keyScan: 1
   SfxMixer: {fileID: 24100000, guid: b6e8854f326497a489051c428accb597, type: 2}
@@ -33309,7 +33333,7 @@ PrefabInstance:
     - target: {fileID: 6168321615027290829, guid: fd43a51c1536aea42a4a474aabc22851,
         type: 3}
       propertyPath: scaleDuration
-      value: 15
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7055153777023660449, guid: fd43a51c1536aea42a4a474aabc22851,
         type: 3}

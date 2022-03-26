@@ -227,7 +227,7 @@ MonoBehaviour:
   gripDuration: 1
   unselectedScaling: 0.001
   scalingSpeed: 0.25
-  selectedName: {fileID: 0}
+  selectedName: {fileID: 126889672}
   selectedDescription: {fileID: 0}
 --- !u!224 &3836416
 RectTransform:
@@ -362,7 +362,7 @@ RectTransform:
   m_AnchorMin: {x: 0.74, y: 0.14925927}
   m_AnchorMax: {x: 1, y: 0.71231496}
   m_AnchoredPosition: {x: 0, y: 5}
-  m_SizeDelta: {x: -19.999996, y: -10}
+  m_SizeDelta: {x: -20, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &43641656
 MonoBehaviour:
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 43641654}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -382,23 +382,99 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: e940f5e70eb32364b9a5f4a22ceac026, type: 3}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 3
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: "Let's learn how to make touch controls in Unity!\r\n\r\nGET UNITY PRO:
-    https://on.unity.com/2N3FACS\r\n\r\n\u25CF More on Unity Remote: https://bit.ly/2OehNon\r\n\u25CF
-    2D Shooting: https://youtu.be/wkKsl1Mfp5M\r\n\r\n\u2665 Support Brackeys on Patreon:
-    http://patreon.com/brackeys/"
+  m_text: Description
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 296ed58cf1bfb1f49bfaa863007dc698, type: 2}
+  m_sharedMaterial: {fileID: -5804862782759560019, guid: 296ed58cf1bfb1f49bfaa863007dc698,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 94.8
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 30
+  m_fontSizeMax: 120
+  m_fontStyle: 0
+  m_textAlignment: 513
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 43641656}
+    characterCount: 11
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 1
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &43641657
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1094,9 +1170,9 @@ MonoBehaviour:
   itemDescription: "\u25CF Low damage from explosion\r\n\u25CF Small blast radius\r\n\u25CF
     Spawns a lot of explosive fragments"
   legacyName: Multiple_main~Multiple grenade
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: MultipleGrenadeName
+  descKey: MultipleGrenadeDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!1 &79598844
@@ -1446,8 +1522,8 @@ GameObject:
   m_Component:
   - component: {fileID: 96981476}
   - component: {fileID: 96981478}
-  - component: {fileID: 96981477}
   - component: {fileID: 96981479}
+  - component: {fileID: 96981477}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -1483,7 +1559,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 96981475}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1492,20 +1568,99 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: e940f5e70eb32364b9a5f4a22ceac026, type: 3}
-    m_FontSize: 46
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 75
-    m_Alignment: 3
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
-    m_LineSpacing: 1
-  m_Text: Cancel
+  m_text: Cancel
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 296ed58cf1bfb1f49bfaa863007dc698, type: 2}
+  m_sharedMaterial: {fileID: -5804862782759560019, guid: 296ed58cf1bfb1f49bfaa863007dc698,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 100
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 100
+  m_fontStyle: 0
+  m_textAlignment: 1025
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 96981477}
+    characterCount: 6
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 1
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &96981478
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1786,8 +1941,8 @@ MonoBehaviour:
   itemName: Weapons
   itemDescription: 
   legacyName: 
-  nameTag: 
-  descTag: 
+  nameKey: 
+  descKey: 
   category: 
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -2039,7 +2194,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.799}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 100.000244, y: 0}
-  m_SizeDelta: {x: 300, y: 0}
+  m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &126889672
 MonoBehaviour:
@@ -2050,7 +2205,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 126889670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -2059,20 +2214,99 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: e940f5e70eb32364b9a5f4a22ceac026, type: 3}
-    m_FontSize: 49
-    m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 140
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Stat name
+  m_text: Stat name
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 296ed58cf1bfb1f49bfaa863007dc698, type: 2}
+  m_sharedMaterial: {fileID: -5804862782759560019, guid: 296ed58cf1bfb1f49bfaa863007dc698,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 74.65
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 100
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 126889672}
+    characterCount: 9
+    spriteCount: 0
+    spaceCount: 1
+    wordCount: 2
+    linkCount: 0
+    lineCount: 2
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &126889673
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3928,13 +4162,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Blaster
-  itemDescription: "<b>Auto-rechargable energy blaster\r</b>\n\r\n\u25CF Two types
-    of attack with low and high damage\r\n\u25CF 21 rounds in magazine\r\n\u25CF
-    Quick auto-recharge\r\n\u25CF High rate of fire"
+  itemDescription: 
   legacyName: Blaster~Default blaster
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: BlasterName
+  descKey: BlasterDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!114 &279091363
@@ -4185,8 +4417,8 @@ MonoBehaviour:
   gripDuration: 1
   unselectedScaling: 0.001
   scalingSpeed: 0.25
-  selectedName: {fileID: 0}
-  selectedDescription: {fileID: 0}
+  selectedName: {fileID: 593754075}
+  selectedDescription: {fileID: 43641656}
 --- !u!1 &298704648
 GameObject:
   m_ObjectHideFlags: 0
@@ -5802,7 +6034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &411070525
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6031,8 +6263,8 @@ MonoBehaviour:
   gripDuration: 1
   unselectedScaling: 0.001
   scalingSpeed: 0.25
-  selectedName: {fileID: 0}
-  selectedDescription: {fileID: 0}
+  selectedName: {fileID: 593754075}
+  selectedDescription: {fileID: 43641656}
 --- !u!1 &440563899
 GameObject:
   m_ObjectHideFlags: 0
@@ -6179,9 +6411,9 @@ MonoBehaviour:
   itemDescription: "\u25CF Low spawn rate\r\n\u25CF Low spawn increace\r\n\u25CF
     Low spawn restriction"
   legacyName: 
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: MediumDName
+  descKey: MediumDDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!1 &441219667
@@ -6969,8 +7201,8 @@ MonoBehaviour:
   gripDuration: 1
   unselectedScaling: 0.001
   scalingSpeed: 0.25
-  selectedName: {fileID: 0}
-  selectedDescription: {fileID: 0}
+  selectedName: {fileID: 593754075}
+  selectedDescription: {fileID: 43641656}
 --- !u!1 &517317960
 GameObject:
   m_ObjectHideFlags: 0
@@ -7121,8 +7353,8 @@ GameObject:
   m_Component:
   - component: {fileID: 521771261}
   - component: {fileID: 521771263}
-  - component: {fileID: 521771262}
   - component: {fileID: 521771264}
+  - component: {fileID: 521771262}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -7158,7 +7390,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 521771260}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -7167,20 +7399,99 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: e940f5e70eb32364b9a5f4a22ceac026, type: 3}
-    m_FontSize: 50
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 51
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Setup your equipment
+  m_text: Set up your equipment
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 296ed58cf1bfb1f49bfaa863007dc698, type: 2}
+  m_sharedMaterial: {fileID: -5804862782759560019, guid: 296ed58cf1bfb1f49bfaa863007dc698,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 120
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 120
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 521771262}
+    characterCount: 21
+    spriteCount: 0
+    spaceCount: 3
+    wordCount: 4
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &521771263
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7898,8 +8209,8 @@ MonoBehaviour:
   gripDuration: 1
   unselectedScaling: 0.001
   scalingSpeed: 0.25
-  selectedName: {fileID: 0}
-  selectedDescription: {fileID: 0}
+  selectedName: {fileID: 593754075}
+  selectedDescription: {fileID: 43641656}
 --- !u!1 &572754458
 GameObject:
   m_ObjectHideFlags: 0
@@ -8132,8 +8443,8 @@ MonoBehaviour:
   itemName: Sniper
   itemDescription: 
   legacyName: Sniper
-  nameTag: SniperName
-  descTag: SniperDescription
+  nameKey: SniperName
+  descKey: SniperDescription
   category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -8355,29 +8666,108 @@ MonoBehaviour:
   m_GameObject: {fileID: 593754073}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: e940f5e70eb32364b9a5f4a22ceac026, type: 3}
-    m_FontSize: 49
-    m_FontStyle: 0
-    m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 140
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Item name
+  m_text: Item name
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 296ed58cf1bfb1f49bfaa863007dc698, type: 2}
+  m_sharedMaterial: {fileID: -5804862782759560019, guid: 296ed58cf1bfb1f49bfaa863007dc698,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 74.3
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 100
+  m_fontStyle: 0
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 593754075}
+    characterCount: 9
+    spriteCount: 0
+    spaceCount: 1
+    wordCount: 2
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &593754076
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8702,11 +9092,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Frag grenade
-  itemDescription: "\u25CF High damage from explosion\r\n\u25CF Small blast radius"
+  itemDescription: 
   legacyName: Fragment~Fragment grenade
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: FragGrenadeName
+  descKey: FragGrenadeDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!1 &606872584
@@ -10845,8 +11235,8 @@ MonoBehaviour:
   itemName: Shields
   itemDescription: 
   legacyName: 
-  nameTag: 
-  descTag: 
+  nameKey: 
+  descKey: 
   category: 
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -11814,8 +12204,8 @@ MonoBehaviour:
   itemName: Players
   itemDescription: 
   legacyName: 
-  nameTag: 
-  descTag: 
+  nameKey: 
+  descKey: 
   category: 
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -11897,8 +12287,8 @@ MonoBehaviour:
   gripDuration: 1
   unselectedScaling: 0.001
   scalingSpeed: 0.25
-  selectedName: {fileID: 0}
-  selectedDescription: {fileID: 0}
+  selectedName: {fileID: 593754075}
+  selectedDescription: {fileID: 43641656}
 --- !u!1 &830617967
 GameObject:
   m_ObjectHideFlags: 0
@@ -12941,7 +13331,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -19.98706, y: 9.993042}
-  m_SizeDelta: {x: 328, y: 97.95}
+  m_SizeDelta: {x: 500, y: 97.95}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &876719633
 MonoBehaviour:
@@ -12995,7 +13385,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1509825544}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -16280,8 +16670,8 @@ MonoBehaviour:
   itemName: Tank
   itemDescription: 
   legacyName: Tank
-  nameTag: TankName
-  descTag: TankDescription
+  nameKey: TankName
+  descKey: TankDescription
   category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -16353,8 +16743,8 @@ MonoBehaviour:
   itemName: Grenades
   itemDescription: 
   legacyName: 
-  nameTag: 
-  descTag: 
+  nameKey: 
+  descKey: 
   category: 
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -16529,9 +16919,9 @@ MonoBehaviour:
   itemDescription: "\u25CF Low spawn rate\r\n\u25CF Very low spawn increace\r\n\u25CF
     Very low spawn restriction"
   legacyName: 
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: EasyDName
+  descKey: EasyDDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!1 &1147912766
@@ -16794,9 +17184,9 @@ MonoBehaviour:
   itemDescription: "\u25CF Low spawn rate\r\n\u25CF High spawn increace\r\n\u25CF
     High spawn restriction"
   legacyName: 
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: InsaneDName
+  descKey: InsaneDDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!1 &1176529223
@@ -18201,12 +18591,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Electric grenade
-  itemDescription: "\u25CF Medium damage from electricity\r\n\u25CF Great blast radius\r\n\u25CF
-    More victims \u2014 more damage\r\n\u25CF <color=#00cc00>Effective against robots</color>"
+  itemDescription: 
   legacyName: Electric~Electric grenade
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: ElectricGrenadeName
+  descKey: ElectricGrenadeDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!1 &1303778271
@@ -20364,8 +20753,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1509825543}
   - component: {fileID: 1509825545}
-  - component: {fileID: 1509825544}
   - component: {fileID: 1509825546}
+  - component: {fileID: 1509825544}
   m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
@@ -20401,7 +20790,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1509825542}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -20410,20 +20799,99 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: e940f5e70eb32364b9a5f4a22ceac026, type: 3}
-    m_FontSize: 46
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 75
-    m_Alignment: 5
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
-    m_LineSpacing: 1
-  m_Text: Start
+  m_text: Start
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 296ed58cf1bfb1f49bfaa863007dc698, type: 2}
+  m_sharedMaterial: {fileID: -5804862782759560019, guid: 296ed58cf1bfb1f49bfaa863007dc698,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 100
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 100
+  m_fontStyle: 0
+  m_textAlignment: 1028
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 1509825544}
+    characterCount: 5
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 1
+    linkCount: 0
+    lineCount: 1
+    pageCount: 1
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1509825545
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20838,9 +21306,9 @@ MonoBehaviour:
     Insane spawn restriction\n\u25CF +900% to your regeneration\n\u25CF <color=#ee0000>It
     won't save you</color>"
   legacyName: 
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: BloodbathDName
+  descKey: BloodbathDDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!1 &1570729610
@@ -21071,8 +21539,8 @@ MonoBehaviour:
   itemName: Throwers
   itemDescription: 
   legacyName: 
-  nameTag: 
-  descTag: 
+  nameKey: 
+  descKey: 
   category: 
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -21300,50 +21768,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586638100}
   m_CullTransparentMesh: 0
---- !u!21 &1591035865
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: PixelFJV4 [extended] Material
-  m_Shader: {fileID: 4800000, guid: 1e3b057af24249748ff873be7fafee47, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _FaceTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 4852432833234324974, guid: 220602ef09c3553488cb2c89707fb55d,
-          type: 2}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _ColorMask: 15
-    - _DiffusePower: 1
-    - _MaskSoftnessX: 0
-    - _MaskSoftnessY: 0
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _VertexOffsetX: 0
-    - _VertexOffsetY: 0
-    m_Colors:
-    - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1597419644
 GameObject:
   m_ObjectHideFlags: 0
@@ -21904,7 +22328,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658239277}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: afb50e82788487141aeee847fb458e0d, type: 3}
   m_Name: 
@@ -21948,13 +22372,13 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1038334563}
-        m_MethodName: 
+        m_MethodName: StartStoryGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -22811,8 +23235,8 @@ MonoBehaviour:
   itemName: Grenadier
   itemDescription: 
   legacyName: Grenadier
-  nameTag: GrenadierName
-  descTag: GrenadierDescription
+  nameKey: GrenadierName
+  descKey: GrenadierDescription
   category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -23421,9 +23845,9 @@ MonoBehaviour:
   itemDescription: "\u25CF Low spawn rate\r\n\u25CF Medium spawn increace\r\n\u25CF
     Medium spawn restriction"
   legacyName: 
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: HardDName
+  descKey: HardDDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!1 &1702445676
@@ -23657,6 +24081,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719899386}
   m_CullTransparentMesh: 0
+--- !u!21 &1722934589
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PixelFJV4 [extended] Material
+  m_Shader: {fileID: 4800000, guid: 1e3b057af24249748ff873be7fafee47, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _FaceTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 4852432833234324974, guid: 220602ef09c3553488cb2c89707fb55d,
+          type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _ColorMask: 15
+    - _DiffusePower: 1
+    - _MaskSoftnessX: 0
+    - _MaskSoftnessY: 0
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _VertexOffsetX: 0
+    - _VertexOffsetY: 0
+    m_Colors:
+    - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1725310025
 GameObject:
   m_ObjectHideFlags: 0
@@ -24604,13 +25072,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Rifle
-  itemDescription: "<b>Powerful rifle with capacious magazine\r</b>\n\r\n\u25CF Bursting
-    and automatic modes\r\n\u25CF 40 rounds in magazine\r\n\u25CF Quick reloading\r\n\u25CF
-    High rate of fire"
+  itemDescription: 
   legacyName: Rifle~Default rifle
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: RifleName
+  descKey: RifleDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!114 &1771545540
@@ -24950,13 +25416,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Energy knife
-  itemDescription: "<b>Energetic melee weapon\r</b>\n\r\n\u25CF Medium damage\r\n\u25CF
-    No need in recharging\r\n\u25CF High rate of attack\r\n\u25CF <color=#cc0000>Weak
-    against robots</color>"
+  itemDescription: 
   legacyName: EnergyKnife~Default energy knife
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: EnergyKnifeName
+  descKey: EnergyKnifeDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!114 &1802336441
@@ -25423,7 +25887,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.2}
   m_AnchorMax: {x: 1, y: 0.8}
   m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 0, y: -10}
+  m_SizeDelta: {x: 68.20232, y: -10}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1862249290
 MonoBehaviour:
@@ -25583,12 +26047,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Power pistol
-  itemDescription: "<b>Simple pistol with great power\r</b>\n\r\n\u25CF High damage\r\n\u25CF
-    18 rounds in magazine\r\n\u25CF Long reloading\r\n\u25CF Medium rate of fire"
+  itemDescription: 
   legacyName: PowerPistol~Default power pistol
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: PowerPistolName
+  descKey: PowerPistolDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!114 &1877204410
@@ -25714,8 +26177,8 @@ MonoBehaviour:
   gripDuration: 1
   unselectedScaling: 0.001
   scalingSpeed: 0.25
-  selectedName: {fileID: 0}
-  selectedDescription: {fileID: 0}
+  selectedName: {fileID: 593754075}
+  selectedDescription: {fileID: 43641656}
 --- !u!224 &1887819648
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25791,8 +26254,8 @@ MonoBehaviour:
   itemName: Teleports
   itemDescription: 
   legacyName: 
-  nameTag: 
-  descTag: 
+  nameKey: 
+  descKey: 
   category: 
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -25871,7 +26334,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.2}
   m_AnchorMax: {x: 0, y: 0.8}
   m_AnchoredPosition: {x: -20, y: 0}
-  m_SizeDelta: {x: 0, y: -10}
+  m_SizeDelta: {x: 68.20232, y: -10}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1908260651
 MonoBehaviour:
@@ -26390,8 +26853,8 @@ MonoBehaviour:
   itemName: God
   itemDescription: 
   legacyName: God
-  nameTag: GodName
-  descTag: GodDescription
+  nameKey: GodName
+  descKey: GodDescription
   category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
@@ -27671,9 +28134,9 @@ MonoBehaviour:
   itemDescription: "\u25CF Damage over time from gas\r\n\u25CF Medium blast radius\r\n\u25CF
     Illegal since 1993"
   legacyName: Gas~Gas grenade
-  nameTag: 
-  descTag: 
-  category: 
+  nameKey: GasGrenadeName
+  descKey: GasGrenadeDescription
+  category: Items
   itemPreview: {fileID: 0}
   itemButton: {fileID: 0}
 --- !u!1 &2100061613
@@ -27789,7 +28252,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 20, y: 10}
-  m_SizeDelta: {x: 328, y: 97.95}
+  m_SizeDelta: {x: 500, y: 97.95}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2100580458
 MonoBehaviour:
@@ -27843,7 +28306,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 96981477}
+  m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -28010,7 +28473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 1591035865}
+  m_Material: {fileID: 1722934589}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -28019,7 +28482,7 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: 220602ef09c3553488cb2c89707fb55d, type: 2}
   m_spriteAsset: {fileID: 0}
   m_material: {fileID: 0}
-  m_sharedMaterial: {fileID: 1591035865}
+  m_sharedMaterial: {fileID: 1722934589}
   m_isDefaultMaterial: 0
   m_padding: 0
   m_canvasRenderer: {fileID: 2108745087}

@@ -41,7 +41,7 @@ public class LocalizationManager : MonoBehaviour
             if (Instance != this) Destroy(this);
             return;
         }
-        
+
         LoadLocalization();
         HandleListeners();
     }

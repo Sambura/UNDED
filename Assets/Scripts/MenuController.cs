@@ -105,6 +105,28 @@ public class MenuController : MonoBehaviour
 		})));
 	}
 
+	public void StartStoryGame()
+	{
+		StartCoroutine(Fader(new System.Action(() =>
+		{
+			StartCoroutine(StoryLoader());
+		})));
+	}
+
+	private IEnumerator StoryLoader()
+	{
+		loadingScreen.SetActive(true);
+		yield return null;
+		var process = SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
+		process.allowSceneActivation = false;
+		fadeOut = false;
+		SwitchScreen(-1);
+		yield return new WaitWhile(() => process.progress < 0.9f);
+		loadingScreen.GetComponent<Animator>().SetTrigger("fadeOut");
+		yield return new WaitForSeconds(0.5f);
+		process.allowSceneActivation = true;
+	}
+
 	private void SwitchScreen(int toScreen)
 	{
 		lastScreen = screen;

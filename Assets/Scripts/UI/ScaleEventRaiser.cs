@@ -20,7 +20,7 @@ public class ScaleEventRaiser : MonoBehaviour
 		{
 			if (below)
 			{
-				scrollView.UpdateData();
+				scrollView.UpdateData(-1);
 				below = false;
 			}
 		}
